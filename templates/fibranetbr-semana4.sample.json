@@ -1,0 +1,72 @@
+{
+  "deck": {
+    "title": "Planejamento Estratégico",
+    "client": "FibranetBR",
+    "theme": "genspark_dark",
+    "week": "Semana 4",
+    "accent": "#ff3333",
+    "font": "Montserrat",
+    "output": {
+      "html": true,
+      "google_slides": true,
+      "pptx": false
+    }
+  },
+  "slides": [
+    {
+      "id": "s01",
+      "layout": "cover",
+      "content": {
+        "eyebrow": "FIBRANETBR",
+        "title": "PLANEJAMENTO ESTRATÉGICO",
+        "subtitle": "Transformar a estratégia em plano executável de aquisição, engajamento, monetização e retenção.",
+        "client": "Semana 4",
+        "footer": "V4 Company"
+      }
+    },
+    {
+      "id": "s02",
+      "layout": "executive_context",
+      "content": {
+        "title": "Momento atual: diagnóstico executivo",
+        "subtitle": "A operação tem força para crescer, mas o motor digital ainda não acompanha o potencial físico.",
+        "left_title": "Sinais fortes da operação",
+        "left_items": [
+          "Base com cerca de 7.000 clientes ativos",
+          "Churn estimado em aproximadamente 1%",
+          "Forte reputação local e nota 4,8 no Google"
+        ],
+        "right_title": "Gargalos do crescimento",
+        "right_items": [
+          "Digital abaixo do potencial",
+          "Comercial não setorizado",
+          "CRM pouco estruturado e crescimento reativo"
+        ]
+      }
+    },
+    {
+      "id": "s03",
+      "layout": "metric_grid",
+      "content": {
+        "title": "Dados validados: base e operação",
+        "subtitle": "Panorama de infraestrutura e viabilidade comercial.",
+        "metrics": [
+          { "value": "7.000", "label": "clientes ativos", "caption": "Base relevante para expansão" },
+          { "value": "1%", "label": "churn estimado", "caption": "Retenção excepcional" },
+          { "value": "3 dias", "label": "ativação", "caption": "Diferencial competitivo" },
+          { "value": "2018", "label": "maturidade", "caption": "Presença consolidada" }
+        ]
+      }
+    },
+    {
+      "id": "s04",
+      "layout": "big_statement",
+      "content": {
+        "statement": "A FibranetBR não vende internet.",
+        "support": "O cliente compra estabilidade, rapidez e confiança.",
+        "attribution": "Tese estratégica da Semana 4"
+      }
+    }
+  ]
+}
+

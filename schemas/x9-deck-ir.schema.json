@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "X9 Deck IR",
+  "type": "object",
+  "required": ["deck", "slides"],
+  "properties": {
+    "deck": {
+      "type": "object",
+      "required": ["title", "client", "theme"],
+      "properties": {
+        "title": { "type": "string" },
+        "client": { "type": "string" },
+        "theme": { "type": "string", "enum": ["genspark_dark", "v4_dark", "custom_dark"] },
+        "week": { "type": "string" },
+        "accent": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "background": { "type": "string" },
+        "font": { "type": "string", "default": "Montserrat" },
+        "output": {
+          "type": "object",
+          "properties": {
+            "html": { "type": "boolean" },
+            "google_slides": { "type": "boolean" },
+            "pptx": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "slides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "layout", "content"],
+        "properties": {
+          "id": { "type": "string" },
+          "layout": {
+            "type": "string",
+            "enum": [
+              "cover",
+              "agenda",
+              "section",
+              "executive_context",
+              "metric_grid",
+              "four_pillars",
+              "three_pillars",
+              "bento",
+              "comparison",
+              "strategy_map",
+              "campaign_structure",
+              "pipeline",
+              "drawflow",
+              "timeline",
+              "cinematic_cover",
+              "evidence_diagnosis",
+              "pipeline_split_outcome",
+              "matrix_4x_highlight",
+              "executive_action_grid",
+              "market_scope_dashboard",
+              "weekly_calendar_plus_routine",
+              "competitor_map",
+              "roi_dashboard",
+              "proposal_scope_45d",
+              "media_budget_compare",
+              "channel_allocation_bars",
+              "media_funnel_plan",
+              "big_statement",
+              "closing"
+            ]
+          },
+          "content": { "type": "object" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

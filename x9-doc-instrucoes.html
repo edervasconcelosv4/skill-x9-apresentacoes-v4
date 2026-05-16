@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X9 — Instruções da Skill</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #050505;
+    --bg-alt:  #0d0d0d;
+    --card:    #111111;
+    --card2:   #161616;
+    --line:    #2a2a2a;
+    --line2:   #3a3a3a;
+    --text:    #ffffff;
+    --muted:   #c0c0c0;
+    --subtle:  #7a7a7a;
+    --accent:  #e53935;
+    --green:   #21c26b;
+    --amber:   #ffb020;
+    --blue:    #3b82f6;
+    --purple:  #a855f7;
+    --radius:  10px;
+    --r-sm:    6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(5,5,5,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 0;
+    padding: 0 48px;
+    height: 56px;
+  }
+  .nav-logo {
+    font-size: 13px; font-weight: 800; letter-spacing: 2px;
+    color: var(--accent); text-transform: uppercase; margin-right: 40px;
+  }
+  .nav-links { display: flex; gap: 4px; flex: 1; }
+  .nav-links a {
+    color: var(--subtle); text-decoration: none; font-size: 12px; font-weight: 600;
+    letter-spacing: .5px; padding: 6px 12px; border-radius: var(--r-sm);
+    transition: all .15s;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--card); }
+  .nav-badge {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    color: var(--subtle); background: var(--card);
+    border: 1px solid var(--line); border-radius: 20px;
+    padding: 3px 10px;
+  }
+
+  /* LAYOUT */
+  .page { padding-top: 56px; }
+  .section { padding: 80px 0; border-bottom: 1px solid var(--line); }
+  .section:last-child { border-bottom: none; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+  .container-wide { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+
+  /* HERO */
+  .hero {
+    padding: 120px 0 100px;
+    background:
+      radial-gradient(ellipse 60% 40% at 70% 30%, rgba(229,57,53,.12), transparent 60%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(59,130,246,.08), transparent 55%);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-eyebrow {
+    display: inline-block; font-size: 11px; font-weight: 800;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--accent);
+    background: rgba(229,57,53,.1); border: 1px solid rgba(229,57,53,.25);
+    border-radius: 20px; padding: 4px 14px; margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(52px, 6vw, 80px); font-weight: 900;
+    line-height: 1.05; letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    font-size: 19px; font-weight: 400; color: var(--muted);
+    max-width: 640px; margin-bottom: 48px; line-height: 1.6;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 52px; }
+  .tag {
+    font-size: 11px; font-weight: 700; letter-spacing: .8px;
+    text-transform: uppercase; color: var(--subtle);
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 20px; padding: 5px 14px;
+  }
+  .tag.accent { color: var(--accent); border-color: rgba(229,57,53,.3); background: rgba(229,57,53,.08); }
+  .tag.green { color: var(--green); border-color: rgba(33,194,107,.3); background: rgba(33,194,107,.08); }
+  .tag.blue { color: var(--blue); border-color: rgba(59,130,246,.3); background: rgba(59,130,246,.08); }
+  .hero-stats { display: flex; gap: 48px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .stat-num { font-size: 42px; font-weight: 900; color: var(--text); line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--subtle); margin-top: 4px; font-weight: 600; letter-spacing: .5px; }
+
+  /* SECTION TITLES */
+  .sec-eyebrow {
+    font-size: 11px; font-weight: 800; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+  }
+  .sec-title { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 14px; }
+  .sec-sub { font-size: 16px; color: var(--muted); max-width: 600px; margin-bottom: 52px; line-height: 1.6; }
+
+  /* CARDS */
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 28px;
+  }
+  .card-accent { border-top: 3px solid var(--accent); }
+  .card-green { border-top: 3px solid var(--green); }
+  .card-blue { border-top: 3px solid var(--blue); }
+  .card-amber { border-top: 3px solid var(--amber); }
+  .card-purple { border-top: 3px solid var(--purple); }
+  .card h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+  .card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .card .card-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block;
+  }
+  .card .card-label.green { color: var(--green); }
+  .card .card-label.blue { color: var(--blue); }
+  .card .card-label.amber { color: var(--amber); }
+  .card .card-label.purple { color: var(--purple); }
+
+  /* GRIDS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+  /* FLOW DIAGRAM */
+  .flow-diagram {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 48px 32px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; flex-wrap: nowrap; overflow-x: auto;
+  }
+  .flow-step {
+    display: flex; flex-direction: column; align-items: center;
+    min-width: 120px; text-align: center;
+  }
+  .flow-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 12px;
+    border: 1px solid var(--line);
+  }
+  .flow-icon.red { background: rgba(229,57,53,.15); border-color: rgba(229,57,53,.3); }
+  .flow-icon.blue { background: rgba(59,130,246,.12); border-color: rgba(59,130,246,.25); }
+  .flow-icon.green { background: rgba(33,194,107,.12); border-color: rgba(33,194,107,.25); }
+  .flow-icon.amber { background: rgba(255,176,32,.12); border-color: rgba(255,176,32,.25); }
+  .flow-icon.purple { background: rgba(168,85,247,.12); border-color: rgba(168,85,247,.25); }
+  .flow-step-title { font-size: 12px; font-weight: 700; color: var(--text); }
+  .flow-step-sub { font-size: 11px; color: var(--subtle); margin-top: 3px; line-height: 1.3; }
+  .flow-arrow {
+    color: var(--line2); font-size: 20px; margin: 0 12px;
+    flex-shrink: 0; padding-bottom: 24px;
+  }
+
+  /* CODE */
+  pre {
+    background: #0a0a0a; border: 1px solid var(--line);
+    border-radius: var(--r-sm); padding: 20px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; line-height: 1.6; overflow-x: auto;
+    color: #e0e0e0;
+  }
+  .code-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--subtle);
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--r-sm) var(--r-sm) 0 0;
+    padding: 6px 16px; display: inline-block;
+    border-bottom: none;
+  }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #f08; background: rgba(255,0,136,.08); padding: 2px 6px; border-radius: 4px; }
+  .kw { color: #f4c842; }
+  .str { color: #a8e6a3; }
+  .cmt { color: #555; }
+  .num { color: #79b8ff; }
+  .prop { color: #ff9d6f; }
+  .val { color: #e3a0ff; }
+
+  /* LAYOUT LIBRARY */
+  .layout-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .layout-card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--r-sm); padding: 16px 18px;
+    cursor: default; transition: border-color .15s, transform .15s;
+  }
+  .layout-card:hover { border-color: var(--line2); transform: translateY(-1px); }
+  .layout-card-name {
+    font-size: 12px; font-weight: 700; color: var(--text);
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 6px;
+  }
+  .layout-card-desc { font-size: 11px; color: var(--subtle); line-height: 1.45; }
+  .layout-card-family {
+    font-size: 9px; font-weight: 800; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 8px; display: block;
+  }
+  .lf-abertura { color: var(--accent); }
+  .lf-diagnostico { color: var(--amber); }
+  .lf-metricas { color: var(--blue); }
+  .lf-estrategia { color: var(--purple); }
+  .lf-fluxos { color: var(--green); }
+  .lf-midia { color: #f97316; }
+  .lf-proposta { color: #06b6d4; }
+
+  /* INSTALL TABS */
+  .install-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+  .tab-btn {
+    font-size: 12px; font-weight: 700; letter-spacing: .5px;
+    padding: 8px 18px; border-radius: var(--r-sm);
+    border: 1px solid var(--line); background: transparent;
+    color: var(--subtle); cursor: pointer; transition: all .15s;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .tab-btn:hover { border-color: var(--line2); color: var(--text); }
+  .tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* PROMPTS */
+  .prompt-card {
+    background: #0a0a0a; border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+  .prompt-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--subtle); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .prompt-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .prompt-text { font-size: 14px; color: var(--muted); line-height: 1.7; font-style: italic; }
+  .prompt-result {
+    margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--subtle); display: flex; gap: 6px;
+  }
+  .prompt-result strong { color: var(--green); }
+
+  /* ANTIPATTERNS */
+  .anti-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .anti-card {
+    background: var(--card); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent); border-radius: var(--r-sm);
+    padding: 14px 18px; display: flex; gap: 14px; align-items: flex-start;
+  }
+  .anti-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .anti-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .anti-why { font-size: 12px; color: var(--subtle); line-height: 1.5; }
+
+  /* QA TABLE */
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left; font-size: 11px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--subtle); padding: 10px 16px;
+    border-bottom: 1px solid var(--line); background: var(--bg-alt);
+  }
+  td {
+    padding: 12px 16px; font-size: 13px; color: var(--muted);
+    border-bottom: 1px solid var(--line);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,.02); }
+  .check { color: var(--green); font-weight: 700; }
+  td strong { color: var(--text); font-weight: 600; }
+
+  /* ALERT / CALLOUT */
+  .callout {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--card2); border: 1px solid var(--line);
+    border-left: 4px solid var(--accent); border-radius: var(--r-sm);
+    padding: 16px 20px; margin: 24px 0;
+  }
+  .callout.green { border-left-color: var(--green); }
+  .callout.amber { border-left-color: var(--amber); }
+  .callout.blue { border-left-color: var(--blue); }
+  .callout-icon { font-size: 18px; flex-shrink: 0; }
+  .callout-body { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .callout-body strong { color: var(--text); }
+
+  /* DS SWATCHES */
+  .swatch-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .swatch {
+    width: 80px; text-align: center;
+  }
+  .swatch-color { height: 48px; border-radius: var(--r-sm); border: 1px solid var(--line); margin-bottom: 6px; }
+  .swatch-hex { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--subtle); }
+  .swatch-name { font-size: 10px; color: var(--muted); font-weight: 600; }
+
+  /* FILE TREE */
+  .file-tree {
+    background: #0a0a0a; border: 1px solid var(--line);
+    border-radius: var(--r-sm); padding: 20px 24px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    line-height: 2;
+  }
+  .ft-folder { color: var(--blue); }
+  .ft-file { color: var(--muted); }
+  .ft-new { color: var(--green); }
+  .ft-desc { color: var(--subtle); font-size: 11px; margin-left: 8px; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--line); margin: 40px 0; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; margin-left: 8px;
+  }
+  .badge-new { background: rgba(33,194,107,.15); color: var(--green); border: 1px solid rgba(33,194,107,.25); }
+  .badge-core { background: rgba(229,57,53,.12); color: var(--accent); border: 1px solid rgba(229,57,53,.25); }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg-alt); border-top: 1px solid var(--line);
+    padding: 40px 48px; text-align: center;
+    font-size: 12px; color: var(--subtle);
+  }
+  footer strong { color: var(--text); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .anti-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 42px; }
+    .flow-diagram { flex-direction: column; padding: 32px 20px; }
+    .flow-arrow { transform: rotate(90deg); margin: 8px 0; padding-bottom: 0; }
+    nav { padding: 0 20px; }
+    .container, .container-wide { padding: 0 20px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">X9 Skill</div>
+  <div class="nav-links">
+    <a href="#o-que-e">O que é</a>
+    <a href="#arquitetura">Arquitetura</a>
+    <a href="#layouts">Layouts</a>
+    <a href="#instalacao">Instalação</a>
+    <a href="#prompts">Prompts</a>
+    <a href="#design">Design System</a>
+    <a href="#boas-praticas">Boas Práticas</a>
+    <a href="#qa">QA</a>
+  </div>
+  <span class="nav-badge">v2.0 · 14EV</span>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero" id="o-que-e">
+    <div class="container">
+      <span class="hero-eyebrow">Skill X9 — Documentação Oficial</span>
+      <h1>Apresentações<br>entregues como <span>slides</span>.</h1>
+      <p class="hero-sub">
+        Uma linha de produção de IA para criar decks executivos com estética dark/premium,
+        saindo em HTML navegável e PPTX/Google Slides editável — tudo a partir de um único contrato estruturado.
+      </p>
+      <div class="hero-tags">
+        <span class="tag accent">Claude Code</span>
+        <span class="tag blue">ChatGPT / OpenAI</span>
+        <span class="tag">Gemini</span>
+        <span class="tag green">IR JSON</span>
+        <span class="tag">HTML Preview</span>
+        <span class="tag">PPTX Nativo</span>
+        <span class="tag">Google Slides</span>
+        <span class="tag">V4 Company</span>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">28</div>
+          <div class="stat-label">Layouts catalogados</div>
+        </div>
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Formatos de saída</div>
+        </div>
+        <div>
+          <div class="stat-num">7</div>
+          <div class="stat-label">Famílias de layout</div>
+        </div>
+        <div>
+          <div class="stat-num">11</div>
+          <div class="stat-label">Arquivos de referência</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARQUITETURA -->
+  <section class="section" id="arquitetura">
+    <div class="container">
+      <div class="sec-eyebrow">Como funciona</div>
+      <h2 class="sec-title">Arquitetura da Skill</h2>
+      <p class="sec-sub">
+        O erro de toda skill de apresentação é mandar a IA desenhar direto.
+        O X9 separa intenção, estrutura e renderização em camadas distintas.
+      </p>
+
+      <!-- FLOW -->
+      <div class="flow-diagram" style="margin-bottom: 48px;">
+        <div class="flow-step">
+          <div class="flow-icon red">📋</div>
+          <div class="flow-step-title">Briefing</div>
+          <div class="flow-step-sub">Cliente, semana,<br>objetivo, fonte</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-icon amber">🧠</div>
+          <div class="flow-step-title">Narrativa</div>
+          <div class="flow-step-sub">Tese, capítulos,<br>sequência editorial</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-icon blue">📦</div>
+          <div class="flow-step-title">IR JSON</div>
+          <div class="flow-step-sub">Contrato único<br>deck.ir.json</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-icon green">🌐</div>
+          <div class="flow-step-title">HTML</div>
+          <div class="flow-step-sub">Preview visual,<br>aprovação rápida</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-icon purple">📊</div>
+          <div class="flow-step-title">PPTX / Slides</div>
+          <div class="flow-step-sub">Entrega editável<br>para o cliente</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="flow-icon red">✅</div>
+          <div class="flow-step-title">QA</div>
+          <div class="flow-step-sub">Legibilidade,<br>alinhamento, contraste</div>
+        </div>
+      </div>
+
+      <!-- ORGANOGRAMA MERMAID -->
+      <h3 style="font-size:20px;font-weight:700;margin-top:20px;margin-bottom:20px;">Organograma do Motor (Skill X9)</h3>
+      <div class="mermaid" style="background: #0a0a0a; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; margin-bottom: 48px; display: flex; justify-content: center; overflow-x: auto;">
+        flowchart LR
+          classDef user fill:#2d3748,stroke:#4fd1c5,stroke-width:1px,color:#fff,font-size:12px,font-family:Montserrat;
+          classDef agent fill:#1a202c,stroke:#e53e3e,stroke-width:1px,color:#fff,font-size:12px,font-family:Montserrat;
+          classDef core fill:#2b6cb0,stroke:#63b3ed,stroke-width:1px,color:#fff,font-size:12px,font-family:Montserrat;
+          classDef output fill:#276749,stroke:#68d391,stroke-width:1px,color:#fff,font-size:12px,font-family:Montserrat;
+
+          Start([👤 Início: Envia o Briefing]):::user
+          
+          subgraph S1 [Passo 1: Planejamento]
+              direction TB
+              Agent{🤖 Inteligência IA}:::agent
+              JSON[📄 Contrato IR JSON]:::core
+              Agent -->|Extrai| JSON
+          end
+          
+          subgraph S2 [Passo 2: Motores de Build]
+              direction TB
+              CodeHTML[⚙️ Renderiza HTML]:::agent
+              CodePPTX[⚙️ Renderiza PPTX]:::agent
+              CodeGS[☁️ API G. Slides]:::agent
+          end
+          
+          subgraph S3 [Passo 3: Formatos]
+              direction TB
+              HTML[/🌐 Web HTML/]:::output
+              PPTX[/📊 Arquivo PPTX/]:::output
+              GSlides[/☁️ G. Slides/]:::output
+          end
+
+          Start --> Agent
+          
+          JSON --> CodeHTML
+          JSON --> CodePPTX
+          JSON --> CodeGS
+          
+          CodeHTML --> HTML
+          CodePPTX --> PPTX
+          CodeGS --> GSlides
+          
+          HTML -.-> QA{✅ Filtro QA Visual}:::core
+          PPTX -.-> QA
+          GSlides -.-> QA
+          
+          QA --> End([🎯 Entrega Pronta]):::user
+      </div>
+
+      <!-- CAMADAS -->
+      <div class="grid-3">
+        <div class="card card-blue">
+          <span class="card-label blue">Camada 1 — Contrato</span>
+          <h3>IR JSON (deck.ir.json)</h3>
+          <p>A representação intermediária. Define cliente, acento, tema e todos os slides com layout e conteúdo tipado. É a fonte de verdade — HTML e PPTX nascem dele.</p>
+        </div>
+        <div class="card card-green">
+          <span class="card-label green">Camada 2 — Preview</span>
+          <h3>render-html-from-ir.js</h3>
+          <p>Lê o IR e gera o HTML navegável. Tem limpeza automática de encoding PT-BR, templates por layout e suporte a drawflow posicionado com CSS custom properties.</p>
+        </div>
+        <div class="card card-purple">
+          <span class="card-label purple">Camada 3 — Entrega</span>
+          <h3>render-pptx-from-ir.js</h3>
+          <p>Usa pptxgenjs para criar PPTX com shapes nativos, fontes, cores de marca e tints calculados. Abre direto no Google Slides sem perder estrutura.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- ESTRUTURA DE PASTAS -->
+      <h3 style="font-size:20px;font-weight:700;margin-bottom:20px;">Estrutura de Arquivos</h3>
+      <div class="file-tree">
+        <div><span class="ft-folder">Skill X9/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">← instale onde quiser no seu computador</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-new">CLAUDE.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">lido automaticamente pelo Claude Code</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">SKILL.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">instrução + detecção de ambiente</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-new">PROMPT_CLAUDE.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">fluxo para Claude.ai / API</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-new">PROMPT_GPT.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">fluxo para ChatGPT / GPT-4o</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-new">PROMPT_GEMINI.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">fluxo para Gemini (Google Workspace nativo)</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-new">PROMPT_UNIVERSAL.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">fluxo para qualquer outra IA</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-new">x9-doc-instrucoes.html</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">← este arquivo</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-folder">references/</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">01-arquitetura.md</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">02-design-system.md</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">03-layouts.md</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">04-google-slides-editavel.md</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">05-html-contract.md</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">06-qa-antipadroes.md</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">07-analise-fibranetbr-v2.md</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">08-fidelidade-html-pptx.md</span>&nbsp;&nbsp;&nbsp;<span class="ft-desc">← novo</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">09-biblioteca-padroes-visuais.md</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">10-setup-google-slides-mcp.md</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">11-design-analysis-manual.md</span>&nbsp;<span class="ft-desc">← novo</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-folder">schemas/</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">x9-deck-ir.schema.json</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-folder">scripts/</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">render-html-from-ir.js</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">render-pptx-from-ir.js</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">setup-google-auth.js</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-folder">templates/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">IR de exemplo</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-folder">testes-formatos/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">outputs gerados para validação</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-new">design-analysis.html</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">manual de direção de arte (cópia local)</span></div>
+        <div>&nbsp;&nbsp;<span class="ft-folder">Decks de Referência/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-desc">PPTXs reais 2ª/3ª/4ª semana</span></div>
+        <div>&nbsp;&nbsp;<span class="ft-folder">_backups/</span></div>
+      </div>
+
+      <!-- design-analysis callout -->
+      <div class="callout blue" style="margin-top:32px;">
+        <div class="callout-icon">🎨</div>
+        <div class="callout-body">
+          <strong>design-analysis.html — Manual de Direção de Arte</strong><br>
+          Arquivo localizado em <code>Skill X9/design-analysis.html</code>. É a fonte visual de referência da skill: define o estilo dark premium, os padrões tipográficos, as famílias de layout e os benchmarks estéticos que o <code>11-design-analysis-manual.md</code> traduz em regras para o agente.<br><br>
+          <strong>Quando abrir:</strong> antes de criar um deck comercial/estratégico; quando quiser validar se o resultado final está dentro do padrão V4; ou quando for estender a skill com novos layouts. O arquivo é navegável e visual — abra direto no browser.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAYOUTS -->
+  <section class="section" id="layouts">
+    <div class="container-wide">
+      <div class="container" style="padding:0;">
+        <div class="sec-eyebrow">Biblioteca</div>
+        <h2 class="sec-title">28 Layouts Catalogados</h2>
+        <p class="sec-sub">Todo slide deve usar um layout desta lista. Não invente estruturas no meio da geração — se nenhum resolve, estenda o IR.</p>
+      </div>
+
+      <div class="layout-grid">
+        <!-- ABERTURA -->
+        <div class="layout-card">
+          <span class="layout-card-family lf-abertura">Abertura</span>
+          <div class="layout-card-name">cover</div>
+          <div class="layout-card-desc">Capa padrão. Título monumental, cliente, semana, fundo escuro.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-abertura">Abertura</span>
+          <div class="layout-card-name">cinematic_cover</div>
+          <div class="layout-card-desc">Capa com speed field animado, eyebrow e rodapé com cliente.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-abertura">Abertura</span>
+          <div class="layout-card-name">section</div>
+          <div class="layout-card-desc">Separador de capítulo. Número de seção, título grande e subtítulo.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-abertura">Abertura</span>
+          <div class="layout-card-name">agenda</div>
+          <div class="layout-card-desc">Índice visual do deck. Use em apresentações com 6+ capítulos.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-abertura">Abertura</span>
+          <div class="layout-card-name">big_statement</div>
+          <div class="layout-card-desc">Slide manifesto. Uma frase forte e curta com apoio e atribuição.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-abertura">Abertura</span>
+          <div class="layout-card-name">closing</div>
+          <div class="layout-card-desc">Fechamento executivo. Próximos passos, ações e rodapé de compromisso.</div>
+        </div>
+
+        <!-- DIAGNÓSTICO -->
+        <div class="layout-card">
+          <span class="layout-card-family lf-diagnostico">Diagnóstico</span>
+          <div class="layout-card-name">executive_context</div>
+          <div class="layout-card-desc">Forças vs gargalos. Dois blocos laterais com listas de itens.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-diagnostico">Diagnóstico</span>
+          <div class="layout-card-name">comparison</div>
+          <div class="layout-card-desc">Antes/depois, hoje/futuro, problema/ação em dois blocos.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-diagnostico">Diagnóstico</span>
+          <div class="layout-card-name">evidence_diagnosis</div>
+          <div class="layout-card-desc">Diagnóstico com evidências reais: prints, WhatsApp, auditorias.</div>
+        </div>
+
+        <!-- MÉTRICAS -->
+        <div class="layout-card">
+          <span class="layout-card-family lf-metricas">Métricas</span>
+          <div class="layout-card-name">metric_grid</div>
+          <div class="layout-card-desc">Painel de KPIs. Números grandes, labels e legendas curtas.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-metricas">Métricas</span>
+          <div class="layout-card-name">bento</div>
+          <div class="layout-card-desc">Dashboard visual com cards de tamanhos diferentes (bento grid).</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-metricas">Métricas</span>
+          <div class="layout-card-name">market_scope_dashboard</div>
+          <div class="layout-card-desc">TAM/SAM/SOM, mercado e oportunidade com cards numéricos.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-metricas">Métricas</span>
+          <div class="layout-card-name">roi_dashboard</div>
+          <div class="layout-card-desc">Projeção financeira. KPIs + cenários + decisão de investimento.</div>
+        </div>
+
+        <!-- ESTRATÉGIA -->
+        <div class="layout-card">
+          <span class="layout-card-family lf-estrategia">Estratégia</span>
+          <div class="layout-card-name">four_pillars</div>
+          <div class="layout-card-desc">Quatro pilares simétricos. 4Ps, produto/preço/praça/promoção.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-estrategia">Estratégia</span>
+          <div class="layout-card-name">three_pillars</div>
+          <div class="layout-card-desc">Três frentes estratégicas. Marketing, comercial e crescimento.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-estrategia">Estratégia</span>
+          <div class="layout-card-name">strategy_map</div>
+          <div class="layout-card-desc">Mapa encadeado de estágios. Método V4, aquisição, CRM e vendas.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-estrategia">Estratégia</span>
+          <div class="layout-card-name">matrix_4x_highlight</div>
+          <div class="layout-card-desc">Quatro colunas, última em destaque. CVBA, BANT, SWOT e argumentos.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-estrategia">Estratégia</span>
+          <div class="layout-card-name">competitor_map</div>
+          <div class="layout-card-desc">Benchmarking em dois blocos (local vs digital) + oportunidade.</div>
+        </div>
+
+        <!-- FLUXOS -->
+        <div class="layout-card">
+          <span class="layout-card-family lf-fluxos">Fluxos</span>
+          <div class="layout-card-name">pipeline</div>
+          <div class="layout-card-desc">Fluxo comercial ou CRM em etapas numeradas com exceções.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-fluxos">Fluxos</span>
+          <div class="layout-card-name">pipeline_split_outcome</div>
+          <div class="layout-card-desc">Pipeline com resultado final bifurcado em ganho/perda.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-fluxos">Fluxos</span>
+          <div class="layout-card-name">drawflow</div>
+          <div class="layout-card-desc">Fluxo espacial com nodes posicionados em coordenadas absolutas. Jornada de lead, triagem, bifurcações e handoffs.</div>
+        </div>
+
+        <!-- MÍDIA -->
+        <div class="layout-card">
+          <span class="layout-card-family lf-midia">Mídia</span>
+          <div class="layout-card-name">media_budget_compare</div>
+          <div class="layout-card-desc">Cenários de verba: 3k vs 6k vs 10k com recomendação visual.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-midia">Mídia</span>
+          <div class="layout-card-name">channel_allocation_bars</div>
+          <div class="layout-card-desc">Distribuição de investimento por canal com barras nativas.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-midia">Mídia</span>
+          <div class="layout-card-name">media_funnel_plan</div>
+          <div class="layout-card-desc">Funil mídia → venda. Descoberta, intenção, prova, conversão, retenção.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-midia">Mídia</span>
+          <div class="layout-card-name">campaign_structure</div>
+          <div class="layout-card-desc">Estrutura de campanha por canal. Google, Meta, social e budget.</div>
+        </div>
+
+        <!-- PROPOSTA -->
+        <div class="layout-card">
+          <span class="layout-card-family lf-proposta">Proposta</span>
+          <div class="layout-card-name">proposal_scope_45d</div>
+          <div class="layout-card-desc">Escopo de 45 dias. Três fases, entregáveis e compromisso de execução.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-proposta">Proposta</span>
+          <div class="layout-card-name">timeline</div>
+          <div class="layout-card-desc">Plano em horizontes. Imediato, 30 dias e 90 dias.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-proposta">Proposta</span>
+          <div class="layout-card-name">executive_action_grid</div>
+          <div class="layout-card-desc">Próximos passos em 2 colunas numeradas + frase de fechamento.</div>
+        </div>
+        <div class="layout-card">
+          <span class="layout-card-family lf-proposta">Proposta</span>
+          <div class="layout-card-name">weekly_calendar_plus_routine</div>
+          <div class="layout-card-desc">Calendário editorial semanal + card lateral de rotina e frequência.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALAÇÃO -->
+  <section class="section" id="instalacao">
+    <div class="container">
+      <div class="sec-eyebrow">Setup</div>
+      <h2 class="sec-title">Como Instalar em Cada Modelo</h2>
+      <p class="sec-sub">A skill é um sistema de arquivos + instrução de comportamento. Cada plataforma tem um jeito de carregar isso.</p>
+
+      <div class="install-tabs">
+        <button class="tab-btn active" onclick="switchTab(this,'claude')">Claude Code</button>
+        <button class="tab-btn" onclick="switchTab(this,'openai')">ChatGPT / GPT-4o</button>
+        <button class="tab-btn" onclick="switchTab(this,'gemini')">Gemini</button>
+        <button class="tab-btn" onclick="switchTab(this,'api')">API Direta</button>
+        <button class="tab-btn" onclick="switchTab(this,'gslides')">Google Slides MCP</button>
+      </div>
+
+      <!-- CLAUDE -->
+      <div class="tab-panel active" id="tab-claude">
+        <div class="callout green">
+          <div class="callout-icon">⭐</div>
+          <div class="callout-body"><strong>Melhor opção.</strong> Claude Code acessa arquivos locais nativamente, executa Node.js e tem o SKILL.md como instrução de comportamento via projeto. É o ambiente em que a skill foi desenvolvida.</div>
+        </div>
+        <div class="grid-2" style="gap:20px;">
+          <div>
+            <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;">Passo a passo</h3>
+            <ol style="padding-left:20px;display:flex;flex-direction:column;gap:12px;color:var(--muted);font-size:14px;">
+              <li>Abra Claude Code no diretório onde você instalou a pasta <code>Skill X9/</code></li>
+              <li>O arquivo <code>SKILL.md</code> dentro de <code>Skill X9/</code> já é lido automaticamente quando você menciona apresentações ou decks</li>
+              <li>Instale Node.js se ainda não tiver: <a href="https://nodejs.org" style="color:var(--blue)">nodejs.org</a></li>
+              <li>Para PPTX, certifique-se que um projeto com <code>pptxgenjs</code> está disponível:
+                <pre style="margin-top:8px;font-size:12px;">cd "pasta-do-seu-projeto"
+npm install pptxgenjs</pre>
+              </li>
+              <li>Peça o deck: Claude vai gerar o IR, rodar os renderers e entregar HTML + PPTX</li>
+            </ol>
+          </div>
+          <div>
+            <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;">Comandos úteis</h3>
+            <div class="code-label">PowerShell</div>
+            <pre><span class="cmt"># Gerar HTML a partir de um IR</span>
+node <span class="str">"Skill X9\scripts\render-html-from-ir.js"</span> `
+  <span class="str">"meu-deck.ir.json"</span> `
+  <span class="str">"meu-deck.preview.html"</span>
+
+<span class="cmt"># Gerar PPTX a partir de um IR</span>
+node <span class="str">"Skill X9\scripts\render-pptx-from-ir.js"</span> `
+  <span class="str">"meu-deck.ir.json"</span> `
+  <span class="str">"meu-deck.pptx"</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPENAI -->
+      <div class="tab-panel" id="tab-openai">
+        <div class="callout green">
+          <div class="callout-icon">✅</div>
+          <div class="callout-body"><strong>Funciona completo.</strong> O ChatGPT gera IR JSON, HTML e Apps Script para Google Slides — tudo inline na resposta, sem Node.js local. Use <code>PROMPT_GPT.md</code> como instrução.</div>
+        </div>
+        <div class="grid-2" style="gap:20px;">
+          <div>
+            <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;">Opção A — Custom Instructions</h3>
+            <ol style="padding-left:20px;display:flex;flex-direction:column;gap:12px;color:var(--muted);font-size:14px;">
+              <li>Abra <strong>ChatGPT → Configurações → Custom Instructions</strong></li>
+              <li>Cole o conteúdo de <code>PROMPT_GPT.md</code> como instrução permanente</li>
+              <li>Peça o deck — o GPT gera IR JSON + HTML + Apps Script</li>
+              <li>Salve o <code>.html</code> e abra no browser</li>
+              <li>Cole o Apps Script em <code>script.google.com</code> → execute → link no Log</li>
+            </ol>
+          </div>
+          <div>
+            <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;">Opção B — Project + Files</h3>
+            <ol style="padding-left:20px;display:flex;flex-direction:column;gap:12px;color:var(--muted);font-size:14px;">
+              <li>Crie um <strong>Project</strong> no ChatGPT</li>
+              <li>Faça upload de: <code>PROMPT_GPT.md</code>, <code>03-layouts.md</code>, <code>02-design-system.md</code>, <code>x9-deck-ir.schema.json</code></li>
+              <li>Instrução do Project: <em>"Leia o PROMPT_GPT.md antes de criar qualquer apresentação."</em></li>
+              <li>Peça o deck — o GPT lê os arquivos e segue o fluxo completo</li>
+            </ol>
+          </div>
+        </div>
+        <div class="callout amber" style="margin-top:20px;">
+          <div class="callout-icon">🔑</div>
+          <div class="callout-body">Google Slides: o GPT gera um <strong>Apps Script</strong> completo. Acesse <code>script.google.com</code>, cole, execute e a apresentação aparece no seu Drive. Nenhum login extra necessário além da conta Google.</div>
+        </div>
+      </div>
+
+      <!-- GEMINI -->
+      <div class="tab-panel" id="tab-gemini">
+        <div class="callout green">
+          <div class="callout-icon">✅</div>
+          <div class="callout-body"><strong>Vantagem nativa.</strong> Gemini tem integração com Google Workspace — pode criar apresentações diretamente no seu Drive sem Apps Script. Use <code>PROMPT_GEMINI.md</code> como instrução.</div>
+        </div>
+        <div class="grid-2" style="gap:20px;">
+          <div>
+            <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;">Via Gemini.google.com</h3>
+            <ol style="padding-left:20px;display:flex;flex-direction:column;gap:12px;color:var(--muted);font-size:14px;">
+              <li>Abra o Gemini e inicie uma nova conversa</li>
+              <li>Cole o conteúdo de <code>PROMPT_GEMINI.md</code> como primeira mensagem</li>
+              <li>Peça o deck — o Gemini gera IR JSON + HTML + cria no Slides via Workspace</li>
+              <li>Receba o link da apresentação diretamente na resposta</li>
+            </ol>
+          </div>
+          <div>
+            <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;">Via Google AI Studio</h3>
+            <ol style="padding-left:20px;display:flex;flex-direction:column;gap:12px;color:var(--muted);font-size:14px;">
+              <li>Abra <strong>AI Studio</strong> e crie um prompt com System Instructions</li>
+              <li>Cole <code>PROMPT_GEMINI.md</code> como System Instruction</li>
+              <li>Faça upload de <code>03-layouts.md</code>, <code>02-design-system.md</code> e <code>x9-deck-ir.schema.json</code></li>
+              <li>Peça o deck — gera IR JSON + HTML + Apps Script como alternativa ao Workspace</li>
+            </ol>
+          </div>
+        </div>
+        <div class="callout blue" style="margin-top:20px;">
+          <div class="callout-icon">🔑</div>
+          <div class="callout-body">Se a integração Google Workspace não estiver ativa, o Gemini gera um <strong>Apps Script</strong> como alternativa. Cole em <code>script.google.com</code>, execute e a apresentação aparece no Drive.</div>
+        </div>
+      </div>
+
+      <!-- API -->
+      <div class="tab-panel" id="tab-api">
+        <div class="callout green">
+          <div class="callout-icon">🔧</div>
+          <div class="callout-body"><strong>Máxima flexibilidade.</strong> Use a API do Claude, OpenAI ou Gemini com o SKILL.md como system prompt. Permite automação total: gerar IR, rodar renderer e abrir no browser em um único script.</div>
+        </div>
+        <div class="code-label">Node.js — Claude API</div>
+        <pre><span class="kw">const</span> Anthropic = <span class="kw">require</span>(<span class="str">"@anthropic-ai/sdk"</span>);
+<span class="kw">const</span> fs = <span class="kw">require</span>(<span class="str">"fs"</span>);
+
+<span class="kw">const</span> client = <span class="kw">new</span> Anthropic();
+<span class="kw">const</span> skillMd = fs.readFileSync(<span class="str">"Skill X9/SKILL.md"</span>, <span class="str">"utf8"</span>);
+<span class="kw">const</span> layoutsMd = fs.readFileSync(<span class="str">"Skill X9/references/03-layouts.md"</span>, <span class="str">"utf8"</span>);
+
+<span class="kw">const</span> response = <span class="kw">await</span> client.messages.create({
+  model: <span class="str">"claude-opus-4-7"</span>,
+  max_tokens: <span class="num">8192</span>,
+  system: skillMd + <span class="str">"\n\n"</span> + layoutsMd,
+  messages: [{
+    role: <span class="str">"user"</span>,
+    content: <span class="str">"Crie um deck de 4ª semana para [CLIENTE]. Retorne apenas o deck.ir.json."</span>
+  }]
+});
+
+<span class="kw">const</span> ir = JSON.parse(response.content[<span class="num">0</span>].text);
+fs.writeFileSync(<span class="str">"deck.ir.json"</span>, JSON.stringify(ir, <span class="kw">null</span>, <span class="num">2</span>));
+<span class="cmt">// Depois rode: node "Skill X9/scripts/render-html-from-ir.js" deck.ir.json preview.html</span></pre>
+      </div>
+
+      <!-- GOOGLE SLIDES MCP -->
+      <div class="tab-panel" id="tab-gslides">
+        <div class="callout green">
+          <div class="callout-icon">📊</div>
+          <div class="callout-body"><strong>Saída nativa no Google Drive.</strong> Com o MCP do Google Drive/Slides ativo, o agente cria o arquivo direto na sua conta — sem exportar, sem copiar. O deck nasce como Google Slides editável com shapes, textos e formas nativos.</div>
+        </div>
+
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;">Pré-requisitos</h3>
+        <ul style="margin-left:20px;margin-bottom:24px;color:var(--muted);font-size:14px;display:flex;flex-direction:column;gap:8px;">
+          <li>Claude Code com MCP do Google Drive habilitado (ou plugin equivalente no ChatGPT/Gemini)</li>
+          <li>Conta Google autenticada no fluxo OAuth da plataforma — o agente vai pedir para você escolher/logar na conta</li>
+          <li>Permissão de escrita no Google Drive (padrão na autenticação)</li>
+          <li>Para uso offline/API: service account com escopo <code>https://www.googleapis.com/auth/drive</code></li>
+        </ul>
+
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:12px;">Fluxo de preflight (antes de pedir o deck)</h3>
+        <div class="code-label">Prompt de verificação</div>
+        <pre><span class="cmt"># Cole isso antes de pedir a apresentação quando quiser entrega no Google Slides</span>
+
+<span class="str">"Antes de criar o deck, confirme:
+1. O MCP do Google Drive está ativo e você tem acesso ao Drive?
+2. Você consegue criar um arquivo na minha conta Google?
+3. Se não estiver autenticado, inicie o fluxo de login agora.
+
+Só prossiga com a criação do IR depois de confirmar esses pontos."</span></pre>
+
+        <h3 style="font-size:15px;font-weight:700;margin:24px 0 12px;">O que o agente cria no Google Slides</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
+          <div style="background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--green);text-transform:uppercase;margin-bottom:8px;">Elementos nativos</div>
+            <ul style="margin-left:16px;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:4px;">
+              <li>Caixas de texto editáveis</li>
+              <li>Shapes (retângulos, elipses, linhas)</li>
+              <li>Fundo de slide com cor sólida</li>
+              <li>Tabelas nativas</li>
+              <li>Cards como grupos de shapes</li>
+            </ul>
+          </div>
+          <div style="background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--amber);text-transform:uppercase;margin-bottom:8px;">Não vai via MCP</div>
+            <ul style="margin-left:16px;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:4px;">
+              <li>Gradientes radiais (vira shape sólido)</li>
+              <li>Efeitos glow CSS</li>
+              <li>Animações/transições do HTML</li>
+              <li>Drawflow interativo (vira diagrama estático)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout amber">
+          <div class="callout-icon">⚠️</div>
+          <div class="callout-body">
+            O guia completo de configuração, escopos OAuth, criação de service account e troubleshooting está em
+            <code>references/10-setup-google-slides-mcp.md</code>. Leia antes do primeiro uso em uma conta ou máquina nova.
+          </div>
+        </div>
+
+        <h3 style="font-size:15px;font-weight:700;margin:24px 0 12px;">Prompt padrão com entrega no Google Slides</h3>
+        <div class="code-label">Exemplo completo</div>
+        <pre><span class="str">"Crie a apresentação de 4ª semana para [CLIENTE]. Arquivo consolidado em [caminho].
+Acento: #CC0000. Slides: capa, contexto, TAM, diagnóstico, distribuição de mídia,
+funil drawflow, proposta e fechamento.
+
+Gere o IR primeiro. Depois crie o arquivo no Google Slides da minha conta Google,
+com todos os elementos como shapes nativos e textos editáveis.
+Me envie o link do arquivo criado."</span></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROMPTS -->
+  <section class="section" id="prompts">
+    <div class="container">
+      <div class="sec-eyebrow">Exemplos</div>
+      <h2 class="sec-title">Prompts que Funcionam</h2>
+      <p class="sec-sub">Prompts bons dão contexto suficiente para o agente montar o IR sem pedir esclarecimentos.</p>
+
+      <div class="prompt-card">
+        <div class="prompt-label">Deck de 4ª semana a partir de arquivo consolidado</div>
+        <div class="prompt-text">
+          "Crie a apresentação de 4ª semana para [CLIENTE]. O arquivo consolidado está em [caminho]. Use acento <strong>#CC0000</strong> (vermelho da marca). O deck deve ter capa, contexto de mercado, TAM/SAM/SOM, diagnóstico do funil atual, comparativo de concorrentes, proposta de distribuição de mídia com cenários 3k e 6k, funil de aquisição com drawflow, escopo de 45 dias e fechamento. Gere o IR primeiro, depois rode os renderers."
+        </div>
+        <div class="prompt-result">
+          <strong>✓ Bom porque:</strong> dá cliente, acento, estrutura esperada e ordem de operações
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-label">Slide específico de drawflow</div>
+        <div class="prompt-text">
+          "Preciso de um drawflow mostrando a jornada do lead: começa com tráfego pago → landing page → WhatsApp D0 → bifurca em SIM (triagem) e NÃO (sequência D3/D5/D7). Use nodes posicionados, node-sim para a ramificação positiva e node-nao para a negativa. Acento da marca é <strong>#1E40AF</strong>."
+        </div>
+        <div class="prompt-result">
+          <strong>✓ Bom porque:</strong> descreve a lógica do fluxo e pede variantes de node por tipo
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-label">Atualizar IR existente com novo slide</div>
+        <div class="prompt-text">
+          "No IR JSON que está em [caminho], adicione um slide de <code>competitor_map</code> comparando os concorrentes locais vs digitais para [CLIENTE]. Os concorrentes locais são A, B e C. Os digitais são X e Y. A oportunidade é: nenhum deles tem atendimento especializado em [nicho]. Atualize o IR e regere o HTML."
+        </div>
+        <div class="prompt-result">
+          <strong>✓ Bom porque:</strong> referencia o arquivo existente, diz o layout e dá o conteúdo completo
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-label">QA de um deck já gerado</div>
+        <div class="prompt-text">
+          "Faça QA do HTML em [caminho] usando o checklist de <code>06-qa-antipadroes.md</code>. Me diga: algum slide tem espaço morto? Há texto pequeno demais? Algum drawflow está usando flex em vez de posicionamento absoluto? Existe cor fora da paleta de marca?"
+        </div>
+        <div class="prompt-result">
+          <strong>✓ Bom porque:</strong> referencia o arquivo de QA, faz perguntas específicas e verificáveis
+        </div>
+      </div>
+
+      <div class="callout amber" style="margin-top: 8px;">
+        <div class="callout-icon">✗</div>
+        <div class="callout-body"><strong>Prompts fracos:</strong> "Crie uma apresentação bonita para meu cliente" — sem acento, sem estrutura, sem arquivo fonte. O agente vai inventar. Sempre dê cliente, acento, objetivo e os blocos esperados.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN SYSTEM -->
+  <section class="section" id="design">
+    <div class="container">
+      <div class="sec-eyebrow">Estética</div>
+      <h2 class="sec-title">Design System X9</h2>
+      <p class="sec-sub">Paleta base fixa. O acento varia por cliente. Tudo mais é consistente.</p>
+
+      <div style="margin-bottom:32px;">
+        <a href="design-analysis .html" target="_blank"
+           style="display:inline-flex;align-items:center;gap:10px;padding:12px 20px;background:#151515;border:1px solid #2a2a2a;border-radius:8px;text-decoration:none;color:#fff;font-size:14px;font-weight:600;transition:border-color .2s;"
+           onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='#2a2a2a'">
+          <span style="font-size:18px;">🎨</span>
+          <span>Abrir design-analysis.html — Manual de Direção de Arte</span>
+          <span style="font-size:11px;color:#666;margin-left:4px;">↗</span>
+        </a>
+      </div>
+
+      <div class="grid-2" style="gap:48px;">
+        <div>
+          <h3 style="font-size:16px;font-weight:700;margin-bottom:20px;">Paleta Base</h3>
+          <div class="swatch-grid">
+            <div class="swatch"><div class="swatch-color" style="background:#050505;border-color:#333;"></div><div class="swatch-hex">#050505</div><div class="swatch-name">bg</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#0d0d0d;"></div><div class="swatch-hex">#0d0d0d</div><div class="swatch-name">bg_alt</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#151515;"></div><div class="swatch-hex">#151515</div><div class="swatch-name">card</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#343434;"></div><div class="swatch-hex">#343434</div><div class="swatch-name">line</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#ffffff;border-color:#333;"></div><div class="swatch-hex">#ffffff</div><div class="swatch-name">text</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#c9c9c9;"></div><div class="swatch-hex">#c9c9c9</div><div class="swatch-name">muted</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#8d8d8d;"></div><div class="swatch-hex">#8d8d8d</div><div class="swatch-name">subtle</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#ff3333;"></div><div class="swatch-hex">#ff3333</div><div class="swatch-name">accent ⭐</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#21c26b;"></div><div class="swatch-hex">#21c26b</div><div class="swatch-name">success</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#ffb020;"></div><div class="swatch-hex">#ffb020</div><div class="swatch-name">warning</div></div>
+            <div class="swatch"><div class="swatch-color" style="background:#3b82f6;"></div><div class="swatch-hex">#3b82f6</div><div class="swatch-name">info</div></div>
+          </div>
+          <div class="callout" style="margin-top:24px;">
+            <div class="callout-icon">⭐</div>
+            <div class="callout-body">O <strong>accent</strong> é a única cor que muda por cliente. Vermelho é o padrão V4. Sempre especifique o HEX exato no IR: <code>"accent": "#CC0000"</code></div>
+          </div>
+          <div style="margin-top:16px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);">
+            <div style="font-size:11px;color:var(--subtle);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">Regra 60/30/10</div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted);">
+              <div><strong style="color:var(--text)">60%</strong> — fundo escuro (#050505, #0d0d0d, #131313)</div>
+              <div><strong style="color:var(--text)">30%</strong> — texto em cinza (#fff, #e0e0e0, #ccc, #9ca3af)</div>
+              <div><strong style="color:var(--accent)">10%</strong> — acento do cliente (bordas, eyebrows, ícones, tags)</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;padding:12px 16px;background:rgba(229,57,53,.07);border:1px solid rgba(229,57,53,.25);border-radius:var(--r-sm);font-size:12px;color:var(--muted);">
+            <strong style="color:var(--accent)">Tint de card obrigatório:</strong> nunca usar <code>#1e1e1e</code> puro como fundo. O renderer calcula <code>cardTint = mixHex(CARD, accent, 0.12)</code> — card cinza puro sem acento = slide morto.
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:16px;font-weight:700;margin-bottom:20px;">Tipografia</h3>
+          <table>
+            <thead><tr><th>Papel</th><th>Tamanho HTML</th><th>Peso</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Hero / Capa</strong></td><td>64–78px</td><td>800–900</td></tr>
+              <tr><td><strong>Título de slide</strong></td><td>34–46px</td><td>750–800</td></tr>
+              <tr><td>Subtítulo</td><td>18–23px</td><td>400</td></tr>
+              <tr><td>Card title</td><td>17–22px</td><td>700</td></tr>
+              <tr><td>Body</td><td>15–18px</td><td>400</td></tr>
+              <tr><td>Label / Eyebrow</td><td>12–14px</td><td>700–800</td></tr>
+              <tr><td><strong>Métrica</strong></td><td>42–76px</td><td>800–900</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:12px;padding:12px 16px;background:rgba(255,176,32,.06);border:1px solid rgba(255,176,32,.25);border-radius:var(--r-sm);font-size:12px;color:var(--muted);">
+            <strong style="color:var(--amber)">Regra dos 16pt (projeção):</strong> corpo lido pelo público nunca abaixo de 16pt. Labels de tabela ≥ 14pt. Métricas de destaque ≥ 36pt. Fontes 9–12pt só existem em micro-dados — nunca em conteúdo principal.
+          </div>
+          <div style="margin-top:20px;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);">
+            <div style="font-size:11px;color:var(--subtle);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Fonte preferencial</div>
+            <div style="font-size:20px;font-weight:800;">Montserrat</div>
+            <div style="font-size:12px;color:var(--subtle);margin-top:4px;">Fallback: Arial, Helvetica, sans-serif</div>
+          </div>
+          <div style="margin-top:16px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);">
+            <div style="font-size:11px;color:var(--subtle);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Canvas</div>
+            <div style="font-size:14px;color:var(--muted);">HTML: <strong style="color:var(--text)">1280 × 720 px</strong></div>
+            <div style="font-size:14px;color:var(--muted);">Google Slides: <strong style="color:var(--text)">Widescreen 16:9</strong></div>
+            <div style="font-size:14px;color:var(--muted);">PPTX: <strong style="color:var(--text)">13.33" × 7.5"</strong></div>
+            <div style="font-size:14px;color:var(--muted);">Margem segura: <strong style="color:var(--text)">56–72 px</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REGRAS DE FIDELIDADE HTML → PPTX -->
+      <div class="divider"></div>
+      <h3 style="font-size:20px;font-weight:700;margin-bottom:20px;">Tradução HTML → PPTX <span class="badge badge-new">Novo</span></h3>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:24px;">Efeitos de browser precisam ser traduzidos para shapes nativos — nunca screenshot.</p>
+      <table>
+        <thead><tr><th>Efeito no HTML</th><th>Tradução no PPTX/Google Slides</th></tr></thead>
+        <tbody>
+          <tr><td><code>radial-gradient</code></td><td>Elipses grandes com alta transparência</td></tr>
+          <tr><td><code>linear-gradient</code></td><td>Retângulos sobrepostos, faixas ou planos rotacionados</td></tr>
+          <tr><td><code>color-mix()</code></td><td>Cor intermediária calculada em HEX</td></tr>
+          <tr><td>Glow / blur</td><td>Elipses ou shapes translúcidos atrás do conteúdo</td></tr>
+          <tr><td>Card com tint</td><td>Fundo sólido calculado a partir de <code>card + accent</code></td></tr>
+          <tr><td>Topbar animada</td><td>Duas faixas: acento sólido + brilho translúcido</td></tr>
+          <tr><td>Sombra de card</td><td>Shape escuro deslocado atrás do card</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- BOAS PRÁTICAS -->
+  <section class="section" id="boas-praticas">
+    <div class="container">
+      <div class="sec-eyebrow">Disciplina</div>
+      <h2 class="sec-title">Boas Práticas & Antipadrões</h2>
+      <p class="sec-sub">O que separa um deck executivo de um slide feito por IA sem critério.</p>
+
+      <div class="grid-2" style="gap:48px;margin-bottom:48px;">
+        <div>
+          <h3 style="font-size:16px;font-weight:700;margin-bottom:20px;color:var(--green);">✓ Faça sempre</h3>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="callout green" style="margin:0;padding:12px 16px;">
+              <div class="callout-icon" style="font-size:14px;">✓</div>
+              <div class="callout-body" style="font-size:13px;"><strong>Gere o IR primeiro.</strong> Nunca saia direto para HTML sem o contrato estruturado.</div>
+            </div>
+            <div class="callout green" style="margin:0;padding:12px 16px;">
+              <div class="callout-icon" style="font-size:14px;">✓</div>
+              <div class="callout-body" style="font-size:13px;"><strong>Use acentos corretos em PT-BR.</strong> "MÍDIA", "DISTRIBUIÇÃO", "intenção" — nunca sem acento.</div>
+            </div>
+            <div class="callout green" style="margin:0;padding:12px 16px;">
+              <div class="callout-icon" style="font-size:14px;">✓</div>
+              <div class="callout-body" style="font-size:13px;"><strong>Todo slide tem uma função narrativa.</strong> Abrir, contextualizar, provar, comparar, decidir ou fechar.</div>
+            </div>
+            <div class="callout green" style="margin:0;padding:12px 16px;">
+              <div class="callout-icon" style="font-size:14px;">✓</div>
+              <div class="callout-body" style="font-size:13px;"><strong>Paridade HTML → PPTX.</strong> Se o HTML tem drawflow, o PPTX precisa ter drawflow nativo — sem fallback de título vazio.</div>
+            </div>
+            <div class="callout green" style="margin:0;padding:12px 16px;">
+              <div class="callout-icon" style="font-size:14px;">✓</div>
+              <div class="callout-body" style="font-size:13px;"><strong>Rode QA antes de entregar.</strong> Legibilidade, alinhamento, contraste, overflow e editabilidade.</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:16px;font-weight:700;margin-bottom:20px;color:var(--accent);">✗ Antipadrões</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="anti-card">
+              <div class="anti-icon">🖼️</div>
+              <div>
+                <div class="anti-name">Slide inteiro como imagem</div>
+                <div class="anti-why">Não é editável. Reprova direto no critério de entrega.</div>
+              </div>
+            </div>
+            <div class="anti-card">
+              <div class="anti-icon">📋</div>
+              <div>
+                <div class="anti-name">Bullet list longa como corpo</div>
+                <div class="anti-why">Parece documento colado. Transforme em cards, colunas ou etapas.</div>
+              </div>
+            </div>
+            <div class="anti-card">
+              <div class="anti-icon">⬜</div>
+              <div>
+                <div class="anti-name">Espaço morto excessivo</div>
+                <div class="anti-why">Parece slide incompleto. Aumente hierarquia ou reorganize o grid.</div>
+              </div>
+            </div>
+            <div class="anti-card">
+              <div class="anti-icon">🔤</div>
+              <div>
+                <div class="anti-name">Texto pequeno demais</div>
+                <div class="anti-why">Não funciona em reunião. Mínimo 13px para corpo de card.</div>
+              </div>
+            </div>
+            <div class="anti-card">
+              <div class="anti-icon">⬜</div>
+              <div>
+                <div class="anti-name">Fundo branco genérico</div>
+                <div class="anti-why">Perde a estética dark premium. Sempre fundo escuro (#050505 a #151515).</div>
+              </div>
+            </div>
+            <div class="anti-card">
+              <div class="anti-icon">📦</div>
+              <div>
+                <div class="anti-name">Drawflow em flex layout</div>
+                <div class="anti-why">Sem direção espacial. Usar position:absolute + CSS custom properties.</div>
+              </div>
+            </div>
+            <div class="anti-card">
+              <div class="anti-icon">🎨</div>
+              <div>
+                <div class="anti-name">Cores fora da paleta</div>
+                <div class="anti-why">Quebra o padrão executivo. Só acento, success, warning e info além da paleta base.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DENSIDADE -->
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;">Densidade Ideal por Slide</h3>
+      <div class="grid-4">
+        <div class="card card-green">
+          <span class="card-label green">Slide Leve</span>
+          <h3>1 ideia central</h3>
+          <p>+ 2 a 3 apoios. Bom para teses, capas e big statements.</p>
+        </div>
+        <div class="card card-blue">
+          <span class="card-label blue">Slide Médio</span>
+          <h3>3 a 5 cards</h3>
+          <p>Diagnósticos, pilares e estratégias. O mais comum.</p>
+        </div>
+        <div class="card card-amber">
+          <span class="card-label amber">Slide Denso</span>
+          <h3>6 a 9 blocos</h3>
+          <p>Aceitável com grid claro. Máx. 90 palavras visíveis.</p>
+        </div>
+        <div class="card card-accent">
+          <span class="card-label">Slide Técnico</span>
+          <h3>Fluxo ou matriz</h3>
+          <p>Labels curtos, sem limite de blocos se houver estrutura visual.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QA -->
+  <section class="section" id="qa">
+    <div class="container">
+      <div class="sec-eyebrow">Qualidade</div>
+      <h2 class="sec-title">Checklist de QA</h2>
+      <p class="sec-sub">Rode antes de qualquer entrega. Se falhar em um item, corrija antes de mostrar ao cliente.</p>
+
+      <div class="grid-2" style="gap:32px;">
+        <div>
+          <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;">Visual & Estrutura</h3>
+          <table>
+            <thead><tr><th>Item</th><th>Critério</th></tr></thead>
+            <tbody>
+              <tr><td><span class="check">✓</span> <strong>Narrativa</strong></td><td>Cada slide tem uma mensagem principal</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Ritmo</strong></td><td>Alternância entre denso, leve, seção e fechamento</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Layout</strong></td><td>Todos os slides usam layouts catalogados</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Densidade</strong></td><td>Sem vazio excessivo nem texto espremido</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Legibilidade</strong></td><td>Corpo principal ≥ 13px em cards</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Contraste</strong></td><td>Texto claro sobre fundo escuro</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Alinhamento</strong></td><td>Cards e títulos seguem grid</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Consistência</strong></td><td>Paleta, raio, bordas e labels seguem padrão</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;">Editabilidade & Texto</h3>
+          <table>
+            <thead><tr><th>Item</th><th>Critério</th></tr></thead>
+            <tbody>
+              <tr><td><span class="check">✓</span> <strong>Editável</strong></td><td>Conteúdo relevante é elemento nativo (não screenshot)</td></tr>
+              <tr><td><span class="check">✓</span> <strong>PT-BR</strong></td><td>Acentos e cedilha corretos em todo texto</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Encoding</strong></td><td>Sem sinais como Ã, â€", MÃ­dia no output</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Métricas</strong></td><td>Valores compactos: ≤ R$45, ≥30, ≤5min</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Títulos</strong></td><td>Não ocupam mais de 2 linhas</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Paridade</strong></td><td>PPTX tem mesma estrutura visual do HTML</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Drawflow</strong></td><td>Nodes com position:absolute, não flex list</td></tr>
+              <tr><td><span class="check">✓</span> <strong>Acento</strong></td><td>Cor de marca correta em todo o deck</td></tr>
+            </tbody>
+          </table>
+          <div class="callout" style="margin-top:20px;">
+            <div class="callout-icon">📋</div>
+            <div class="callout-body" style="font-size:13px;">Referência completa: <code>references/06-qa-antipadroes.md</code></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IR JSON EXAMPLE -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-eyebrow">Referência</div>
+      <h2 class="sec-title">Estrutura do IR JSON</h2>
+      <p class="sec-sub">O contrato mínimo que o agente precisa gerar antes de qualquer renderer rodar.</p>
+
+      <div class="code-label">deck.ir.json — estrutura mínima</div>
+      <pre>{
+  <span class="prop">"deck"</span>: {
+    <span class="prop">"title"</span>: <span class="str">"Planejamento Digital 4ª Semana"</span>,
+    <span class="prop">"client"</span>: <span class="str">"Nome do Cliente"</span>,
+    <span class="prop">"theme"</span>: <span class="str">"genspark_dark"</span>,        <span class="cmt">// genspark_dark | v4_dark | custom_dark</span>
+    <span class="prop">"week"</span>: <span class="str">"4ª Semana"</span>,
+    <span class="prop">"accent"</span>: <span class="str">"#CC0000"</span>,              <span class="cmt">// HEX exato da marca do cliente</span>
+    <span class="prop">"font"</span>: <span class="str">"Montserrat"</span>,
+    <span class="prop">"output"</span>: { <span class="prop">"html"</span>: <span class="kw">true</span>, <span class="prop">"pptx"</span>: <span class="kw">true</span> }
+  },
+  <span class="prop">"slides"</span>: [
+    {
+      <span class="prop">"id"</span>: <span class="str">"s01"</span>,
+      <span class="prop">"layout"</span>: <span class="str">"cinematic_cover"</span>,    <span class="cmt">// um dos 28 layouts catalogados</span>
+      <span class="prop">"content"</span>: {
+        <span class="prop">"eyebrow"</span>: <span class="str">"4ª SEMANA · GROWTH PLAN"</span>,
+        <span class="prop">"title"</span>: <span class="str">"Da Invisibilidade ao<br>Domínio Digital"</span>,
+        <span class="prop">"subtitle"</span>: <span class="str">"Estratégia de aquisição e CRM para 2026"</span>,
+        <span class="prop">"client"</span>: <span class="str">"Nome do Cliente"</span>,
+        <span class="prop">"footer"</span>: <span class="str">"Maio 2026 · V4 Company"</span>
+      }
+    },
+    {
+      <span class="prop">"id"</span>: <span class="str">"s02"</span>,
+      <span class="prop">"layout"</span>: <span class="str">"drawflow"</span>,
+      <span class="prop">"content"</span>: {
+        <span class="prop">"title"</span>: <span class="str">"Funil de Aquisição Digital"</span>,
+        <span class="prop">"subtitle"</span>: <span class="str">"Da mídia ao WhatsApp qualificado"</span>,
+        <span class="prop">"variant"</span>: <span class="str">"acquisition"</span>,      <span class="cmt">// acquisition | pipeline | default</span>
+        <span class="prop">"nodes"</span>: [
+          { <span class="prop">"id"</span>: <span class="str">"ads"</span>, <span class="prop">"x"</span>: <span class="num">38</span>, <span class="prop">"y"</span>: <span class="num">0</span>, <span class="prop">"title"</span>: <span class="str">"Tráfego Pago"</span>, <span class="prop">"body"</span>: <span class="str">"Meta + Google"</span> },
+          { <span class="prop">"id"</span>: <span class="str">"yes"</span>, <span class="prop">"x"</span>: <span class="num">6</span>, <span class="prop">"y"</span>: <span class="num">75</span>, <span class="prop">"title"</span>: <span class="str">"Triagem"</span>, <span class="prop">"body"</span>: <span class="str">"Qualifica e agenda"</span>, <span class="prop">"type"</span>: <span class="str">"sim"</span> },
+          { <span class="prop">"id"</span>: <span class="str">"no"</span>,  <span class="prop">"x"</span>: <span class="num">70</span>, <span class="prop">"y"</span>: <span class="num">75</span>, <span class="prop">"title"</span>: <span class="str">"Nurturing"</span>, <span class="prop">"body"</span>: <span class="str">"D3 / D5 / D7"</span>, <span class="prop">"type"</span>: <span class="str">"nao"</span> }
+        ],
+        <span class="prop">"decision"</span>: <span class="str">"O fluxo mostra como mídia vira consulta agendada."</span>
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <div style="margin-bottom:8px;">
+      <strong>X9 Skill</strong> · v2.0 · 14EV · @eder.vasconcelos
+    </div>
+    <div style="color:var(--subtle);">
+      Skill de apresentações estratégicas no padrão Genspark/V4 para V4 Company EE.
+      Última atualização: maio 2026.
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  function switchTab(btn, id) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+</script><script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+</script>
+
+</body>
+</html>

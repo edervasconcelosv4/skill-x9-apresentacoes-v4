@@ -1,0 +1,163 @@
+{
+  "deck": {
+    "title": "Teste 02 - Padrão Híbrido Genspark/V4",
+    "client": "FibranetBR",
+    "theme": "genspark_dark",
+    "week": "Semana 4",
+    "accent": "#ff2a2a",
+    "font": "Montserrat",
+    "output": {
+      "html": true,
+      "google_slides": true,
+      "pptx": true
+    }
+  },
+  "slides": [
+    {
+      "id": "s01",
+      "layout": "cinematic_cover",
+      "content": {
+        "eyebrow": "FIBRANETBR · SEMANA 4",
+        "title": "GROWTH PLAN",
+        "subtitle": "Um plano de aceleração para transformar cobertura, confiança e atendimento em crescimento previsível.",
+        "client": "Planejamento Estratégico",
+        "footer": "V4 Company"
+      },
+      "notes": "Capa com metáfora de velocidade e alto contraste. Conteúdo principal continua editável."
+    },
+    {
+      "id": "s02",
+      "layout": "evidence_diagnosis",
+      "content": {
+        "title": "O gargalo não está na oferta. Está na clareza do caminho.",
+        "subtitle": "A base operacional é forte, mas o lead ainda encontra fricção entre interesse, atendimento e fechamento.",
+        "finding": "A operação precisa vender velocidade antes de vender plano.",
+        "bullets": [
+          "O cliente quer resolver instabilidade e não comparar megas.",
+          "A mensagem comercial ainda depende muito de resposta manual.",
+          "Sem régua de CRM, leads quentes esfriam antes da decisão.",
+          "Oportunidade: transformar atendimento rápido em argumento de conversão."
+        ],
+        "evidence": [
+          {
+            "tag": "Lead quente",
+            "text": "Tenho fibra aí no meu bairro?",
+            "caption": "Pergunta de intenção alta que precisa virar triagem imediata."
+          },
+          {
+            "tag": "Objeção",
+            "text": "Mas meu provedor atual cai toda hora.",
+            "caption": "Sinal de dor. A resposta deve vender estabilidade e suporte."
+          },
+          {
+            "tag": "Fechamento",
+            "text": "Consigo instalar ainda essa semana?",
+            "caption": "Velocidade de ativação vira diferencial comercial."
+          }
+        ]
+      }
+    },
+    {
+      "id": "s03",
+      "layout": "pipeline_split_outcome",
+      "content": {
+        "title": "Pipeline comercial: do interesse à ativação",
+        "subtitle": "O fluxo precisa separar curiosidade, intenção e prontidão para instalação.",
+        "steps": [
+          {
+            "title": "Captação",
+            "body": "Anúncios por bairro, criativos de dor e promessa clara de estabilidade."
+          },
+          {
+            "title": "Triagem",
+            "body": "Checagem de cobertura, urgência e motivo de troca em até 5 minutos."
+          },
+          {
+            "title": "Oferta",
+            "body": "Plano recomendado por perfil, com prova local e argumento de instalação."
+          },
+          {
+            "title": "Ativação",
+            "body": "Agendamento, confirmação e onboarding para reduzir arrependimento."
+          }
+        ],
+        "outcomes": [
+          {
+            "title": "Ganho",
+            "body": "Lead com cobertura, dor ativa e instalação agendada."
+          },
+          {
+            "title": "Perda / Nutrição",
+            "body": "Sem cobertura, sem urgência ou objeção não tratada."
+          }
+        ]
+      }
+    },
+    {
+      "id": "s04",
+      "layout": "matrix_4x_highlight",
+      "content": {
+        "title": "Matriz de mensagem: vender o que o cliente realmente compra",
+        "subtitle": "A comunicação deve sair de atributos técnicos e entrar em benefício percebido.",
+        "columns": [
+          {
+            "kicker": "C · Característica",
+            "title": "Fibra + cobertura local",
+            "body": "Prova técnica e presença regional para reduzir insegurança inicial."
+          },
+          {
+            "kicker": "V · Vantagem",
+            "title": "Atendimento próximo",
+            "body": "Menos burocracia, resposta mais rápida e sensação de suporte real."
+          },
+          {
+            "kicker": "B · Benefício",
+            "title": "Internet sem interrupção",
+            "body": "Home office, streaming e rotina da casa sem travar no momento crítico."
+          },
+          {
+            "kicker": "A · Ação",
+            "title": "Verifique seu bairro agora",
+            "body": "CTA direto para cobertura, WhatsApp e agendamento de instalação."
+          }
+        ],
+        "decision": "Direção criativa: parar de competir por megas e começar a competir por confiança, estabilidade e velocidade de instalação."
+      }
+    },
+    {
+      "id": "s05",
+      "layout": "executive_action_grid",
+      "content": {
+        "title": "Próximos passos imediatos",
+        "subtitle": "A semana seguinte deve validar o motor de aquisição com controle comercial.",
+        "actions": [
+          {
+            "title": "Mapa de bairros",
+            "body": "Separar áreas prioritárias por cobertura, demanda e ticket."
+          },
+          {
+            "title": "Criativos de dor",
+            "body": "Testar instabilidade, atendimento e instalação rápida."
+          },
+          {
+            "title": "Régua WhatsApp",
+            "body": "Padronizar triagem, objeções e follow-up."
+          },
+          {
+            "title": "CRM mínimo",
+            "body": "Status por lead: novo, qualificado, agendado, perdido."
+          },
+          {
+            "title": "Prova local",
+            "body": "Usar reputação, nota e depoimentos por região."
+          },
+          {
+            "title": "Painel semanal",
+            "body": "Medir CPL, taxa de resposta, agendamento e ativação."
+          }
+        ],
+        "commitment": "Meta do teste: transformar atenção em agendamento, e agendamento em ativação rastreável."
+      }
+    }
+  ]
+}

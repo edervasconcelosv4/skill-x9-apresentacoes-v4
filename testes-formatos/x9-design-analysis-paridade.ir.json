@@ -1,0 +1,155 @@
+{
+  "deck": {
+    "title": "Teste de Paridade Visual",
+    "client": "X9 Skill",
+    "theme": "v4_dark",
+    "week": "QA",
+    "accent": "#f05a1a",
+    "font": "Montserrat",
+    "output": {
+      "html": true,
+      "pptx": true,
+      "google_slides": false
+    }
+  },
+  "slides": [
+    {
+      "id": "s01",
+      "layout": "section",
+      "content": {
+        "section_number": "01",
+        "title": "Padroes comerciais agora entram no renderer",
+        "subtitle": "O PPTX deve preservar composicao, cards, funis, nodes e dashboards sem cair em slide vazio."
+      }
+    },
+    {
+      "id": "s02",
+      "layout": "market_scope_dashboard",
+      "content": {
+        "title": "Tamanho de oportunidade antes da verba",
+        "subtitle": "O cliente entende por que existe mercado antes de discutir campanha.",
+        "scopes": [
+          { "title": "TAM", "value": "18k", "body": "Pessoas com demanda potencial na regiao ampliada." },
+          { "title": "SAM", "value": "7.2k", "body": "Publico alcancavel com midia e conteudo local." },
+          { "title": "SOM", "value": "420", "body": "Meta realista de leads qualificados no ciclo inicial." }
+        ],
+        "decision": "Comecar pelo mercado evita que a verba pareca chute."
+      }
+    },
+    {
+      "id": "s03",
+      "layout": "competitor_map",
+      "content": {
+        "title": "Lacuna competitiva que vira posicionamento",
+        "subtitle": "Comparacao simples entre presenca local e agressividade digital.",
+        "columns": [
+          {
+            "title": "Locais",
+            "items": ["Tem reputacao offline", "Pouca clareza de oferta", "Baixa captura digital"]
+          },
+          {
+            "title": "Digitais",
+            "items": ["Compram atencao", "Usam promessa direta", "Dominam busca e remarketing"]
+          }
+        ],
+        "opportunity": "A oportunidade e ocupar o meio: confianca local com maquina digital."
+      }
+    },
+    {
+      "id": "s04",
+      "layout": "media_budget_compare",
+      "content": {
+        "title": "Duas velocidades de investimento",
+        "subtitle": "O mesmo sistema muda de ritmo quando a verba sobe.",
+        "scenarios": [
+          {
+            "label": "Cenario de entrada",
+            "total": "R$ 3k",
+            "role": "Validar mensagens e gerar aprendizado sem forcar escala.",
+            "channels": [
+              { "name": "Meta Ads", "amount": "R$ 1.800", "percent": 60, "purpose": "Demanda latente" },
+              { "name": "Google Ads", "amount": "R$ 1.200", "percent": 40, "purpose": "Intencao ativa" }
+            ],
+            "bullets": ["Menos volume", "Mais controle", "Boa leitura inicial"]
+          },
+          {
+            "label": "Cenario recomendado",
+            "total": "R$ 6k",
+            "role": "Ganhar volume, testar criativos e sustentar remarketing.",
+            "featured": true,
+            "channels": [
+              { "name": "Meta Ads", "amount": "R$ 3.300", "percent": 55, "purpose": "Topo e prova" },
+              { "name": "Google Ads", "amount": "R$ 2.700", "percent": 45, "purpose": "Captura de demanda" }
+            ],
+            "bullets": ["Mais aprendizado", "Mais criativos", "Mais previsibilidade"]
+          }
+        ],
+        "decision": "Para escala comercial, 6k entrega velocidade que 3k nao sustenta."
+      }
+    },
+    {
+      "id": "s05",
+      "layout": "drawflow",
+      "content": {
+        "title": "Jornada nativa desenhada para o cliente entender",
+        "subtitle": "Nodes e setas precisam ser editaveis no Google Slides.",
+        "nodes": [
+          { "id": "ads", "x": 6, "y": 4, "title": "Trafego", "body": "Meta + Google", "type": "Meta" },
+          { "id": "lp", "x": 36, "y": 4, "title": "Landing Page", "body": "Promessa + formulario" },
+          { "id": "wa", "x": 66, "y": 4, "title": "WhatsApp", "body": "Resposta em ate 5 min", "type": "WhatsApp" },
+          { "id": "triagem", "x": 22, "y": 50, "title": "Triagem", "body": "Qualifica e agenda" },
+          { "id": "perda", "x": 64, "y": 50, "title": "Nutricao", "body": "D3, D5 e D7" }
+        ],
+        "edges": [
+          { "from": "ads", "to": "lp" },
+          { "from": "lp", "to": "wa" },
+          { "from": "wa", "to": "triagem", "label": "sim" },
+          { "from": "wa", "to": "perda", "label": "nao" }
+        ],
+        "decision": "Se o drawflow nao estiver nitido, o cliente nao compra a operacao."
+      }
+    },
+    {
+      "id": "s06",
+      "layout": "roi_dashboard",
+      "content": {
+        "title": "ROI vira painel, nao paragrafo",
+        "subtitle": "Verba, CPL, contratos e receita precisam conversar visualmente.",
+        "metrics": [
+          { "label": "Investimento", "value": "R$ 6k" },
+          { "label": "CPL alvo", "value": "R$ 45" },
+          { "label": "Contratos", "value": "8-12" },
+          { "label": "Receita potencial", "value": "R$ 48k+" }
+        ],
+        "bars": [
+          { "title": "Aprendizado de criativos", "percent": 72, "value": "alto" },
+          { "title": "Captura de intencao", "percent": 64, "value": "medio/alto" },
+          { "title": "Remarketing", "percent": 45, "value": "em construcao" }
+        ],
+        "decision": "O investimento faz sentido quando a maquina fecha o ciclo ate contrato."
+      }
+    },
+    {
+      "id": "s07",
+      "layout": "proposal_scope_45d",
+      "content": {
+        "title": "Escopo vira execucao em 45 dias",
+        "subtitle": "A proposta precisa terminar em plano claro, nao em inspiracao.",
+        "phases": [
+          { "title": "D0-D15", "body": "Setup, tracking, criativos e CRM" },
+          { "title": "D16-D30", "body": "Campanhas, rotina e primeiras leituras" },
+          { "title": "D31-D45", "body": "Otimizacao, escala e proxima decisao" }
+        ],
+        "deliverables": [
+          { "title": "Landing page", "body": "Oferta e formulario" },
+          { "title": "Campanhas", "body": "Meta + Google" },
+          { "title": "Criativos", "body": "Ganchos e provas" },
+          { "title": "CRM", "body": "Tags e etapas" },
+          { "title": "Rotina", "body": "SLA e follow-up" },
+          { "title": "Dashboard", "body": "Leads, CPL e vendas" }
+        ],
+        "decision": "Apos 45 dias, decidir escala com dados e nao com sensacao."
+      }
+    }
+  ]
+}

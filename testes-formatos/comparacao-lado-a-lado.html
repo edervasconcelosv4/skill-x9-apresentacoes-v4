@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comparacao X9 vivid vs referencias</title>
+  <style>
+    :root {
+      --bg: #080808;
+      --panel: #121212;
+      --line: #2b2b2b;
+      --text: #f4f4f4;
+      --muted: #a9a9a9;
+      --accent: #ff3333;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 85% 5%, rgba(255, 51, 51, 0.18), transparent 30%),
+        linear-gradient(135deg, #050505, #101010 55%, #050505);
+      color: var(--text);
+      font-family: Montserrat, Arial, Helvetica, sans-serif;
+    }
+    main {
+      width: min(1500px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 40px 0 56px;
+    }
+    header {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      max-width: 980px;
+      font-size: clamp(36px, 5vw, 72px);
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+    p {
+      margin: 0;
+      max-width: 980px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(18, 18, 18, 0.86);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+    }
+    .card strong {
+      display: block;
+      padding: 16px 18px 6px;
+      color: var(--text);
+      font-size: 17px;
+    }
+    .card span {
+      display: block;
+      padding: 0 18px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .wide {
+      grid-column: span 3;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .note {
+      margin-top: 26px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--accent);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+    @media (max-width: 1000px) {
+      .grid, .wide { grid-template-columns: 1fr; }
+      .wide { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">X9 / comparacao visual</div>
+      <h1>Referencias vs vivid</h1>
+      <p>Comparacao entre os dois decks de referencia enviados e a versao X9 vivid importada para Google Slides.</p>
+    </header>
+
+    <section class="grid" aria-label="Comparacao de capas">
+      <article class="card">
+        <strong>FibranetBR referencia</strong>
+        <span>Mais cinematografico: imagem, luz vermelha e metafora visual.</span>
+        <img src="comparacao-thumbnails/fibranet_cover.png" alt="Capa FibranetBR referencia" />
+      </article>
+      <article class="card">
+        <strong>OFOS referencia</strong>
+        <span>Mais corporativo V4: diagonais fortes e grafismo premium.</span>
+        <img src="comparacao-thumbnails/ofos_cover.png" alt="Capa OFOS referencia" />
+      </article>
+      <article class="card">
+        <strong>X9 vivid PPTX/Slides</strong>
+        <span>Mais editavel e limpo, mas ainda menos atmosferico.</span>
+        <img src="comparacao-thumbnails/vivid_cover.png" alt="Capa X9 vivid" />
+      </article>
+
+      <div class="wide" aria-label="Comparacao de slides internos">
+        <article class="card">
+          <strong>FibranetBR contexto</strong>
+          <span>Cards com iconografia, contraste e fundo com profundidade.</span>
+          <img src="comparacao-thumbnails/fibranet_p2.png" alt="Slide interno FibranetBR" />
+        </article>
+        <article class="card">
+          <strong>OFOS cards</strong>
+          <span>Cards horizontais, icones e ritmo editorial mais maduro.</span>
+          <img src="comparacao-thumbnails/ofos_p4.png" alt="Slide interno OFOS" />
+        </article>
+        <article class="card">
+          <strong>X9 vivid contexto</strong>
+          <span>Estrutura correta, mas precisa de icones, densidade e micro-hierarquia.</span>
+          <img src="comparacao-thumbnails/vivid_p2.png" alt="Slide interno X9 vivid" />
+        </article>
+      </div>
+    </section>
+
+    <p class="note">Minha leitura: o X9 vivid acertou o caminho tecnico da editabilidade. Agora precisa ganhar direcao de arte: cena visual, textura, grafismos, icones e layouts menos literais.</p>
+  </main>
+</body>
+</html>

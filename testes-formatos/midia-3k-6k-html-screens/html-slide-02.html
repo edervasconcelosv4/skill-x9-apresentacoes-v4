@@ -1,0 +1,173 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>
+    :root { --accent: #00d6b4; --bg: #050505; --card: #151515; --line: #343434; --text: #fff; --muted: #c9c9c9; --subtle: #8d8d8d; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #111; color: var(--text); font-family: Montserrat, Arial, Helvetica, sans-serif; }
+    .deck { display: grid; gap: 32px; padding: 32px; justify-content: center; }
+    .slide { width: 1280px; height: 720px; position: relative; overflow: hidden; background:
+      radial-gradient(circle at 85% 15%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 28%),
+      linear-gradient(135deg, #050505 0%, #101010 58%, #050505 100%); }
+    .safe { position: absolute; inset: 64px; }
+    .topbar { position: absolute; left: 0; top: 0; width: 100%; height: 8px; background: var(--accent); }
+    .eyebrow { margin: 0 0 12px; color: var(--accent); font-size: 14px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+    h1, h2, h3, p { margin: 0; }
+    h1 { max-width: 920px; font-size: 72px; line-height: 0.96; font-weight: 850; }
+    h2 { max-width: 980px; font-size: 42px; line-height: 1.05; font-weight: 800; }
+    h3 { font-size: 21px; line-height: 1.12; font-weight: 800; }
+    .subtitle, .slide-header p:not(.eyebrow) { max-width: 900px; color: var(--muted); font-size: 20px; line-height: 1.45; margin-top: 14px; }
+    .cover-inner { display: flex; flex-direction: column; justify-content: center; }
+    .cover h1 { text-transform: uppercase; }
+    .cinematic-cover { background:
+      radial-gradient(circle at 78% 40%, color-mix(in srgb, var(--accent) 46%, transparent), transparent 19%),
+      linear-gradient(118deg, #020202 0%, #080808 42%, color-mix(in srgb, var(--accent) 32%, #090909) 100%); }
+    .speed-field { position: absolute; inset: -10%; opacity: .9; background:
+      repeating-linear-gradient(116deg, transparent 0 36px, rgba(255,255,255,.08) 37px 39px, transparent 40px 84px),
+      linear-gradient(90deg, rgba(0,0,0,.9), transparent 55%, rgba(255,255,255,.08)); transform: skewX(-12deg); }
+    .cinematic-inner { display: flex; flex-direction: column; justify-content: center; text-shadow: 0 18px 46px rgba(0,0,0,.65); }
+    .cinematic-cover h1 { max-width: 1040px; font-size: 86px; letter-spacing: -3px; text-transform: uppercase; }
+    .cover-footer { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; color: var(--subtle); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .slide-header { margin-bottom: 34px; }
+    .slide-header.compact { margin-bottom: 24px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; height: 420px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card, .metric { background: color-mix(in srgb, var(--card) 88%, var(--accent)); border: 1px solid var(--line); border-top: 5px solid var(--accent); border-radius: 8px; padding: 24px; }
+    .card ul { margin: 22px 0 0; padding: 0; list-style: none; display: grid; gap: 16px; }
+    .card li { color: var(--muted); font-size: 18px; line-height: 1.35; padding-left: 22px; position: relative; }
+    .card li:before { content: ""; position: absolute; left: 0; top: 0.62em; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .evidence-grid { display: grid; grid-template-columns: .9fr 1.55fr; gap: 26px; align-items: stretch; }
+    .diagnosis-card { min-height: 420px; background: rgba(16,16,16,.9); border: 1px solid var(--line); border-left: 7px solid var(--accent); border-radius: 12px; padding: 28px; }
+    .diagnosis-card strong { display: block; font-size: 30px; line-height: 1.05; margin-bottom: 24px; }
+    .diagnosis-card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+    .diagnosis-card li { color: var(--muted); font-size: 17px; line-height: 1.35; }
+    .evidence-shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: end; }
+    .phone-shot { min-height: 360px; border-radius: 24px; background: linear-gradient(180deg, #f7f7f7, #d9d9d9); color: #101010; padding: 22px; box-shadow: 0 22px 60px rgba(0,0,0,.42); display: flex; flex-direction: column; justify-content: space-between; transform: rotate(-1deg); }
+    .phone-shot:nth-child(2) { transform: rotate(1.5deg) translateY(-18px); }
+    .phone-shot span { color: var(--accent); font-weight: 900; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .phone-shot p { font-size: 19px; line-height: 1.22; font-weight: 800; }
+    .phone-shot small { color: #555; font-size: 12px; line-height: 1.25; }
+    .pipeline-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 28px; }
+    .pipeline-step { position: relative; min-height: 245px; background: color-mix(in srgb, var(--card) 90%, var(--accent)); border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
+    .pipeline-step:after { content: ""; position: absolute; right: -15px; top: 50%; width: 28px; height: 2px; background: var(--accent); opacity: .75; }
+    .pipeline-step:last-child:after { display: none; }
+    .pipeline-step span, .action-card span { color: var(--accent); font-size: 13px; font-weight: 900; letter-spacing: 1px; }
+    .pipeline-step h3, .matrix-card h3, .action-card h3 { margin-top: 14px; }
+    .pipeline-step p, .matrix-card p, .action-card p, .outcome p { margin-top: 13px; color: var(--muted); font-size: 15.5px; line-height: 1.35; }
+    .outcome-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+    .outcome { border-radius: 12px; padding: 18px 22px; border: 1px solid var(--line); background: rgba(18,18,18,.88); }
+    .outcome.win { border-left: 7px solid #21c26b; }
+    .outcome.loss { border-left: 7px solid var(--accent); }
+    .matrix-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
+    .matrix-card { min-height: 310px; background: rgba(18,18,18,.9); border: 1px solid var(--line); border-top: 5px solid #4d4d4d; border-radius: 12px; padding: 24px; }
+    .matrix-card.highlight { background: color-mix(in srgb, var(--accent) 28%, #151515); border-top-color: var(--accent); }
+    .matrix-card span { color: var(--subtle); font-size: 12px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+    .decision-strip { margin-top: 18px; border-radius: 12px; padding: 16px 22px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.13); color: var(--text); font-size: 18px; font-weight: 800; }
+    .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 22px; }
+    .action-card { min-height: 150px; background: rgba(18,18,18,.9); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+    .budget-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 20px; }
+    .budget-scenario { min-height: 365px; border: 1px solid var(--line); border-radius: 18px; background: rgba(18,18,18,.9); padding: 24px; }
+    .budget-scenario.featured { background: color-mix(in srgb, var(--accent) 24%, #141414); border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
+    .scenario-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; }
+    .scenario-head span, .allocation-title span { color: var(--subtle); font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+    .scenario-head strong { color: var(--text); font-size: 46px; line-height: 1; letter-spacing: -1px; }
+    .scenario-role { margin-top: 10px; color: var(--muted); font-size: 16px; line-height: 1.35; }
+    .channel-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+    .channel-card { border-radius: 14px; padding: 16px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); }
+    .channel-card.meta { border-top: 5px solid #2f7cff; }
+    .channel-card.google { border-top: 5px solid #ffb000; }
+    .channel-card span { display: block; color: var(--subtle); font-size: 12px; font-weight: 900; text-transform: uppercase; }
+    .channel-card strong { display: block; margin-top: 7px; font-size: 28px; }
+    .channel-card small { display: block; margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.25; }
+    .budget-scenario ul { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; }
+    .budget-scenario li { color: var(--muted); font-size: 15px; line-height: 1.28; padding-left: 18px; position: relative; }
+    .budget-scenario li:before { content: ""; position: absolute; left: 0; top: .55em; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .allocation-board { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 26px; }
+    .allocation-panel { min-height: 410px; border-radius: 18px; background: rgba(18,18,18,.9); border: 1px solid var(--line); padding: 26px; }
+    .allocation-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .allocation-title strong { font-size: 30px; }
+    .bar-row { margin-bottom: 24px; }
+    .bar-copy { display: flex; justify-content: space-between; color: var(--text); font-size: 15px; font-weight: 800; margin-bottom: 9px; }
+    .bar-copy span { color: var(--muted); }
+    .bar-track { height: 18px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; border: 1px solid rgba(255,255,255,.1); }
+    .bar-track i { display: block; height: 100%; border-radius: 999px; }
+    .bar-track i.meta { background: linear-gradient(90deg, #145eff, #59b8ff); }
+    .bar-track i.google { background: linear-gradient(90deg, #ff7a00, #ffd45a); }
+    .bar-row p { margin-top: 8px; color: var(--subtle); font-size: 13px; line-height: 1.3; }
+    .allocation-note { margin-top: 14px; padding: 15px 17px; border-radius: 12px; background: rgba(255,255,255,.07); color: var(--muted); font-size: 15px; line-height: 1.35; }
+    .funnel-stack { display: grid; grid-template-columns: .85fr 1fr 1fr .85fr; gap: 14px; margin-top: 26px; align-items: stretch; }
+    .funnel-stage { min-height: 320px; border-radius: 16px; background: rgba(18,18,18,.92); border: 1px solid var(--line); padding: 22px; position: relative; overflow: hidden; }
+    .funnel-stage:before { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 7px; background: var(--accent); opacity: .85; }
+    .funnel-stage:nth-child(1), .funnel-stage:nth-child(4) { transform: translateY(32px); }
+    .funnel-stage span { color: var(--accent); font-size: 13px; font-weight: 900; letter-spacing: 1px; }
+    .funnel-stage h3 { margin-top: 16px; font-size: 24px; }
+    .funnel-stage p { margin-top: 18px; color: var(--muted); font-size: 16px; line-height: 1.38; }
+    .funnel-stage div { position: absolute; left: 22px; right: 22px; bottom: 22px; display: flex; justify-content: space-between; gap: 14px; align-items: end; }
+    .funnel-stage b { color: var(--text); font-size: 15px; }
+    .funnel-stage small { color: var(--subtle); font-size: 12px; text-align: right; line-height: 1.2; }
+    .strong { border-top-color: #21c26b; }
+    .alert { border-top-color: var(--accent); }
+    .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .metric { min-height: 280px; display: flex; flex-direction: column; justify-content: center; }
+    .metric strong { color: var(--accent); font-size: 58px; line-height: 1; font-weight: 850; }
+    .metric span { margin-top: 18px; color: var(--text); font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+    .metric p { margin-top: 14px; color: var(--muted); font-size: 16px; line-height: 1.45; }
+    .statement { display: grid; place-items: center; text-align: center; }
+    .statement-inner { max-width: 980px; }
+    .statement h2 { max-width: none; font-size: 70px; }
+    .statement p { margin-top: 22px; color: var(--muted); font-size: 27px; line-height: 1.32; }
+    .statement span { display: inline-block; margin-top: 38px; color: var(--accent); font-size: 14px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+    @media print { body { background: #000; } .deck { padding: 0; gap: 0; } .slide { break-after: page; } }
+  .deck{padding:0!important;gap:0!important;display:block!important}.slide{margin:0!important}</style></head><body><main class="deck"><section class="slide media-budget">
+          <div class="topbar"></div>
+          <div class="safe">
+            <header class="slide-header compact">
+              <p class="eyebrow">DISTRIBUICAO DE MIDIA</p>
+              <h2>Dois cenarios, duas velocidades de aprendizado</h2>
+              <p>O investimento de R$ 3k valida direcao. O de R$ 6k permite testar mais criativos, acelerar aprendizado e proteger captura de demanda.</p>
+            </header>
+            <div class="budget-compare">
+              
+                <article class="budget-scenario ">
+                  <div class="scenario-head">
+                    <span>Cenario conservador</span>
+                    <strong>R$ 3.000</strong>
+                  </div>
+                  <p class="scenario-role">Verba de validacao: poucas frentes, controle maior e leitura mais lenta.</p>
+                  <div class="channel-split">
+                    
+                      <div class="channel-card meta">
+                        <span>Meta Ads</span>
+                        <strong>R$ 1.800</strong>
+                        <small>60% · descoberta e remarketing</small>
+                      </div>
+                      <div class="channel-card google">
+                        <span>Google Ads</span>
+                        <strong>R$ 1.200</strong>
+                        <small>40% · captura de demanda</small>
+                      </div>
+                  </div>
+                  <ul><li>Prioriza publico frio no Meta com criativos de dor e prova.</li><li>Google fica concentrado em termos de maior intencao.</li><li>Boa opcao quando ainda nao ha historico forte de conversao.</li></ul>
+                </article>
+                <article class="budget-scenario featured">
+                  <div class="scenario-head">
+                    <span>Cenario recomendado</span>
+                    <strong>R$ 6.000</strong>
+                  </div>
+                  <p class="scenario-role">Verba de tracao: mais testes simultaneos e leitura melhor por canal.</p>
+                  <div class="channel-split">
+                    
+                      <div class="channel-card meta">
+                        <span>Meta Ads</span>
+                        <strong>R$ 3.300</strong>
+                        <small>55% · escala criativa</small>
+                      </div>
+                      <div class="channel-card google">
+                        <span>Google Ads</span>
+                        <strong>R$ 2.700</strong>
+                        <small>45% · demanda ativa</small>
+                      </div>
+                  </div>
+                  <ul><li>Permite separar aquisicao, prova social e remarketing.</li><li>Google ganha folego para search + termos concorrenciais.</li><li>Mais chance de identificar vencedor sem esperar muitas semanas.</li></ul>
+                </article>
+            </div>
+            <div class="decision-strip">Minha recomendacao: se o objetivo for aprender com seguranca, R$ 3k resolve; se o objetivo for gerar volume e leitura semanal, R$ 6k e o minimo mais saudavel.</div>
+          </div>
+        </section></main></body></html>

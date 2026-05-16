@@ -1,0 +1,176 @@
+{
+  "deck": {
+    "title": "Distribuição de Mídia - Meta + Google Ads",
+    "client": "Cliente Teste",
+    "theme": "custom_dark",
+    "week": "Teste X9",
+    "accent": "#00d6b4",
+    "font": "Montserrat",
+    "output": {
+      "html": true,
+      "pptx": true,
+      "google_slides": true
+    }
+  },
+  "slides": [
+    {
+      "id": "s01-cover",
+      "layout": "cover",
+      "content": {
+        "eyebrow": "MÍDIA PAGA",
+        "title": "Plano de investimento",
+        "subtitle": "Dois cenários para distribuir verba entre Meta Ads e Google Ads, comparando o que muda quando o cliente sai de R$ 3k para R$ 6k.",
+        "client": "Cliente Teste",
+        "footer": "X9 2.0 | Media Plan"
+      },
+      "notes": "Capa intencionalmente mais simples: menos cinemática, mais executiva."
+    },
+    {
+      "id": "s02-budget-compare",
+      "layout": "media_budget_compare",
+      "content": {
+        "title": "Dois cenários, duas velocidades de aprendizado",
+        "subtitle": "O investimento de R$ 3k valida direção. O de R$ 6k permite testar mais criativos, acelerar aprendizado e proteger captura de demanda.",
+        "decision": "Minha recomendação: se o objetivo for aprender com segurança, R$ 3k resolve; se o objetivo for gerar volume e leitura semanal, R$ 6k é o mínimo mais saudável.",
+        "scenarios": [
+          {
+            "label": "Cenário conservador",
+            "total": "R$ 3.000",
+            "role": "Verba de validação: poucas frentes, controle maior e leitura mais lenta.",
+            "featured": false,
+            "channels": [
+              {
+                "name": "Meta Ads",
+                "amount": "R$ 1.800",
+                "percent": 60,
+                "purpose": "descoberta e remarketing"
+              },
+              {
+                "name": "Google Ads",
+                "amount": "R$ 1.200",
+                "percent": 40,
+                "purpose": "captura de demanda"
+              }
+            ],
+            "bullets": [
+              "Prioriza público frio no Meta com criativos de dor e prova.",
+              "Google fica concentrado em termos de maior intenção.",
+              "Boa opção quando ainda não há histórico forte de conversão."
+            ]
+          },
+          {
+            "label": "Cenário recomendado",
+            "total": "R$ 6.000",
+            "role": "Verba de tração: mais testes simultâneos e leitura melhor por canal.",
+            "featured": true,
+            "channels": [
+              {
+                "name": "Meta Ads",
+                "amount": "R$ 3.300",
+                "percent": 55,
+                "purpose": "escala criativa"
+              },
+              {
+                "name": "Google Ads",
+                "amount": "R$ 2.700",
+                "percent": 45,
+                "purpose": "demanda ativa"
+              }
+            ],
+            "bullets": [
+              "Permite separar aquisição, prova social e remarketing.",
+              "Google ganha fôlego para search + termos concorrenciais.",
+              "Mais chance de identificar vencedor sem esperar muitas semanas."
+            ]
+          }
+        ]
+      },
+      "notes": "Slide de decisão: deixa claro o papel estratégico de cada faixa de investimento."
+    },
+    {
+      "id": "s03-channel-bars",
+      "layout": "channel_allocation_bars",
+      "content": {
+        "title": "Mix de canal por cenário",
+        "subtitle": "A divisão não é só matemática. Meta sustenta descoberta e recorrência; Google captura quem já está procurando solução.",
+        "scenarios": [
+          {
+            "label": "R$ 3k",
+            "total": "Validação",
+            "note": "Leitura principal: descobrir se a oferta gera conversa qualificada sem abrir muitas variáveis.",
+            "channels": [
+              {
+                "name": "Meta Ads",
+                "amount": "R$ 1.800",
+                "percent": 60,
+                "purpose": "2 campanhas: aquisição + remarketing leve."
+              },
+              {
+                "name": "Google Ads",
+                "amount": "R$ 1.200",
+                "percent": 40,
+                "purpose": "1 campanha search com palavras de alta intenção."
+              }
+            ]
+          },
+          {
+            "label": "R$ 6k",
+            "total": "Tração",
+            "note": "Leitura principal: comparar ângulos criativos e capturar demanda sem sufocar o aprendizado.",
+            "channels": [
+              {
+                "name": "Meta Ads",
+                "amount": "R$ 3.300",
+                "percent": 55,
+                "purpose": "3 frentes: criativo, prova social e remarketing."
+              },
+              {
+                "name": "Google Ads",
+                "amount": "R$ 2.700",
+                "percent": 45,
+                "purpose": "Search principal + extensões por serviço/região."
+              }
+            ]
+          }
+        ]
+      },
+      "notes": "Slide visual para explicar por que a proporção muda pouco, mas a capacidade operacional muda muito."
+    },
+    {
+      "id": "s04-funnel-plan",
+      "layout": "media_funnel_plan",
+      "content": {
+        "title": "Como eu operaria os canais na prática",
+        "subtitle": "A verba precisa ser lida como sistema: Meta gera contexto, Google captura intenção, remarketing reduz perda e o WhatsApp/LP converte.",
+        "decision": "Se for rodar R$ 6k, eu separaria os testes por etapa do funil desde o primeiro dia; em R$ 3k, eu manteria o sistema mais enxuto.",
+        "stages": [
+          {
+            "name": "Descoberta",
+            "message": "Anúncios de dor, oportunidade e antes/depois para criar interesse em público frio.",
+            "channel": "Meta Ads",
+            "kpi": "CTR, CPM, engajamento"
+          },
+          {
+            "name": "Intenção",
+            "message": "Search para capturar quem já procura solução, serviço, marca ou comparação.",
+            "channel": "Google Ads",
+            "kpi": "CPC, taxa de conversão"
+          },
+          {
+            "name": "Prova",
+            "message": "Criativos com caso, oferta, objeções e argumentos para quem demonstrou interesse.",
+            "channel": "Meta + Google",
+            "kpi": "CPL, qualidade do lead"
+          },
+          {
+            "name": "Conversão",
+            "message": "Direcionamento para WhatsApp ou landing page com CTA claro e rastreio simples.",
+            "channel": "LP / WhatsApp",
+            "kpi": "Lead válido, venda"
+          }
+        ]
+      },
+      "notes": "Slide de operação: mostra que a distribuição de mídia precisa se conectar com funil e medição."
+    }
+  ]
+}

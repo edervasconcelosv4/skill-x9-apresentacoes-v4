@@ -1,0 +1,2716 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Analysis - @eder.vasconcelos</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0D0D0D;
+    --surface: #141414;
+    --surface2: #1A1A1A;
+    --border: #262626;
+    --fg: #FFFFFF;
+    --muted: #9CA3AF;
+    --muted2: #6B7280;
+    --accent: #E80403;
+    --accent2: #FF4B4B;
+    --green: #10B981;
+    --blue: #3B82F6;
+    --yellow: #FFCC00;
+    --orange: #FF6B00;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 56px 80px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--orange));
+  }
+  .page-header .eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .page-header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+  }
+  .page-header h1 span { color: var(--accent); }
+  .page-header .subtitle {
+    margin-top: 16px;
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 640px;
+  }
+  .page-header .meta-row {
+    margin-top: 32px;
+    display: flex;
+    gap: 32px;
+  }
+  .meta-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .meta-chip strong { color: var(--fg); }
+
+  /* ── LAYOUT ── */
+  .main { max-width: 1440px; margin: 0 auto; padding: 56px 80px 80px; }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 64px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-number {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .section-title span { color: var(--accent); }
+
+  /* ── GRID SYSTEMS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    position: relative;
+  }
+  .card.accent-left { border-left: 6px solid var(--accent); }
+  .card.accent-top { border-top: 6px solid var(--accent); }
+  .card.accent-green { border-left: 6px solid var(--green); }
+  .card.accent-blue { border-left: 6px solid var(--blue); }
+  .card.accent-yellow { border-left: 6px solid var(--yellow); }
+  .card.accent-orange { border-left: 6px solid var(--orange); }
+  .card-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .card-label.green { color: var(--green); }
+  .card-label.blue { color: var(--blue); }
+  .card-label.yellow { color: var(--yellow); }
+  .card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .card-body { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .card-body ul { list-style: none; }
+  .card-body li { padding-left: 20px; position: relative; margin-bottom: 6px; }
+  .card-body li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  /* ── COLOR SWATCH ── */
+  .swatch-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .swatch {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    width: 80px;
+  }
+  .swatch-dot {
+    width: 56px; height: 56px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+  .swatch-label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.3;
+  }
+  .swatch-count {
+    font-size: 10px;
+    color: var(--muted2);
+  }
+
+  /* ── FONT DISPLAY ── */
+  .font-specimen {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .font-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .font-sample { line-height: 1.1; }
+
+  /* ── SIZE SCALE ── */
+  .size-bar-row {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 10px;
+  }
+  .size-label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    width: 48px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .size-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--surface2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .size-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .size-bar-fill.dim { background: var(--border); }
+  .size-count {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    width: 36px;
+    text-align: right;
+  }
+
+  /* ── STAT BLOCKS ── */
+  .stat-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  .stat-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-weight: 600;
+  }
+
+  /* ── PRESENTATION TABLE ── */
+  .pres-table { width: 100%; border-collapse: collapse; }
+  .pres-table th {
+    background: var(--surface2);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .pres-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+    vertical-align: middle;
+  }
+  .pres-table tr:last-child td { border-bottom: none; }
+  .pres-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .pres-table .name { color: var(--fg); font-weight: 600; }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .tag.red { background: rgba(232,4,3,0.15); color: #FF6B6B; }
+  .tag.blue { background: rgba(59,130,246,0.15); color: #93C5FD; }
+  .tag.dark { background: rgba(27,28,29,0.8); color: #9CA3AF; border: 1px solid #333; }
+  .tag.light { background: rgba(255,255,255,0.1); color: #D1D5DB; }
+  .tag.gold { background: rgba(201,162,39,0.2); color: #C9A227; }
+  .color-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    display: inline-block; margin-right: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    vertical-align: middle;
+  }
+
+  /* ── RULE BLOCKS ── */
+  .rule-block {
+    background: var(--surface);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+  .rule-block.green { border-left-color: var(--green); }
+  .rule-block.blue { border-left-color: var(--blue); }
+  .rule-block.yellow { border-left-color: var(--yellow); }
+  .rule-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .rule-body { font-size: 13px; color: var(--muted); }
+  .rule-code {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    background: var(--surface2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #93C5FD;
+  }
+
+  /* ── ANTI-PATTERN ── */
+  .anti-table { width: 100%; border-collapse: collapse; }
+  .anti-table th {
+    background: var(--surface2);
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--muted); padding: 10px 16px;
+    text-align: left; border-bottom: 1px solid var(--border);
+  }
+  .anti-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .anti-table tr:last-child td { border-bottom: none; }
+  .anti-bad { color: #F87171; }
+  .anti-good { color: #4ADE80; }
+  .anti-why { color: var(--muted); }
+
+  /* ── LAYOUT DIAGRAM ── */
+  .slide-mock {
+    background: #1B1C1D;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+    font-size: 0;
+  }
+  .mock-topbar {
+    position: absolute; top: 0; left: 0; right: 0; height: 3%;
+    background: var(--accent);
+  }
+  .mock-header {
+    position: absolute; top: 3%; left: 5%; right: 5%; height: 14%;
+    background: rgba(255,255,255,0.04);
+    border-radius: 3px;
+  }
+  .mock-grid {
+    position: absolute; top: 20%; left: 5%; right: 5%; bottom: 8%;
+    display: grid; gap: 2%;
+  }
+  .mock-grid.cols2 { grid-template-columns: 1fr 1fr; }
+  .mock-grid.cols3 { grid-template-columns: 1fr 1fr 1fr; }
+  .mock-card {
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    border-left: 2px solid var(--accent);
+  }
+  .mock-card.top { border-left: none; border-top: 2px solid var(--accent); }
+  .mock-card.blue-accent { border-left-color: var(--blue); }
+  .mock-card.green-accent { border-left-color: var(--green); }
+  .mock-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.5);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px; font-weight: 700;
+    text-align: center;
+    color: var(--muted);
+    padding: 4px 0;
+    font-size: 1rem;
+  }
+  .mock-timeline {
+    position: absolute; top: 20%; left: 5%; right: 5%; height: 20%;
+    display: flex; align-items: center; gap: 1%;
+  }
+  .mock-node {
+    width: 8%; height: 60%; background: rgba(255,255,255,0.06);
+    border-top: 2px solid var(--accent);
+    border-radius: 2px; flex-shrink: 0;
+  }
+  .mock-arrow { flex: 1; height: 1px; background: var(--border); }
+  .mock-flow {
+    position: absolute; top: 20%; left: 5%; right: 5%;
+    display: flex; align-items: center; gap: 2%; height: 25%;
+  }
+  .mock-step {
+    flex: 1; height: 100%; background: rgba(255,255,255,0.06);
+    border-top: 2px solid var(--accent); border-radius: 2px;
+  }
+  .mock-arrow-text {
+    font-size: 1.5rem; color: var(--accent); font-weight: 700;
+  }
+  .mock-metrics {
+    position: absolute; bottom: 8%; left: 5%; right: 5%; height: 18%;
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 2%;
+  }
+  .mock-metric { background: rgba(255,255,255,0.06); border-radius: 3px; }
+
+  /* ── COMPONENT INVENTORY ── */
+  .component-lead {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+  .component-lead-note {
+    background:
+      radial-gradient(circle at 88% 10%, rgba(232,4,3,0.18), transparent 28%),
+      linear-gradient(135deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .component-lead-note p {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .component-pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .component-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .component-pill::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .component-totals {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .component-total {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .component-total strong {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .component-total span {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .component-reference-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .component-reference {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 18px 34px rgba(0,0,0,0.22);
+  }
+  .component-reference img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid var(--border);
+  }
+  .component-reference-body {
+    padding: 14px 16px 16px;
+  }
+  .component-reference-kicker {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .component-reference-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .component-reference-copy {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .component-family {
+    background: linear-gradient(135deg, rgba(255,255,255,0.038), rgba(255,255,255,0.018));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 18px;
+  }
+  .component-family.blue {
+    background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(255,255,255,0.018));
+    border-color: rgba(59,130,246,0.18);
+  }
+  .component-family.green {
+    background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(255,255,255,0.018));
+    border-color: rgba(16,185,129,0.18);
+  }
+  .component-family.gold {
+    background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(255,255,255,0.018));
+    border-color: rgba(245,158,11,0.2);
+  }
+  .component-family-head {
+    display: grid;
+    grid-template-columns: 0.82fr 1.18fr;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 18px;
+  }
+  .component-family-label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .component-family-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-top: 8px;
+  }
+  .component-family-copy {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .component-family-rules {
+    display: grid;
+    gap: 10px;
+  }
+  .component-family-rule {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .component-family-rule strong {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: var(--fg);
+  }
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .comp-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+    min-height: 228px;
+  }
+  .comp-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent), rgba(232,4,3,0));
+  }
+  .component-family.blue .comp-card::before {
+    background: linear-gradient(180deg, var(--blue), rgba(59,130,246,0));
+  }
+  .component-family.green .comp-card::before {
+    background: linear-gradient(180deg, var(--green), rgba(16,185,129,0));
+  }
+  .component-family.gold .comp-card::before {
+    background: linear-gradient(180deg, var(--yellow), rgba(255,204,0,0));
+  }
+  .comp-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .comp-meta span {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .comp-icon {
+    font-size: 26px;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .comp-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .comp-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.58;
+  }
+  .comp-foot {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 1.45;
+  }
+  .comp-code {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    margin-top: 12px;
+    background: rgba(255,255,255,0.05);
+    padding: 5px 9px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+  .component-combo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 6px;
+  }
+  .component-combo {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 5px solid var(--accent);
+    border-radius: 14px;
+    padding: 18px;
+    min-height: 182px;
+  }
+  .component-combo:nth-child(2) { border-top-color: var(--blue); }
+  .component-combo:nth-child(3) { border-top-color: var(--yellow); }
+  .component-combo:nth-child(4) { border-top-color: var(--green); }
+  .component-combo:nth-child(5) { border-top-color: var(--orange); }
+  .component-combo-label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .component-combo-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .component-combo-copy {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .component-combo-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .component-combo-stack span {
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--fg);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  /* ── SKILL RULES ── */
+  .rules-list { display: flex; flex-direction: column; gap: 8px; }
+  .rule-item {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 16px 20px;
+    border-left: 3px solid var(--border);
+    font-size: 13px; color: var(--muted);
+  }
+  .rule-item strong { color: var(--fg); }
+  .rule-item.mandatory { border-left-color: var(--accent); }
+  .rule-item.recommended { border-left-color: var(--blue); }
+  .rule-item.forbidden { border-left-color: #F87171; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-row { margin-bottom: 14px; }
+  .progress-top { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .progress-name { font-size: 13px; font-weight: 600; }
+  .progress-pct { font-family: 'Roboto Mono', monospace; font-size: 12px; color: var(--muted); }
+  .progress-track { height: 6px; background: var(--surface2); border-radius: 3px; }
+  .progress-fill { height: 100%; border-radius: 3px; }
+
+  /* -- CHARTS & FUNNELS -- */
+  .visual-lab {
+    background:
+      radial-gradient(circle at 84% 8%, rgba(232,4,3,0.16), transparent 28%),
+      linear-gradient(135deg, var(--surface), #101010);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .visual-lab::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--accent), var(--orange), var(--blue));
+  }
+  .chart-card {
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .chart-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .bar-chart-row {
+    display: grid;
+    grid-template-columns: 96px 1fr 58px;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .bar-track {
+    height: 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .bar-fill.blue { background: linear-gradient(90deg, #2563EB, #60A5FA); }
+  .bar-fill.green { background: linear-gradient(90deg, #059669, #34D399); }
+  .bar-fill.yellow { background: linear-gradient(90deg, #F59E0B, #FDE047); }
+  .waterfall {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    align-items: end;
+    height: 210px;
+    margin-top: 8px;
+  }
+  .waterfall-step {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
+  }
+  .waterfall-bar {
+    border-radius: 8px 8px 3px 3px;
+    background: linear-gradient(180deg, rgba(232,4,3,0.92), rgba(232,4,3,0.28));
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .waterfall-step:nth-child(2) .waterfall-bar { background: linear-gradient(180deg, #3B82F6, rgba(59,130,246,0.22)); }
+  .waterfall-step:nth-child(3) .waterfall-bar { background: linear-gradient(180deg, #F59E0B, rgba(245,158,11,0.22)); }
+  .waterfall-step:nth-child(4) .waterfall-bar { background: linear-gradient(180deg, #10B981, rgba(16,185,129,0.22)); }
+  .waterfall-step:nth-child(5) .waterfall-bar { background: linear-gradient(180deg, #FF4B4B, rgba(255,75,75,0.22)); }
+  .waterfall-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+  }
+  .waterfall-label {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.25;
+  }
+  .funnel-board {
+    display: grid;
+    grid-template-columns: 1.25fr 0.9fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .funnel-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .funnel-layer {
+    min-height: 66px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    padding: 14px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .funnel-layer::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: var(--accent);
+  }
+  .funnel-layer:nth-child(2)::before { background: var(--blue); }
+  .funnel-layer:nth-child(3)::before { background: var(--yellow); }
+  .funnel-layer:nth-child(4)::before { background: var(--green); }
+  .funnel-layer:nth-child(5)::before { background: var(--orange); }
+  .funnel-layer .stage {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .funnel-layer .stage-copy {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .funnel-metric {
+    position: absolute;
+    right: 16px;
+    top: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--fg);
+  }
+  .recipe-list {
+    display: grid;
+    gap: 10px;
+  }
+  .recipe-step {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 12px;
+    align-items: start;
+    background: rgba(0,0,0,0.22);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 13px;
+  }
+  .recipe-step b {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--accent);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+  }
+  .recipe-step strong {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    margin-bottom: 3px;
+  }
+  .recipe-step span {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .slide-pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .slide-pattern {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 5px solid var(--accent);
+    border-radius: 12px;
+    padding: 18px;
+    min-height: 178px;
+  }
+  .slide-pattern:nth-child(2) { border-top-color: var(--blue); }
+  .slide-pattern:nth-child(3) { border-top-color: var(--yellow); }
+  .slide-pattern:nth-child(4) { border-top-color: var(--green); }
+  .pattern-kicker {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+    margin-bottom: 12px;
+  }
+  .pattern-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .pattern-use {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  /* -- NATIVE V4 MODEL LIBRARY -- */
+  .native-v4-intro {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+  .native-v4-note {
+    background:
+      radial-gradient(circle at 88% 10%, rgba(232,4,3,0.18), transparent 28%),
+      linear-gradient(135deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .native-v4-note strong { color: var(--fg); }
+  .native-v4-kpi {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .native-v4-kpi div {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .native-v4-kpi b {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .native-v4-kpi span {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+  .native-v4-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .native-model {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 18px 34px rgba(0,0,0,0.28);
+  }
+  .native-model-shot {
+    aspect-ratio: 16/9;
+    background: #080808;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .native-model-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .native-shot-duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    height: 100%;
+  }
+  .native-shot-duo img { min-width: 0; }
+  .native-commercial-preview {
+    height: 100%;
+    padding: 13px;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 12px;
+    background:
+      radial-gradient(circle at 85% 18%, rgba(232,4,3,0.32), transparent 34%),
+      linear-gradient(135deg, #060606, #190708 62%, #0B0B0B);
+  }
+  .mini-cvba-stack,
+  .mini-funnel-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .mini-preview-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--fg);
+  }
+  .mini-cvba-card {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    align-items: center;
+    column-gap: 7px;
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-left: 4px solid var(--orange);
+    border-radius: 8px;
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+  .mini-cvba-card b {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    color: var(--orange);
+    line-height: 1;
+  }
+  .mini-cvba-card span {
+    display: block;
+    grid-column: 2;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.22);
+    margin-top: 4px;
+  }
+  .mini-funnel-row {
+    height: 22px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--orange), rgba(232,4,3,0.58));
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    box-shadow: 0 10px 24px rgba(232,4,3,0.18);
+  }
+  .mini-funnel-callout {
+    margin-top: 2px;
+    border-left: 4px solid var(--accent);
+    background: rgba(0,0,0,0.34);
+    border-radius: 8px;
+    padding: 7px 9px;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  .mini-funnel-callout strong {
+    display: block;
+    color: var(--fg);
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 3px;
+  }
+  .native-model-body { padding: 18px; }
+  .native-model-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .native-model-use {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+    min-height: 52px;
+  }
+  .native-model-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 14px 0;
+  }
+  .native-model-tags span {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 10px;
+    color: var(--fg);
+    background: rgba(232,4,3,0.15);
+    border: 1px solid rgba(232,4,3,0.35);
+    border-radius: 999px;
+    padding: 5px 8px;
+  }
+  .native-opinion {
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    color: #D1D5DB;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .native-opinion b {
+    color: var(--accent);
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .native-rule-panel {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 18px;
+  }
+  .native-rule-card {
+    background: linear-gradient(135deg, var(--surface), rgba(232,4,3,0.07));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .native-rule-card .chart-title { margin-bottom: 10px; }
+  .native-rule-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .native-rule-list div {
+    background: rgba(0,0,0,0.22);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 13px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .native-rule-list strong {
+    display: block;
+    color: var(--fg);
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 4px;
+  }
+  .native-rule-list div:nth-child(2) { border-left-color: var(--blue); }
+  .native-rule-list div:nth-child(3) { border-left-color: var(--yellow); }
+  .native-rule-list div:nth-child(4) { border-left-color: var(--green); }
+
+  @media (max-width: 1180px) {
+    .main { padding: 44px 32px 60px; }
+    .grid-2,
+    .grid-3,
+    .grid-4,
+    .component-lead,
+    .component-family-head,
+    .funnel-board,
+    .native-v4-intro,
+    .native-rule-panel {
+      grid-template-columns: 1fr;
+    }
+    .component-reference-grid,
+    .comp-grid,
+    .component-combo-grid,
+    .slide-pattern-grid,
+    .native-v4-gallery,
+    .native-rule-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .page-header,
+    .main {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .component-reference-grid,
+    .comp-grid,
+    .component-combo-grid,
+    .slide-pattern-grid,
+    .native-v4-gallery,
+    .native-rule-list {
+      grid-template-columns: 1fr;
+    }
+    .component-totals {
+      grid-template-columns: 1fr;
+    }
+    .page-footer {
+      padding-left: 20px;
+      padding-right: 20px;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+    }
+  }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--muted2);
+  }
+  .page-footer strong { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ HEADER -->
+<div class="page-header">
+  <div class="eyebrow">@eder.vasconcelos</div>
+  <h1>Análise de <span>Design</span><br>Apresentações Corporativas</h1>
+  <p class="subtitle">Extração matemática de padrões visuais, tipográficos e cromáticos de 31 apresentações (1.393+ slides) das Semanas 2, 3 e 4 do programa EE.</p>
+  <div class="meta-row">
+    <div class="meta-chip"><strong>31</strong> arquivos PPTX</div>
+    <div class="meta-chip"><strong>1.393+</strong> slides analisados</div>
+    <div class="meta-chip"><strong>3</strong> semanas de entregas</div>
+    <div class="meta-chip"><strong>12</strong> clientes distintos</div>
+    <div class="meta-chip">Gerado em <strong>14/05/2026</strong></div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ═══════════════════════════════════════════════════════ 1. INVENTÁRIO -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">01</div>
+    <div class="section-title">Inventário de <span>Apresentações</span></div>
+  </div>
+
+  <div class="grid-4" style="margin-bottom:24px;">
+    <div class="stat-block"><div class="stat-value">31</div><div class="stat-label">Arquivos totais</div></div>
+    <div class="stat-block"><div class="stat-value" style="color:var(--blue)">~28</div><div class="stat-label">Avg shapes/slide</div></div>
+    <div class="stat-block"><div class="stat-value" style="color:var(--green)">43</div><div class="stat-label">Avg slides/arquivo</div></div>
+    <div class="stat-block"><div class="stat-value" style="color:var(--yellow)">13.33"</div><div class="stat-label">Tamanho padrão (widescreen)</div></div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+    <table class="pres-table">
+      <thead>
+        <tr>
+          <th>Arquivo</th>
+          <th>Semana</th>
+          <th>Slides</th>
+          <th>Avg Shapes</th>
+          <th>Modo</th>
+          <th>Cor Principal</th>
+          <th>Acento</th>
+          <th>Fontes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">FibranetBR (15 slides)</td><td>Ref.</td><td>15</td><td>10.6</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#282C31"></span>#282C31</td><td><span class="color-dot" style="background:#C63D2F"></span>Vermelho</td><td>Inter, Consolas, Montserrat</td></tr>
+        <tr><td class="name">Becton</td><td><span class="tag red">2ª</span></td><td>41</td><td>26.2</td><td><span class="tag dark">Dark+Light</span></td><td><span class="color-dot" style="background:#F5F5F5"></span>#F5F5F5</td><td><span class="color-dot" style="background:#E80403"></span>Vermelho</td><td>Inter, Calibri, Montserrat</td></tr>
+        <tr><td class="name">Cria Nutrição</td><td><span class="tag red">2ª</span></td><td>47</td><td>36.6</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#E74C3C"></span>Vermelho</td><td>Montserrat, Calibri</td></tr>
+        <tr><td class="name">Espaço Zabeu</td><td><span class="tag red">2ª</span></td><td>62</td><td>17.2</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#FF0100"></span>Vermelho</td><td>Calibri, Open Sans, Montserrat</td></tr>
+        <tr><td class="name">Henrique Hoffman</td><td><span class="tag red">2ª</span></td><td>42</td><td>18.9</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#0A0A0A"></span>#0A0A0A</td><td><span class="color-dot" style="background:#FF0100"></span>Vermelho</td><td>Calibri, Roboto, Montserrat</td></tr>
+        <tr><td class="name">WK Carpetes</td><td><span class="tag red">2ª</span></td><td>48</td><td>36.5</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#1F2937"></span>#1F2937</td><td><span class="color-dot" style="background:#DC2626"></span>Vermelho</td><td>Montserrat, Calibri</td></tr>
+        <tr><td class="name">WZR</td><td><span class="tag red">2ª</span></td><td>41</td><td>9.5</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#FF0000"></span>Vermelho</td><td>Roboto, Calibri, Montserrat</td></tr>
+        <tr><td class="name">Óticas Líder</td><td><span class="tag red">2ª</span></td><td>39</td><td>12.9</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#E63946"></span>Vermelho</td><td>Montserrat, Calibri, Oswald</td></tr>
+        <tr><td class="name">OFOS</td><td><span class="tag red">2ª</span></td><td>46</td><td>15.4</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#111111"></span>#111111</td><td><span class="color-dot" style="background:#CF1918"></span>Vermelho</td><td>Montserrat, Calibri, Oswald</td></tr>
+        <tr><td class="name">Biesky</td><td><span class="tag red">2ª</span></td><td>58</td><td>20.4</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#1A0505"></span>#1A0505</td><td><span class="color-dot" style="background:#DC2626"></span>Vermelho</td><td>Calibri, Open Sans, Montserrat</td></tr>
+        <tr><td class="name">GigaClima</td><td><span class="tag red">2ª</span></td><td>57</td><td>30.9</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#FF0100"></span>Vermelho</td><td>Calibri, Montserrat, Roboto</td></tr>
+        <tr><td class="name">Laundry Pass</td><td><span class="tag red">2ª</span></td><td>54</td><td>21.5</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#EF4444"></span>Vermelho</td><td>Calibri, Open Sans, Montserrat</td></tr>
+        <!-- semana 3 -->
+        <tr><td class="name">Biesky</td><td><span class="tag blue">3ª</span></td><td>40</td><td>15.2</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#1B1C1D"></span>#1B1C1D</td><td><span class="color-dot" style="background:#CF1918"></span>Vermelho</td><td>Proxima Nova, Calibri, Open Sans</td></tr>
+        <tr><td class="name">Espaço Zabeu</td><td><span class="tag blue">3ª</span></td><td>39</td><td>25.2</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#E24B4A"></span>Vermelho+Laranja</td><td>Proxima Nova, Montserrat, Calibri</td></tr>
+        <tr><td class="name">GigaClima</td><td><span class="tag blue">3ª</span></td><td>47</td><td>25.2</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#1B1C1D"></span>#1B1C1D</td><td><span class="color-dot" style="background:#B9272C"></span>Vermelho+Azul</td><td>Proxima Nova, Calibri, Roboto</td></tr>
+        <tr><td class="name">Laundry Pass</td><td><span class="tag blue">3ª</span></td><td>53</td><td>19.8</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#444444"></span>#444444</td><td><span class="color-dot" style="background:#CC0000"></span>Vermelho</td><td>Roboto, Montserrat, Calibri</td></tr>
+        <tr><td class="name">OFOS</td><td><span class="tag blue">3ª</span></td><td>48</td><td>22.2</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#FF4D4D"></span>Vermelho</td><td>Calibri, Roboto, Montserrat</td></tr>
+        <tr><td class="name">Punctual</td><td><span class="tag blue">3ª</span></td><td>33</td><td>32.2</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#E53935"></span>Vermelho</td><td>Calibri, Lato, Montserrat</td></tr>
+        <tr><td class="name">Studio Henrique</td><td><span class="tag blue">3ª</span></td><td>27</td><td>37.4</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#1B1C1D"></span>#1B1C1D</td><td><span class="color-dot" style="background:#EF4444"></span>Vermelho</td><td>Calibri, Montserrat, Proxima Nova</td></tr>
+        <tr><td class="name">WK Carpetes</td><td><span class="tag blue">3ª</span></td><td>41</td><td>61.4</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#EF4444"></span>Vermelho</td><td>Montserrat, Calibri, Oswald</td></tr>
+        <tr><td class="name">WZR</td><td><span class="tag blue">3ª</span></td><td>39</td><td>12.6</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#141419"></span>#141419</td><td><span class="color-dot" style="background:#DC143C"></span>Crimson</td><td>Calibri, Roboto, Montserrat</td></tr>
+        <tr><td class="name">Óticas Líder</td><td><span class="tag blue">3ª</span></td><td>39</td><td>16.4</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#C9A227"></span>Ouro</td><td>Calibri, Roboto, Montserrat</td></tr>
+        <tr><td class="name">Mayko</td><td><span class="tag blue">3ª</span></td><td>34</td><td>23.1</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#1B1C1D"></span>#1B1C1D</td><td><span class="color-dot" style="background:#CC0000"></span>Vermelho</td><td>Proxima Nova, Calibri, Open Sans</td></tr>
+        <!-- semana 4 -->
+        <tr><td class="name">DECORTI</td><td><span class="tag green" style="background:rgba(16,185,129,0.15);color:#34D399">4ª</span></td><td>43</td><td>44.1</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#1F2937"></span>#1F2937</td><td><span class="color-dot" style="background:#EF4444"></span>Vermelho</td><td>Roboto, Calibri, Montserrat</td></tr>
+        <tr><td class="name">GigaClima</td><td><span class="tag green" style="background:rgba(16,185,129,0.15);color:#34D399">4ª</span></td><td>56</td><td>29.8</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#F5F5F5"></span>#F5F5F5</td><td><span class="color-dot" style="background:#E80403"></span>Vermelho</td><td>Calibri, Courier New, DM Serif</td></tr>
+        <tr><td class="name">WK Carpetes</td><td><span class="tag green" style="background:rgba(16,185,129,0.15);color:#34D399">4ª</span></td><td>40</td><td>38.2</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#131314"></span>#131314</td><td><span class="color-dot" style="background:#EF4444"></span>Vermelho</td><td>Calibri, Open Sans, Montserrat</td></tr>
+        <tr><td class="name">Mayko Junior</td><td><span class="tag green" style="background:rgba(16,185,129,0.15);color:#34D399">4ª</span></td><td>36</td><td>27.1</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#EF5350"></span>Vermelho+Verde</td><td>Roboto, Calibri, Montserrat</td></tr>
+        <tr><td class="name">Movement Academia</td><td><span class="tag green" style="background:rgba(16,185,129,0.15);color:#34D399">4ª</span></td><td>58</td><td>29.6</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#DC143C"></span>Crimson</td><td>Calibri, Open Sans, Montserrat</td></tr>
+        <tr><td class="name">OFOS</td><td><span class="tag green" style="background:rgba(16,185,129,0.15);color:#34D399">4ª</span></td><td>48</td><td>20.6</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#1A1A1A"></span>#1A1A1A</td><td><span class="color-dot" style="background:#E8420A"></span>Laranja-Vermelho</td><td>Roboto, Calibri, Montserrat</td></tr>
+        <tr><td class="name">Tropical Magic Biesky</td><td><span class="tag green" style="background:rgba(16,185,129,0.15);color:#34D399">4ª</span></td><td>43</td><td>36.5</td><td><span class="tag light">Light</span></td><td><span class="color-dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="color-dot" style="background:#2196F3"></span>Azul</td><td>Calibri, Open Sans, Montserrat</td></tr>
+        <tr><td class="name">WZR</td><td><span class="tag green" style="background:rgba(16,185,129,0.15);color:#34D399">4ª</span></td><td>49</td><td>18.2</td><td><span class="tag dark">Dark</span></td><td><span class="color-dot" style="background:#1E1E1E"></span>#1E1E1E</td><td><span class="color-dot" style="background:#FF4B4B"></span>Vermelho</td><td>Montserrat, Calibri, Oswald</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 2. PALETA DE CORES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">02</div>
+    <div class="section-title">Paleta de <span>Cores</span></div>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:32px;">
+    <!-- Backgrounds -->
+    <div class="card accent-left">
+      <div class="card-label">Fundos — Dark Mode (60%)</div>
+      <div class="card-title">Backgrounds Escuros</div>
+      <div class="swatch-grid" style="margin-top:16px;">
+        <div class="swatch"><div class="swatch-dot" style="background:#0D0D0D"></div><div class="swatch-label">#0D0D0D<br><span class="swatch-count">Premium</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#131314"></div><div class="swatch-label">#131314<br><span class="swatch-count">WK 4ª</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#1A1A1A"></div><div class="swatch-label">#1A1A1A<br><span class="swatch-count">OFOS 4ª</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#1B1C1D"></div><div class="swatch-label">#1B1C1D<br><span class="swatch-count">Padrão 3ª</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#1E1E1E"></div><div class="swatch-label">#1E1E1E<br><span class="swatch-count">WZR</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#141419"></div><div class="swatch-label">#141419<br><span class="swatch-count">WZR 3ª</span></div></div>
+      </div>
+    </div>
+    <!-- Backgrounds Light -->
+    <div class="card" style="border-left:6px solid #9CA3AF;">
+      <div class="card-label" style="color:#9CA3AF;">Fundos — Light Mode (60%)</div>
+      <div class="card-title">Backgrounds Claros</div>
+      <div class="swatch-grid" style="margin-top:16px;">
+        <div class="swatch"><div class="swatch-dot" style="background:#FFFFFF;border-color:rgba(0,0,0,0.1)"></div><div class="swatch-label" style="color:#555">#FFFFFF<br><span class="swatch-count">Mais usado</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#F5F5F5;border-color:rgba(0,0,0,0.1)"></div><div class="swatch-label" style="color:#555">#F5F5F5<br><span class="swatch-count">GigaClima 4ª</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#F1F5F9;border-color:rgba(0,0,0,0.1)"></div><div class="swatch-label" style="color:#555">#F1F5F9<br><span class="swatch-count">GigaClima 3ª</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#1F2937;"></div><div class="swatch-label">#1F2937<br><span class="swatch-count">Escuro-azul</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#111827;"></div><div class="swatch-label">#111827<br><span class="swatch-count">Navy</span></div></div>
+      </div>
+    </div>
+    <!-- Accent Colors -->
+    <div class="card accent-top">
+      <div class="card-label">Cores de Acento (10%) — Dinâmicas por cliente</div>
+      <div class="card-title">Acentos & Destaques</div>
+      <div class="swatch-grid" style="margin-top:16px;">
+        <div class="swatch"><div class="swatch-dot" style="background:#E80403"></div><div class="swatch-label">#E80403<br><span class="swatch-count">V4 Red</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#CF1918"></div><div class="swatch-label">#CF1918<br><span class="swatch-count">Crimson</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#DC2626"></div><div class="swatch-label">#DC2626<br><span class="swatch-count">Red 600</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#EF4444"></div><div class="swatch-label">#EF4444<br><span class="swatch-count">Red 500</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#FF4B4B"></div><div class="swatch-label">#FF4B4B<br><span class="swatch-count">Coral Red</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#E8420A"></div><div class="swatch-label">#E8420A<br><span class="swatch-count">Orange-Red</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#C9A227"></div><div class="swatch-label">#C9A227<br><span class="swatch-count">Gold (Óticas)</span></div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#2196F3"></div><div class="swatch-label">#2196F3<br><span class="swatch-count">Blue (Biesky)</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <!-- Texto -->
+    <div class="card accent-left" style="border-left-color:var(--muted)">
+      <div class="card-label" style="color:var(--muted)">Textos (30%) — Hierarquia em 3 níveis</div>
+      <div class="card-title">Escala de Cinza para Texto</div>
+      <div style="margin-top:16px;">
+        <div class="progress-row">
+          <div class="progress-top"><span class="progress-name">#FFFFFF — Títulos principais</span><span class="progress-pct">Nível 1</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:100%;background:#FFFFFF;"></div></div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-top"><span class="progress-name">#E0E0E0 — Corpo confortável</span><span class="progress-pct">Nível 2</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:88%;background:#E0E0E0;"></div></div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-top"><span class="progress-name">#CCCCCC — Texto secundário</span><span class="progress-pct">Nível 2</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:80%;background:#CCCCCC;"></div></div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-top"><span class="progress-name">#AAAAAA / #9CA3AF — Muted</span><span class="progress-pct">Nível 3</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:67%;background:#9CA3AF;"></div></div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-top"><span class="progress-name">#666666 — Legendas</span><span class="progress-pct">Nível 4</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:40%;background:#666666;"></div></div>
+        </div>
+        <div class="progress-row">
+          <div class="progress-top"><span class="progress-name">#333333 — Texto escuro (light mode)</span><span class="progress-pct">Nível 1 Light</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:20%;background:#333333;"></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Semânticas -->
+    <div class="card accent-left" style="border-left-color:var(--green)">
+      <div class="card-label green">Cores Semânticas — Fluxogramas & Status</div>
+      <div class="card-title">Cores com Significado</div>
+      <div class="card-body" style="margin-top:16px;">
+        <ul>
+          <li><strong style="color:#4ADE80">Verde #4ADE80 / #10B981 / #22C55E</strong> — Sucesso, Ganho, Avanço, Growth</li>
+          <li><strong style="color:#F87171">Vermelho #EF4444 / #CF1918</strong> — Perda, Alerta, Problema, Atenção</li>
+          <li><strong style="color:#93C5FD">Azul #3B82F6 / #60A5FA</strong> — Nutrição, Educação, Informação</li>
+          <li><strong style="color:#FFB74D">Laranja #FF9800 / #EF9F27</strong> — Pendente, Atenção moderada</li>
+          <li><strong style="color:#D1D5DB">Branco/Cinza</strong> — Neutro, Espera, Sem status</li>
+          <li><strong style="color:#25D366">Verde-vivo #25D366</strong> — WhatsApp CTA</li>
+          <li><strong style="color:#4285F4">Azul Google #4285F4</strong> — Google Ads referência</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 3. TIPOGRAFIA -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">03</div>
+    <div class="section-title"><span>Tipografia</span> & Hierarquia</div>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:28px;">
+    <div class="font-specimen">
+      <div class="font-name">Montserrat — Primária de Destaque</div>
+      <div class="font-sample" style="font-family:'Montserrat',sans-serif;">
+        <div style="font-size:36px;font-weight:900;line-height:1;">TÍTULO HERO</div>
+        <div style="font-size:18px;font-weight:700;color:var(--accent);margin-top:6px;">SEÇÃO DE DESTAQUE</div>
+        <div style="font-size:14px;font-weight:600;color:var(--muted);margin-top:4px;">Subtítulo de card — Medium 600</div>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--muted2);">Usado em títulos, labels, eyebrows, CTAs. Weights: 700, 800, 900.</div>
+    </div>
+    <div class="font-specimen">
+      <div class="font-name">Roboto / Inter — Corpo de Texto</div>
+      <div class="font-sample" style="font-family:'Inter',sans-serif;">
+        <div style="font-size:16px;font-weight:400;line-height:1.6;color:var(--muted);">Texto de corpo regular com espaçamento confortável para leitura em projeção.</div>
+        <div style="font-size:13px;color:var(--muted2);margin-top:8px;">Labels de tabelas e legendas em 12–13px.</div>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--muted2);">Corpo de texto, descrições em cards, bullets de lista. Weights: 400, 500, 600.</div>
+    </div>
+    <div class="font-specimen">
+      <div class="font-name">Oswald / Courier New — Especiais</div>
+      <div class="font-sample">
+        <div style="font-family:monospace;font-size:22px;font-weight:700;color:var(--accent);letter-spacing:2px;">104%</div>
+        <div style="font-family:monospace;font-size:14px;color:var(--muted);margin-top:4px;">CONVERSÃO · 2.4x</div>
+        <div style="font-family:serif;font-size:18px;color:var(--fg);margin-top:8px;font-style:italic;">DM Serif Display</div>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--muted2);">Oswald: números de destaque, KPIs grandes. Courier New: dados técnicos, tabelas de dados.</div>
+    </div>
+  </div>
+
+  <!-- Hierarquia de tamanhos -->
+  <div class="card" style="margin-bottom:24px;">
+    <div class="card-label">Escala tipográfica — Tamanhos Validados</div>
+    <div class="card-title">Hierarquia Matemática de Fontes</div>
+    <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div>
+        <div class="rule-block" style="margin-bottom:8px;">
+          <div class="rule-title">Display / Hero Number</div>
+          <div class="rule-body">72–104pt · Montserrat 900 · Cor de acento · KPIs gigantes, números de destaque</div>
+        </div>
+        <div class="rule-block">
+          <div class="rule-title">Título Principal</div>
+          <div class="rule-body">36–54pt · Montserrat 800 · Branco puro · Letras maiúsculas, preenchimento de espaço</div>
+        </div>
+        <div class="rule-block" style="margin-top:8px;">
+          <div class="rule-title">Subtítulo / Card Title</div>
+          <div class="rule-body">22–36pt · Montserrat 700 · Branco ou Acento · Cabeçalhos de seção e cards</div>
+        </div>
+        <div class="rule-block" style="margin-top:8px;">
+          <div class="rule-title">Eyebrow / Label</div>
+          <div class="rule-body">11–16pt · Montserrat 800 · Cor Acento · UPPERCASE + letter-spacing 2px</div>
+        </div>
+      </div>
+      <div>
+        <div class="rule-block" style="margin-bottom:8px;">
+          <div class="rule-title">Corpo Principal (Projeção)</div>
+          <div class="rule-body">16–18pt · Inter/Roboto 400–500 · Cinza claro · Mínimo para conteúdo apresentado ao público</div>
+        </div>
+        <div class="rule-block" style="margin-top:8px;">
+          <div class="rule-title">Corpo de Card (Padrão Real)</div>
+          <div class="rule-body">10–15pt · Calibri/Roboto · #9CA3AF · Bullets, listas, descrições dentro de cards</div>
+        </div>
+        <div class="rule-block" style="margin-top:8px;">
+          <div class="rule-title">Micro / Dados Densos</div>
+          <div class="rule-body">6–9pt · Calibri · Muted · Usado em slides-dashboard com altíssima densidade de informação</div>
+        </div>
+        <div class="rule-block" style="margin-top:8px;" class="yellow">
+          <div class="rule-title">⚠️ Realidade dos Slides Reais</div>
+          <div class="rule-body">Os slides analisados têm <strong>6–10pt</strong> como tamanho mais frequente. O ideal de 16pt+ é a meta premium, mas a densidade de dados força fontes menores.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Frequência de fontes -->
+  <div class="card">
+    <div class="card-label">Frequência de Uso — 31 arquivos</div>
+    <div class="card-title">Ranking de Fontes</div>
+    <div style="margin-top:20px;">
+      <div class="progress-row">
+        <div class="progress-top"><span class="progress-name">Calibri</span><span class="progress-pct">28/31 arquivos</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:90%;background:var(--muted);"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-top"><span class="progress-name">Montserrat</span><span class="progress-pct">26/31 arquivos</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:84%;background:var(--accent);"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-top"><span class="progress-name">Roboto</span><span class="progress-pct">14/31 arquivos</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:45%;background:#3B82F6;"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-top"><span class="progress-name">Open Sans</span><span class="progress-pct">10/31 arquivos</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:32%;background:#10B981;"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-top"><span class="progress-name">Proxima Nova</span><span class="progress-pct">8/31 arquivos</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:26%;background:#F472B6;"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-top"><span class="progress-name">Oswald / Oswald SemiBold</span><span class="progress-pct">24/31 arquivos</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:77%;background:#FFCC00;"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-top"><span class="progress-name">Inter</span><span class="progress-pct">3/31 arquivos</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:10%;background:#A78BFA;"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-top"><span class="progress-name">Courier New / Consolas</span><span class="progress-pct">4/31 arquivos</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:13%;background:#94A3B8;"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-top"><span class="progress-name">Lato / Poppins</span><span class="progress-pct">3/31 arquivos</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:10%;background:#6B7280;"></div></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:12px 16px;background:rgba(232,4,3,0.08);border-radius:8px;font-size:12px;color:var(--muted);">
+      <strong style="color:var(--accent)">Nota:</strong> Calibri aparece em quase todos pois é a fonte default do PowerPoint — inserida automaticamente em textboxes vazios. A fonte <em>intencional</em> primária é <strong>Montserrat</strong>, e a secundária é <strong>Roboto</strong> ou <strong>Open Sans</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 4. LAYOUT & DENSIDADE -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">04</div>
+    <div class="section-title">Layout, <span>Grid</span> & Densidade</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:24px;">
+    <div>
+      <div class="rule-block" style="margin-bottom:12px;">
+        <div class="rule-title">Tamanho de Slide</div>
+        <div class="rule-body">Padrão: <span class="rule-code">13.33" × 7.5"</span> (Widescreen 16:9, 1280×720px). Alguns arquivos usam <span class="rule-code">33.87 × 19.05cm</span> (1920×1080px).</div>
+      </div>
+      <div class="rule-block" style="margin-bottom:12px;">
+        <div class="rule-title">Densidade de Shapes por Slide</div>
+        <div class="rule-body">
+          Mínima: <strong>9–10</strong> shapes (slides limpos, Semana 2)<br>
+          Média: <strong>20–30</strong> shapes (padrão da maioria)<br>
+          Alta: <strong>36–44</strong> shapes (Decorti, WK, Studio HH)<br>
+          Extrema: <strong>61</strong> shapes (WK Carpetes 3ª — bento ultra-denso)
+        </div>
+      </div>
+      <div class="rule-block">
+        <div class="rule-title">Regra 60/30/10</div>
+        <div class="rule-body"><strong>60%</strong> fundo/base · <strong>30%</strong> texto/content · <strong>10%</strong> acento/cor de destaque. Nunca inverter essa proporção.</div>
+      </div>
+    </div>
+    <div>
+      <div class="rule-block" style="margin-bottom:12px;">
+        <div class="rule-title">Padding de Slide</div>
+        <div class="rule-body">Margens mínimas: <span class="rule-code">5%</span> laterais, <span class="rule-code">3–5%</span> topo/baixo. Em slides premium: <span class="rule-code">80px</span> laterais, <span class="rule-code">56px</span> topo em 1920px.</div>
+      </div>
+      <div class="rule-block" style="margin-bottom:12px;">
+        <div class="rule-title">Gap entre Cards no Grid</div>
+        <div class="rule-body">Gap interno: <span class="rule-code">16–24px</span>. Padding interno de card: <span class="rule-code">24–32px</span>. Cards nunca sem respiro interno.</div>
+      </div>
+      <div class="rule-block">
+        <div class="rule-title">Border Radius de Cards</div>
+        <div class="rule-body">Cards: <span class="rule-code">border-radius: 10–12px</span>. Pills/Tags: <span class="rule-code">20–24px</span>. Containers rasos: <span class="rule-code">6–8px</span>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layout Patterns Visuais -->
+  <div class="card-label" style="margin-bottom:16px;font-family:Montserrat,sans-serif;font-size:11px;font-weight:800;letter-spacing:2px;color:var(--accent);">PADRÕES DE LAYOUT IDENTIFICADOS</div>
+  <div class="grid-3" style="gap:16px;">
+
+    <!-- Cover -->
+    <div>
+      <div class="slide-mock">
+        <div class="mock-topbar"></div>
+        <div style="position:absolute;top:20%;left:8%;right:8%;display:flex;flex-direction:column;gap:4%;">
+          <div style="height:4%;background:var(--accent);width:20%;border-radius:2px;"></div>
+          <div style="height:12%;background:rgba(255,255,255,0.9);border-radius:3px;"></div>
+          <div style="height:2%;background:var(--accent);width:15%;border-radius:1px;"></div>
+          <div style="height:5%;background:rgba(255,255,255,0.3);border-radius:2px;"></div>
+        </div>
+        <div class="mock-metrics" style="height:14%;">
+          <div class="mock-metric"></div>
+          <div class="mock-metric"></div>
+          <div class="mock-metric"></div>
+          <div class="mock-metric"></div>
+        </div>
+        <div class="mock-label">Capa / Hero</div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);padding:0 4px;">Título XL + acento + métricas rodapé</div>
+    </div>
+
+    <!-- 2 cols -->
+    <div>
+      <div class="slide-mock">
+        <div class="mock-topbar"></div>
+        <div class="mock-header"></div>
+        <div class="mock-grid cols2" style="bottom:8%;">
+          <div class="mock-card"></div>
+          <div class="mock-card top"></div>
+        </div>
+        <div class="mock-label">2 Colunas Simétricas</div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);padding:0 4px;">Grid 2 colunas. Acento left/top. Padrão mais frequente.</div>
+    </div>
+
+    <!-- 3 cols -->
+    <div>
+      <div class="slide-mock">
+        <div class="mock-topbar"></div>
+        <div class="mock-header"></div>
+        <div class="mock-grid cols3" style="bottom:8%;">
+          <div class="mock-card"></div>
+          <div class="mock-card top"></div>
+          <div class="mock-card blue-accent"></div>
+        </div>
+        <div class="mock-label">3 Colunas / Bento Grid</div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);padding:0 4px;">3 cards com acentos diferentes por função</div>
+    </div>
+
+    <!-- Timeline -->
+    <div>
+      <div class="slide-mock">
+        <div class="mock-topbar"></div>
+        <div class="mock-header"></div>
+        <div class="mock-timeline">
+          <div class="mock-node"></div>
+          <div class="mock-arrow"></div>
+          <div class="mock-node"></div>
+          <div class="mock-arrow"></div>
+          <div class="mock-node"></div>
+          <div class="mock-arrow"></div>
+          <div class="mock-node"></div>
+          <div class="mock-arrow"></div>
+          <div class="mock-node" style="border-top-color:var(--green)"></div>
+        </div>
+        <div style="position:absolute;bottom:8%;left:5%;right:5%;height:30%;display:grid;grid-template-columns:1fr 1fr;gap:2%;">
+          <div style="background:rgba(255,255,255,0.04);border-radius:3px;border-left:2px solid var(--accent);"></div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:3px;border-left:2px solid var(--green);"></div>
+        </div>
+        <div class="mock-label">Timeline Horizontal</div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);padding:0 4px;">Nós conectados com setas + cards de contexto</div>
+    </div>
+
+    <!-- Drawflow -->
+    <div>
+      <div class="slide-mock">
+        <div class="mock-topbar"></div>
+        <div class="mock-header"></div>
+        <div class="mock-flow">
+          <div class="mock-step"></div>
+          <div class="mock-arrow-text">›</div>
+          <div class="mock-step"></div>
+          <div class="mock-arrow-text">›</div>
+          <div class="mock-step" style="border-top-color:var(--green)"></div>
+          <div class="mock-arrow-text" style="color:var(--green)">›</div>
+          <div class="mock-step" style="border-top-color:var(--green)"></div>
+        </div>
+        <div style="position:absolute;top:48%;left:5%;right:5%;height:18%;display:flex;gap:2%;">
+          <div style="flex:1;background:rgba(255,255,255,0.04);border-radius:3px;border-left:2px solid #F87171;"></div>
+          <div style="flex:1;background:rgba(255,255,255,0.04);border-radius:3px;border-left:2px solid var(--blue);"></div>
+        </div>
+        <div class="mock-label">Drawflow / Fluxograma</div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);padding:0 4px;">Etapas → setas → desvios coloridos (verde/vermelho)</div>
+    </div>
+
+    <!-- Dashboard -->
+    <div>
+      <div class="slide-mock">
+        <div class="mock-topbar"></div>
+        <div class="mock-header" style="height:12%"></div>
+        <div style="position:absolute;top:18%;left:5%;right:5%;bottom:8%;display:grid;grid-template-columns:1fr 1fr;gap:2%;">
+          <div style="display:flex;flex-direction:column;gap:2%;">
+            <div style="flex:1;background:rgba(255,255,255,0.06);border-radius:3px;border-left:2px solid var(--accent);"></div>
+            <div style="flex:1;background:rgba(255,255,255,0.06);border-radius:3px;border-left:2px solid var(--accent);"></div>
+            <div style="flex:1;background:rgba(255,255,255,0.06);border-radius:3px;border-left:2px solid var(--accent);"></div>
+            <div style="flex:1;background:rgba(255,255,255,0.06);border-radius:3px;border-left:2px solid var(--accent);"></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:3px;border-top:2px solid var(--blue);"></div>
+        </div>
+        <div class="mock-label">Dashboard Rows + Card Grande</div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);padding:0 4px;">Lista key-value à esquerda + container visual à direita</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 5. ELEMENTOS VISUAIS -->
+<div class="section" id="layout-padroes-complementares">
+  <div class="card-label" style="margin-bottom:16px;font-family:Montserrat,sans-serif;font-size:11px;font-weight:800;letter-spacing:2px;color:var(--accent);">PADROES DE LAYOUT IDENTIFICADOS - COMPLEMENTOS OBRIGATORIOS</div>
+  <div class="grid-3" style="gap:16px;">
+    <div>
+      <div class="slide-mock">
+        <div class="mock-topbar" style="background:var(--blue);"></div>
+        <div class="mock-header" style="height:12%"></div>
+        <div style="position:absolute;top:22%;left:6%;right:6%;bottom:12%;display:grid;grid-template-columns:0.9fr 1.1fr;gap:4%;">
+          <div style="display:grid;grid-template-rows:1fr 1fr;gap:8%;">
+            <div style="background:rgba(37,99,235,0.16);border:1px solid rgba(96,165,250,0.34);border-radius:5px;border-top:3px solid var(--blue);"></div>
+            <div style="background:rgba(245,158,11,0.13);border:1px solid rgba(245,158,11,0.34);border-radius:5px;border-top:3px solid var(--yellow);"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12%;justify-content:center;">
+            <div style="height:12%;width:88%;background:linear-gradient(90deg,var(--blue),rgba(96,165,250,0.2));border-radius:999px;"></div>
+            <div style="height:12%;width:68%;background:linear-gradient(90deg,var(--yellow),rgba(245,158,11,0.2));border-radius:999px;"></div>
+            <div style="height:12%;width:42%;background:linear-gradient(90deg,var(--green),rgba(16,185,129,0.2));border-radius:999px;"></div>
+          </div>
+        </div>
+        <div class="mock-label">Distribuicao de Midia / Budget Split</div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);padding:0 4px;">Compara cenarios 3k, 6k, 10k e divide Meta, Google e remarketing.</div>
+    </div>
+
+    <div>
+      <div class="slide-mock">
+        <div class="mock-topbar" style="background:var(--orange);"></div>
+        <div class="mock-header" style="height:12%"></div>
+        <div style="position:absolute;top:24%;left:12%;right:12%;bottom:14%;display:flex;flex-direction:column;align-items:center;gap:6%;">
+          <div style="height:13%;width:96%;background:var(--orange);border-radius:5px;"></div>
+          <div style="height:13%;width:82%;background:#D95112;border-radius:5px;"></div>
+          <div style="height:13%;width:66%;background:#B64214;border-radius:5px;"></div>
+          <div style="height:13%;width:48%;background:#843016;border-radius:5px;"></div>
+          <div style="height:13%;width:28%;background:#5C2415;border:1px solid var(--orange);border-radius:5px;"></div>
+        </div>
+        <div style="position:absolute;right:6%;top:44%;width:28%;height:18%;background:rgba(232,4,3,0.1);border-left:3px solid var(--accent);border-radius:5px;"></div>
+        <div class="mock-label">Funil / Waterfall Comercial</div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);padding:0 4px;">Mostra queda de volume e pontos de perda com callout de correcao.</div>
+    </div>
+
+    <div>
+      <div class="slide-mock">
+        <div class="mock-topbar" style="background:var(--green);"></div>
+        <div class="mock-header" style="height:12%"></div>
+        <div style="position:absolute;top:24%;left:6%;right:6%;height:22%;display:flex;align-items:center;gap:2%;">
+          <div style="flex:1;height:100%;background:rgba(255,255,255,0.06);border-radius:5px;border-top:3px solid var(--accent);"></div>
+          <div style="color:var(--muted);font-size:18px;font-weight:900;">&gt;</div>
+          <div style="flex:1;height:100%;background:rgba(255,255,255,0.06);border-radius:5px;border-top:3px solid var(--blue);"></div>
+          <div style="color:var(--muted);font-size:18px;font-weight:900;">&gt;</div>
+          <div style="flex:1;height:100%;background:rgba(255,255,255,0.06);border-radius:5px;border-top:3px solid var(--yellow);"></div>
+        </div>
+        <div style="position:absolute;top:54%;left:23%;right:23%;height:24%;display:grid;grid-template-columns:1fr 1fr;gap:8%;">
+          <div style="background:rgba(16,185,129,0.13);border:1px solid rgba(16,185,129,0.35);border-radius:5px;"></div>
+          <div style="background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.35);border-radius:5px;"></div>
+        </div>
+        <div class="mock-label">Fluxo Operacional / Decisao</div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);padding:0 4px;">Etapas, bifurcacoes, ganho/perda, SLA e responsaveis do processo.</div>
+    </div>
+
+    <div>
+      <div class="slide-mock">
+        <div class="mock-topbar" style="background:var(--yellow);"></div>
+        <div class="mock-header" style="height:12%"></div>
+        <div style="position:absolute;top:22%;left:32%;right:32%;height:18%;background:rgba(245,158,11,0.16);border:1px solid rgba(245,158,11,0.38);border-radius:5px;"></div>
+        <div style="position:absolute;top:43%;left:50%;width:1px;height:10%;background:var(--border);"></div>
+        <div style="position:absolute;top:53%;left:18%;right:18%;height:1px;background:var(--border);"></div>
+        <div style="position:absolute;top:56%;left:9%;right:9%;height:24%;display:grid;grid-template-columns:repeat(4,1fr);gap:4%;">
+          <div style="background:rgba(255,255,255,0.055);border-radius:5px;border-top:3px solid var(--accent);"></div>
+          <div style="background:rgba(255,255,255,0.055);border-radius:5px;border-top:3px solid var(--blue);"></div>
+          <div style="background:rgba(255,255,255,0.055);border-radius:5px;border-top:3px solid var(--green);"></div>
+          <div style="background:rgba(255,255,255,0.055);border-radius:5px;border-top:3px solid var(--orange);"></div>
+        </div>
+        <div class="mock-label">Organograma / Time de Execucao</div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);padding:0 4px;">Mostra papeis, ownership, squads, rotinas e quem decide o que.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">05</div>
+    <div class="section-title">Elementos <span>Visuais</span> & Componentes</div>
+  </div>
+
+  <div class="component-lead">
+    <div class="component-lead-note">
+      <div class="card-label" style="margin-bottom:8px;">Biblioteca Canônica</div>
+      <div class="card-title" style="font-size:24px;margin-bottom:0;">O que os decks bons repetem de verdade</div>
+      <p>Esta seção não é uma lista abstrata. Ela consolida padrões que aparecem nos decks das Semanas 2, 3 e 4: Fibranet, Gigaclima, Movement, Tropical Magic, Zabeu, Laundry Pass, Biesky, OFOS, WZR, Studio Henrique e outros. O objetivo é transformar repertório visual real em componentes que possam ser reutilizados pela skill em HTML, PPTX e Google Slides.</p>
+      <div class="component-pill-row">
+        <span class="component-pill">capa</span>
+        <span class="component-pill">prova</span>
+        <span class="component-pill">mídia</span>
+        <span class="component-pill">funil</span>
+        <span class="component-pill">mercado</span>
+        <span class="component-pill">proposta</span>
+      </div>
+    </div>
+    <div class="component-totals">
+      <div class="component-total"><strong>31</strong><span>decks reais alimentando a biblioteca visual</span></div>
+      <div class="component-total"><strong>8</strong><span>famílias recorrentes de raciocínio e forma</span></div>
+      <div class="component-total"><strong>20+</strong><span>blocos reaproveitáveis para o gerador X9</span></div>
+      <div class="component-total"><strong>3</strong><span>camadas sempre separadas: fundo, estrutura e decisão</span></div>
+    </div>
+  </div>
+
+  <div class="component-reference-grid">
+    <div class="component-reference">
+      <img src="testes-formatos/referencias-lote-02/09_fibranet_cover.png" alt="Fibranet cover">
+      <div class="component-reference-body">
+        <div class="component-reference-kicker">Capa de impacto</div>
+        <div class="component-reference-title">Fibranet</div>
+        <div class="component-reference-copy">Imagem-metáfora + título gigante. Referência máxima para abertura cinematográfica.</div>
+      </div>
+    </div>
+    <div class="component-reference">
+      <img src="testes-formatos/referencias-lote-02/05_zabeu_cliente_oculto.png" alt="Zabeu cliente oculto">
+      <div class="component-reference-body">
+        <div class="component-reference-kicker">Prova real</div>
+        <div class="component-reference-title">Espaço Zabeu</div>
+        <div class="component-reference-copy">Prints e evidências na própria tela. O visual vira argumento, não decoração.</div>
+      </div>
+    </div>
+    <div class="component-reference">
+      <img src="testes-formatos/referencias-lote-02/06_biesky_pipeline.png" alt="Biesky pipeline">
+      <div class="component-reference-body">
+        <div class="component-reference-kicker">Pipeline</div>
+        <div class="component-reference-title">Biesky</div>
+        <div class="component-reference-copy">Etapas horizontais com ganho e perda visíveis. Excelente para comercial e CRM.</div>
+      </div>
+    </div>
+    <div class="component-reference">
+      <img src="testes-formatos/referencias-lote-02/07_laundry_cvba.png" alt="Laundry CVBA">
+      <div class="component-reference-body">
+        <div class="component-reference-kicker">Matriz 4x</div>
+        <div class="component-reference-title">Laundry Pass</div>
+        <div class="component-reference-copy">Quatro colunas com uma tese final destacada. Muito forte para copy e posicionamento.</div>
+      </div>
+    </div>
+    <div class="component-reference">
+      <img src="testes-formatos/referencias-lote-02/01_movement_grade_semanal.png" alt="Movement grade semanal">
+      <div class="component-reference-body">
+        <div class="component-reference-kicker">Calendário</div>
+        <div class="component-reference-title">Movement Academia</div>
+        <div class="component-reference-copy">Grade semanal + rotina lateral. Ótimo para planejamento operacional de conteúdo.</div>
+      </div>
+    </div>
+    <div class="component-reference">
+      <img src="testes-formatos/referencias-lote-02/02_tropical_operacao.png" alt="Tropical operação">
+      <div class="component-reference-body">
+        <div class="component-reference-kicker">Processo recorrente</div>
+        <div class="component-reference-title">Tropical Magic / Biesky</div>
+        <div class="component-reference-copy">Timeline mais cards por frente. Resolve muito bem slides de operação contínua.</div>
+      </div>
+    </div>
+    <div class="component-reference">
+      <img src="testes-formatos/referencias-lote-02/08_zabeu_tam.png" alt="Zabeu TAM">
+      <div class="component-reference-body">
+        <div class="component-reference-kicker">Mercado</div>
+        <div class="component-reference-title">TAM / SAM / SOM</div>
+        <div class="component-reference-copy">Mistura conceito e número. Serve para potencial de mercado e leitura de oportunidade.</div>
+      </div>
+    </div>
+    <div class="component-reference">
+      <img src="testes-formatos/referencias-lote-02/03_studio_proximos_passos.png" alt="Studio próximos passos">
+      <div class="component-reference-body">
+        <div class="component-reference-kicker">Fechamento</div>
+        <div class="component-reference-title">Studio Henrique</div>
+        <div class="component-reference-copy">Próximos passos em blocos numerados. Fecha deck com clareza e compromisso.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="component-family">
+    <div class="component-family-head">
+      <div>
+        <div class="component-family-label">Família 01</div>
+        <div class="component-family-title">Identidade, abertura e assinatura visual</div>
+        <div class="component-family-copy">São os componentes que fazem o deck parecer sistema e não coleção de slides soltos. Eles seguram atmosfera, início de leitura e fechamento da tese.</div>
+      </div>
+      <div class="component-family-rules">
+        <div class="component-family-rule"><strong>Quando usar</strong>Capas, mudanças de seção, slides de tese e qualquer tela que precise parecer mais premium logo no primeiro olhar.</div>
+        <div class="component-family-rule"><strong>Cuidado principal</strong>Fundo forte pode existir, mas precisa ficar fora da área crítica de leitura. Se o halo invade título ou cards, ele deixa de ser assinatura e vira ruído.</div>
+      </div>
+    </div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-meta"><span>base</span><span>abertura</span></div>
+        <div class="comp-icon">▬</div>
+        <div class="comp-name">Topbar + Eyebrow Lockup</div>
+        <div class="comp-desc">Faixa de 4 a 8px no topo com eyebrow em uppercase. É a âncora mais constante do sistema V4 e ajuda o cliente a entender a seção sem esforço.</div>
+        <div class="comp-foot">Origem: OFOS, WZR, Gigaclima, Ícaro Braga e variações X9.</div>
+        <div class="comp-code">topbar 4-8px · eyebrow 11-13pt</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>hero</span><span>capa</span></div>
+        <div class="comp-icon">◭</div>
+        <div class="comp-name">Capa Cinematográfica</div>
+        <div class="comp-desc">Foto ou cena de fundo com metáfora forte, overlay escuro e título gigante. Funciona melhor quando o slide precisa abrir narrativa e não despejar informação.</div>
+        <div class="comp-foot">Origem: Fibranet 2ª Semana e capas premium de Gigaclima.</div>
+        <div class="comp-code">1 cena · 1 tese · 1 subtítulo curto</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>background</span><span>atmosfera</span></div>
+        <div class="comp-icon">◔</div>
+        <div class="comp-name">Halo / Diagonal Sutil</div>
+        <div class="comp-desc">Elipses, glows e planos diagonais entram só para dar profundidade. Eles devem aparecer com baixa opacidade e longe do conteúdo principal.</div>
+        <div class="comp-foot">Origem: WZR, OFOS, testes X9 e decks dark premium.</div>
+        <div class="comp-code">opacidade 4-14% · fora da área útil</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>fechamento</span><span>veredito</span></div>
+        <div class="comp-icon">▁</div>
+        <div class="comp-name">Faixa de Decisão</div>
+        <div class="comp-desc">Barra horizontal próxima da base com a frase que resume a leitura do slide. Ajuda muito em apresentações consultivas longas.</div>
+        <div class="comp-foot">Origem: decks X9 recentes, pipelines e slides de método V4.</div>
+        <div class="comp-code">1 frase objetiva · largura total</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="component-family blue">
+    <div class="component-family-head">
+      <div>
+        <div class="component-family-label">Família 02</div>
+        <div class="component-family-title">Cards, prova e argumentação</div>
+        <div class="component-family-copy">Essa camada faz o deck parecer consultivo. O ponto não é só “ter cards”, e sim transformar achado, opinião e prova em blocos fáceis de escanear.</div>
+      </div>
+      <div class="component-family-rules">
+        <div class="component-family-rule"><strong>Quando usar</strong>Diagnóstico, auditoria, cliente oculto, copy, proposta de valor e qualquer trecho em que precisamos defender uma tese.</div>
+        <div class="component-family-rule"><strong>Cuidado principal</strong>Se o print estiver pequeno ou sem legenda, ele só ocupa espaço. Evidência precisa nascer com moldura, contexto e conclusão ao lado.</div>
+      </div>
+    </div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-meta"><span>card</span><span>padrão</span></div>
+        <div class="comp-icon">▣</div>
+        <div class="comp-name">Card com Borda de Acento</div>
+        <div class="comp-desc">Container com borda lateral ou superior colorida. Continua sendo a peça mais útil do sistema porque organiza sem depender de tabelas nativas.</div>
+        <div class="comp-foot">Origem: praticamente todos os decks dark e modulares.</div>
+        <div class="comp-code">left 6px ou top 6-8px</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>prova</span><span>auditoria</span></div>
+        <div class="comp-icon">▤</div>
+        <div class="comp-name">Frame de Evidência Real</div>
+        <div class="comp-desc">Print, foto, conversa ou tela real colocada como peça de prova. Deve ganhar borda, legenda curta e uma leitura orientada pelo deck.</div>
+        <div class="comp-foot">Origem: Espaço Zabeu cliente oculto e análises de operação.</div>
+        <div class="comp-code">imagem + legenda + achado principal</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>status</span><span>pilar</span></div>
+        <div class="comp-icon">◉</div>
+        <div class="comp-name">Pills, Tags e Chips</div>
+        <div class="comp-desc">Badges arredondados para pilar, canal, etapa, cenário ou status. Funcionam muito bem para dar semântica rápida sem aumentar o texto.</div>
+        <div class="comp-foot">Origem: CVBA, dashboards, estudos de mídia e fechamento de hipótese.</div>
+        <div class="comp-code">radius 20-24px · padding 4x12</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>opinião</span><span>síntese</span></div>
+        <div class="comp-icon">✦</div>
+        <div class="comp-name">Caixa de Insight / Opinião</div>
+        <div class="comp-desc">Bloco curto para interpretar o que o visual significa. É o componente que evita slide bonito porém mudo, principalmente em diagnóstico e benchmarking.</div>
+        <div class="comp-foot">Origem: comparativos Vivid, design-analysis e decks de fechamento.</div>
+        <div class="comp-code">o que ver · por que importa</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="component-family gold">
+    <div class="component-family-head">
+      <div>
+        <div class="component-family-label">Família 03</div>
+        <div class="component-family-title">Dados, mídia e leitura de mercado</div>
+        <div class="component-family-copy">Aqui entram os blocos que transformam número em decisão: verba, KPI, potencial de mercado, cenário de canal e comparação de volume.</div>
+      </div>
+      <div class="component-family-rules">
+        <div class="component-family-rule"><strong>Quando usar</strong>Distribuição de mídia, cenários 3k vs 6k, TAM/SAM/SOM, dashboards de performance e slides que justificam investimento.</div>
+        <div class="component-family-rule"><strong>Cuidado principal</strong>Não misturar todos os números no mesmo plano. O slide precisa ter número hero, visual principal e uma frase de interpretação.</div>
+      </div>
+    </div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-meta"><span>kpi</span><span>destaque</span></div>
+        <div class="comp-icon">⚡</div>
+        <div class="comp-name">Metric Hero</div>
+        <div class="comp-desc">Número grande em alto contraste com label curta abaixo. Serve para CPL, leads, contrato, taxa ou qualquer métrica que precisa aparecer antes do resto.</div>
+        <div class="comp-foot">Origem: dashboards Decorti, mídia X9, slides de validação de dados.</div>
+        <div class="comp-code">36-80pt · 1 unidade por card</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>tabela fake</span><span>dashboard</span></div>
+        <div class="comp-icon">⋮</div>
+        <div class="comp-name">Dashboard Row</div>
+        <div class="comp-desc">Linha key-value com label à esquerda e valor à direita. Substitui a tabela nativa e mantém a estética premium do deck.</div>
+        <div class="comp-foot">Origem: dashboards executivos, propostas e slides de metas.</div>
+        <div class="comp-code">label esquerda · valor direita</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>mídia</span><span>cenário</span></div>
+        <div class="comp-icon">▮</div>
+        <div class="comp-name">Barras de Alocação de Mídia</div>
+        <div class="comp-desc">Barras vetoriais para comparar Meta, Google, remarketing e cenários de investimento. Funcionam melhor do que gráfico nativo para decks comerciais.</div>
+        <div class="comp-foot">Origem: testes X9 de 3k vs 6k e planejamento de aquisição.</div>
+        <div class="comp-code">barra nativa · percentual · verba</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>mercado</span><span>escopo</span></div>
+        <div class="comp-icon">◎</div>
+        <div class="comp-name">Stack TAM / SAM / SOM</div>
+        <div class="comp-desc">Camadas concêntricas ou blocos empilhados para explicar tamanho de mercado, recorte e oportunidade viável. Precisa misturar conceito e número.</div>
+        <div class="comp-foot">Origem: Espaço Zabeu 2ª Semana e market scope dashboards.</div>
+        <div class="comp-code">conceito + volume + insight financeiro</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="component-family green">
+    <div class="component-family-head">
+      <div>
+        <div class="component-family-label">Família 04</div>
+        <div class="component-family-title">Fluxos, funis e operação comercial</div>
+        <div class="component-family-copy">Essa é a família que mais traduz “como funciona” em vez de apenas “o que é”. Ela explica CRM, handoff, follow-up, perda, ganho e jornada do lead.</div>
+      </div>
+      <div class="component-family-rules">
+        <div class="component-family-rule"><strong>Quando usar</strong>Etapas de aquisição, CRM, drawflow, pipeline comercial, gargalos, atendimento, jornada WhatsApp e processos multiárea.</div>
+        <div class="component-family-rule"><strong>Cuidado principal</strong>Não encher cada etapa de texto. O ganho do pipeline está na leitura do caminho. Conteúdo demais faz o cliente desistir antes de chegar ao ponto.</div>
+      </div>
+    </div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-meta"><span>pipeline</span><span>crm</span></div>
+        <div class="comp-icon">→</div>
+        <div class="comp-name">Pipeline Steps</div>
+        <div class="comp-desc">Cards numerados conectados por setas. Ideal para mostrar passagem de etapa, responsável e próximo passo sem virar organograma confuso.</div>
+        <div class="comp-foot">Origem: Biesky, estudos de processo comercial e decks da 4ª Semana.</div>
+        <div class="comp-code">step n → step n+1</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>ganho</span><span>perda</span></div>
+        <div class="comp-icon">⇄</div>
+        <div class="comp-name">Split Outcome</div>
+        <div class="comp-desc">Saídas finais em verde e vermelho para mostrar o que acontece quando o fluxo dá certo ou quebra. Muito útil para explicar bifurcação de venda.</div>
+        <div class="comp-foot">Origem: Biesky pipeline e drawflows recentes da skill.</div>
+        <div class="comp-code">verde = sucesso · vermelho = perda</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>drawflow</span><span>bifurcação</span></div>
+        <div class="comp-icon">◇</div>
+        <div class="comp-name">Nó Drawflow / Bifurcação</div>
+        <div class="comp-desc">Node com texto curto e conectores nativos para desenhar WhatsApp, CRM, D0, follow-up e desvios operacionais. Precisa ficar nítido e com rota clara.</div>
+        <div class="comp-foot">Origem: decks de aquisição digital e testes Ícaro Braga.</div>
+        <div class="comp-code">node + conector + rótulo</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>perda</span><span>queda</span></div>
+        <div class="comp-icon">▁▂▃</div>
+        <div class="comp-name">Waterfall de Conversão</div>
+        <div class="comp-desc">Barras decrescentes para mostrar onde o volume cai do topo ao fechamento. Ajuda muito quando o cliente precisa enxergar gargalo em vez de ouvir abstração.</div>
+        <div class="comp-foot">Origem: dashboards de funil, mídia e slides de perdas operacionais.</div>
+        <div class="comp-code">valor/max × altura total</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="component-family">
+    <div class="component-family-head">
+      <div>
+        <div class="component-family-label">Família 05</div>
+        <div class="component-family-title">Planejamento, benchmarking e proposta</div>
+        <div class="component-family-copy">É a camada que transforma análise em plano executável. Aqui entram rotina, comparação competitiva, escopo e fechamento comercial.</div>
+      </div>
+      <div class="component-family-rules">
+        <div class="component-family-rule"><strong>Quando usar</strong>Calendário editorial, próximos passos, CVBA, benchmarking, roadmap de 30/45/90 dias e proposta consultiva.</div>
+        <div class="component-family-rule"><strong>Cuidado principal</strong>Não transformar tudo em tabela. O componente precisa orientar decisão: qual frente priorizar, qual diferencial sustentar e qual sequência executar.</div>
+      </div>
+    </div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-meta"><span>rotina</span><span>editorial</span></div>
+        <div class="comp-icon">▦</div>
+        <div class="comp-name">Grade Semanal + Rotina</div>
+        <div class="comp-desc">Tabela de semana ou calendário com um card lateral de frequência, pilares ou regras de execução. Muito mais forte do que apenas listar posts.</div>
+        <div class="comp-foot">Origem: Movement Academia e planos editoriais de Gigaclima.</div>
+        <div class="comp-code">grade + legenda + rotina lateral</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>matriz</span><span>copy</span></div>
+        <div class="comp-icon">▥</div>
+        <div class="comp-name">Matriz 4x Highlight</div>
+        <div class="comp-desc">Quatro colunas com uma delas em destaque para fechamento. Excelente para CVBA, frameworks de argumento e leitura de oferta.</div>
+        <div class="comp-foot">Origem: Laundry Pass e frameworks comerciais.</div>
+        <div class="comp-code">4 colunas · última como síntese</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>benchmark</span><span>valor</span></div>
+        <div class="comp-icon">▤</div>
+        <div class="comp-name">Coluna Central de Benchmark</div>
+        <div class="comp-desc">Comparação entre concorrentes com a proposta central destacada. O cliente consegue entender rápido onde está a vantagem competitiva.</div>
+        <div class="comp-foot">Origem: Benchmarking Decorti e matrizes comparativas premium.</div>
+        <div class="comp-code">centro em destaque · laterais em fade</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-meta"><span>proposta</span><span>escopo</span></div>
+        <div class="comp-icon">▧</div>
+        <div class="comp-name">Phase Stack 30 / 45 / 90D</div>
+        <div class="comp-desc">Blocos por fase com entregáveis, meta e compromisso. É o componente certo para a apresentação terminar em execução e não em recomendação vaga.</div>
+        <div class="comp-foot">Origem: Gabarito Complexo, Réplica Genspark Nativa e escopos X9.</div>
+        <div class="comp-code">fase · entrega · resultado esperado</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card accent-top" style="margin-top:18px;">
+    <div class="card-label">Combinações Vencedoras</div>
+    <div class="card-title">Blocos que funcionam muito bem juntos</div>
+    <div class="card-body" style="margin-top:10px;margin-bottom:18px;">A skill não precisa pensar só em elementos isolados. Os melhores decks combinam componentes em pacotes coerentes, cada um desenhado para uma decisão específica.</div>
+    <div class="component-combo-grid">
+      <div class="component-combo">
+        <div class="component-combo-label">Combo 01</div>
+        <div class="component-combo-title">Capa de impacto</div>
+        <div class="component-combo-copy">Para abrir narrativa com força e parecer Genspark sem perder edição.</div>
+        <div class="component-combo-stack"><span>hero cover</span><span>topbar</span><span>halo sutil</span><span>subtítulo curto</span></div>
+      </div>
+      <div class="component-combo">
+        <div class="component-combo-label">Combo 02</div>
+        <div class="component-combo-title">Diagnóstico com prova</div>
+        <div class="component-combo-copy">Melhor caminho para auditoria, cliente oculto, análise de atendimento e criativos reais.</div>
+        <div class="component-combo-stack"><span>frame real</span><span>card de insight</span><span>faixa de decisão</span></div>
+      </div>
+      <div class="component-combo">
+        <div class="component-combo-label">Combo 03</div>
+        <div class="component-combo-title">Mídia com número e cenário</div>
+        <div class="component-combo-copy">Faz o cliente entender custo, volume, canal e impacto financeiro sem virar planilha.</div>
+        <div class="component-combo-stack"><span>metric hero</span><span>barras de mídia</span><span>waterfall</span><span>veredito</span></div>
+      </div>
+      <div class="component-combo">
+        <div class="component-combo-label">Combo 04</div>
+        <div class="component-combo-title">Fluxo operacional de vendas</div>
+        <div class="component-combo-copy">Explica jornada, CRM, handoff, D0, follow-up e o que acontece quando o lead responde ou some.</div>
+        <div class="component-combo-stack"><span>pipeline</span><span>drawflow</span><span>split outcome</span></div>
+      </div>
+      <div class="component-combo">
+        <div class="component-combo-label">Combo 05</div>
+        <div class="component-combo-title">Benchmark + proposta</div>
+        <div class="component-combo-copy">Ideal para fechar com posição competitiva, plano e próxima ação clara.</div>
+        <div class="component-combo-stack"><span>matriz 4x</span><span>benchmark</span><span>phase stack</span><span>fechamento</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comp-grid" style="display:none;">
+    <div class="comp-card">
+      <div class="comp-icon">▬</div>
+      <div class="comp-name">Topbar Decorativa</div>
+      <div class="comp-desc">Faixa horizontal de 4–8px no topo de todos os slides. Cor de acento sólida. Âncora visual que padroniza a série.</div>
+      <div class="comp-code">height: 4–8px · top:0 · full-width</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">▣</div>
+      <div class="comp-name">Card com Borda de Acento</div>
+      <div class="comp-desc">Container com border-left 6px colorida (acento do cliente). Fundo levemente tintado. Canto arredondado 10–12px.</div>
+      <div class="comp-code">border-left: 6px solid accent</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">◈</div>
+      <div class="comp-name">Card com Borda Superior</div>
+      <div class="comp-desc">Variante com border-top ao invés de border-left. Usado para comparativos lado a lado onde todos os cards têm peso igual.</div>
+      <div class="comp-code">border-top: 6px solid accent</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">◉</div>
+      <div class="comp-name">Pill / Tag</div>
+      <div class="comp-desc">Retângulo com border-radius alto (20–24px). Usado para labels de seção, eyebrows, status, números de etapa.</div>
+      <div class="comp-code">border-radius: 20–24px · padding: 4px 12px</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">━</div>
+      <div class="comp-name">Separador Horizontal</div>
+      <div class="comp-desc">Linha de 1px com cor border (#262626 ou #333). Separa seções dentro de cards sem usar bordas explícitas.</div>
+      <div class="comp-code">height: 1px · background: #262626</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">⬛</div>
+      <div class="comp-name">Barra de Progress Vetorial</div>
+      <div class="comp-desc">Barras de progresso ou funil construídas com RECTANGLE nativos. Altura calculada matematicamente por regra de três.</div>
+      <div class="comp-code">height = valor/max × max_height</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">◦◦◦◦◦</div>
+      <div class="comp-name">Timeline Horizontal</div>
+      <div class="comp-desc">Nós (cards pequenos) conectados por setas ou linhas horizontais. Clamp automático nos extremos para evitar overflow.</div>
+      <div class="comp-code">border-top colorida por status</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">▦</div>
+      <div class="comp-name">Dashboard Row (key-value)</div>
+      <div class="comp-desc">Lista estilo tabela com label à esquerda e valor à direita. Separadores de 1px entre linhas. Substitui tabelas nativas.</div>
+      <div class="comp-code">label · · · · valor (right)</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">⚡</div>
+      <div class="comp-name">Metric Hero</div>
+      <div class="comp-desc">Número gigante (36–104pt) em cor de acento com label abaixo em uppercase. Usado para KPIs e dados de impacto.</div>
+      <div class="comp-code">font-size: 40–80pt · color: accent</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">→→→</div>
+      <div class="comp-name">Pipeline Steps</div>
+      <div class="comp-desc">Cards numerados horizontais conectados por setas. Card verde = sucesso. Card vermelho = perda/alerta. Borda superior colorida.</div>
+      <div class="comp-code">step_n → step_n+1 com setas ›</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">╌╌╌</div>
+      <div class="comp-name">Borda Pontilhada</div>
+      <div class="comp-desc">border-style dashed ou sysDash via XML. Usado para caixas "Quando Usar", insights secundários, ou elementos de contexto.</div>
+      <div class="comp-code">set_dash_style(shape, 'sysDash')</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-icon">▤</div>
+      <div class="comp-name">Coluna Modulares (Benchmark)</div>
+      <div class="comp-desc">Sistema de 3+ colunas para comparação. Coluna central (proposta) com header sólido colorido. Concorrentes com fade visual.</div>
+      <div class="comp-code">col destaque: acento · outros: muted</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 6. BORDAS & LINHAS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">06</div>
+    <div class="section-title">Bordas, Linhas <span>& Transparências</span></div>
+  </div>
+  <div class="grid-2">
+    <div>
+      <div class="rule-block" style="margin-bottom:10px;">
+        <div class="rule-title">Espessura de Borda de Acento</div>
+        <div class="rule-body"><span class="rule-code">4px</span> — Topbar e linhas finas de separação<br>
+        <span class="rule-code">6px</span> — Borda lateral de card (padrão)<br>
+        <span class="rule-code">8px</span> — Borda superior de card premium<br>
+        <span class="rule-code">10px</span> — Destaque máximo, card hero</div>
+      </div>
+      <div class="rule-block" style="margin-bottom:10px;">
+        <div class="rule-title">Borda de Container</div>
+        <div class="rule-body">Cards sempre com <span class="rule-code">border: 1px solid #262626</span> (dark) ou <span class="rule-code">border: 1px solid #E5E7EB</span> (light). Nunca sem borda — sem borda = sem definição visual.</div>
+      </div>
+      <div class="rule-block">
+        <div class="rule-title">Separadores Internos</div>
+        <div class="rule-body">Dentro de dashboard rows: <span class="rule-code">1px solid rgba(255,255,255,0.05)</span> — quase invisíveis mas estruturam a grade.</div>
+      </div>
+    </div>
+    <div>
+      <div class="rule-block" style="margin-bottom:10px;">
+        <div class="rule-title">Transparências de Fundo</div>
+        <div class="rule-body">Surface sobre background escuro:<br>
+        <span class="rule-code">rgba(255,255,255,0.03–0.06)</span> — cards neutros<br>
+        <span class="rule-code">rgba(accent, 0.05–0.10)</span> — cards tintados pela cor de acento (vibrância)<br>
+        <span class="rule-code">rgba(accent, 0.15–0.20)</span> — cards de alerta ou destaque forte</div>
+      </div>
+      <div class="rule-block" style="margin-bottom:10px;">
+        <div class="rule-title">Números Fantasmas (Background Text)</div>
+        <div class="rule-body">Números gigantes quase invisíveis no fundo: cor <span class="rule-code">#1F1F1F</span> sobre fundo <span class="rule-code">#141414</span>. opacity ~3–5% — cria profundidade sem poluir.</div>
+      </div>
+      <div class="rule-block">
+        <div class="rule-title">Border Radius Padronizado</div>
+        <div class="rule-body">Slide inteiro: sem radius<br>
+        Cards grandes: <span class="rule-code">12px</span><br>
+        Badges/pills: <span class="rule-code">20–24px</span><br>
+        Micro-elementos: <span class="rule-code">4–6px</span><br>
+        Avatares/círculos: <span class="rule-code">50%</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 7. TONALIDADES & VARIAÇÕES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">07</div>
+    <div class="section-title">Tonalidades por <span>Cliente</span></div>
+  </div>
+  <div class="grid-3">
+    <div class="card accent-left">
+      <div class="card-label">Modelo Dark — Mais Premium</div>
+      <div class="card-title">Dark Mode System</div>
+      <div class="swatch-grid" style="margin-top:12px;margin-bottom:12px;">
+        <div class="swatch"><div class="swatch-dot" style="background:#0D0D0D"></div><div class="swatch-label">#0D0D0D</div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#141414"></div><div class="swatch-label">#141414</div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#1B1C1D"></div><div class="swatch-label">#1B1C1D</div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#E80403"></div><div class="swatch-label">#E80403</div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#FFFFFF"></div><div class="swatch-label" style="color:#ccc">#FFFFFF</div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#9CA3AF"></div><div class="swatch-label">#9CA3AF</div></div>
+      </div>
+      <div class="card-body">Biesky (3ª), WK Carpetes (4ª), WZR (3ª e 4ª), Studio Henrique, Mayko, OFOS (4ª), FibranetBR</div>
+    </div>
+    <div class="card" style="border-left:6px solid #9CA3AF;">
+      <div class="card-label" style="color:#9CA3AF">Modelo Light — Mais Acessível</div>
+      <div class="card-title">Light Mode System</div>
+      <div class="swatch-grid" style="margin-top:12px;margin-bottom:12px;">
+        <div class="swatch"><div class="swatch-dot" style="background:#FFFFFF;border-color:rgba(0,0,0,0.1)"></div><div class="swatch-label" style="color:#777">#FFFFFF</div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#F5F5F5;border-color:rgba(0,0,0,0.1)"></div><div class="swatch-label" style="color:#777">#F5F5F5</div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#1F2937"></div><div class="swatch-label">#1F2937</div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#E80403"></div><div class="swatch-label">#E80403</div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#333333"></div><div class="swatch-label">#333333</div></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#AAAAAA"></div><div class="swatch-label">#AAAAAA</div></div>
+      </div>
+      <div class="card-body">GigaClima (2ª e 4ª), Cria Nutrição, Laundry Pass, Espaço Zabeu (2ª), WK Carpetes (2ª), OFOS (3ª)</div>
+    </div>
+    <div class="card" style="border-left:6px solid #C9A227;">
+      <div class="card-label" style="color:#C9A227">Accent Dinâmico — Por Identidade</div>
+      <div class="card-title">Acentos Customizados</div>
+      <div class="card-body" style="margin-top:12px;">
+        <ul>
+          <li><span class="color-dot" style="background:#E80403"></span>Vermelho #E80403 - padrao base</li>
+          <li><span class="color-dot" style="background:#C9A227"></span>Ouro #C9A227 — Óticas Líder 3ª</li>
+          <li><span class="color-dot" style="background:#E8420A"></span>Laranja-Red #E8420A — OFOS 4ª</li>
+          <li><span class="color-dot" style="background:#2196F3"></span>Azul #2196F3 — Tropical Magic Biesky</li>
+          <li><span class="color-dot" style="background:#DC143C"></span>Crimson #DC143C — WZR / Movement</li>
+          <li><span class="color-dot" style="background:#EF9F27"></span>Âmbar #EF9F27 — Espaço Zabeu 3ª</li>
+          <li><span class="color-dot" style="background:#FF4B4B"></span>Coral #FF4B4B — WZR 4ª</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. GRAFICOS E FUNIS -->
+<div class="section" id="graficos-funis">
+  <div class="section-header">
+    <div class="section-number">08</div>
+    <div class="section-title">Graficos, Funis de Venda <span>& Como Criar</span></div>
+  </div>
+
+  <div class="visual-lab">
+    <div class="grid-2">
+      <div class="chart-card">
+        <div class="chart-title">Distribuicao de Midia por Canal</div>
+        <div class="bar-chart-row"><span>Meta Ads</span><div class="bar-track"><div class="bar-fill blue" style="width:55%"></div></div><strong>55%</strong></div>
+        <div class="bar-chart-row"><span>Google Ads</span><div class="bar-track"><div class="bar-fill yellow" style="width:45%"></div></div><strong>45%</strong></div>
+        <div class="bar-chart-row"><span>Remarketing</span><div class="bar-track"><div class="bar-fill green" style="width:18%"></div></div><strong>18%</strong></div>
+        <div class="card-body" style="margin-top:16px;">Use quando o cliente precisa entender divisao de verba, prioridade de canal e diferenca entre cenarios 3k, 6k ou 10k.</div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-title">Waterfall de Conversao</div>
+        <div class="waterfall">
+          <div class="waterfall-step"><div class="waterfall-value">12k</div><div class="waterfall-bar" style="height:160px"></div><div class="waterfall-label">Impressoes</div></div>
+          <div class="waterfall-step"><div class="waterfall-value">720</div><div class="waterfall-bar" style="height:116px"></div><div class="waterfall-label">Cliques</div></div>
+          <div class="waterfall-step"><div class="waterfall-value">96</div><div class="waterfall-bar" style="height:78px"></div><div class="waterfall-label">Leads</div></div>
+          <div class="waterfall-step"><div class="waterfall-value">31</div><div class="waterfall-bar" style="height:52px"></div><div class="waterfall-label">Qualificados</div></div>
+          <div class="waterfall-step"><div class="waterfall-value">9</div><div class="waterfall-bar" style="height:34px"></div><div class="waterfall-label">Vendas</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="funnel-board">
+      <div>
+        <div class="chart-title" style="margin-top:26px;">Funil de Venda Recomendado</div>
+        <div class="funnel-stack">
+          <div class="funnel-layer"><div class="stage">01 Descoberta</div><div class="stage-copy">Anuncios de dor, oportunidade e prova visual para publico frio.</div><div class="funnel-metric">100%</div></div>
+          <div class="funnel-layer"><div class="stage">02 Intencao</div><div class="stage-copy">Busca ativa, palavras de alta intencao e comparativos de solucao.</div><div class="funnel-metric">22%</div></div>
+          <div class="funnel-layer"><div class="stage">03 Prova</div><div class="stage-copy">Cases, prints, antes/depois, objecoes e autoridade comercial.</div><div class="funnel-metric">9%</div></div>
+          <div class="funnel-layer"><div class="stage">04 Conversao</div><div class="stage-copy">WhatsApp, LP, proposta, rotina de follow-up e SLA de atendimento.</div><div class="funnel-metric">3%</div></div>
+          <div class="funnel-layer"><div class="stage">05 Retencao</div><div class="stage-copy">Upsell, reativacao, indicacao e recompra.</div><div class="funnel-metric">1.4x</div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="chart-title" style="margin-top:26px;">Receita para Virar Slide</div>
+        <div class="recipe-list">
+          <div class="recipe-step"><b>1</b><div><strong>Defina a decisao</strong><span>O slide deve responder: investir mais, mudar canal, corrigir atendimento ou melhorar oferta?</span></div></div>
+          <div class="recipe-step"><b>2</b><div><strong>Escolha o desenho</strong><span>Use barras para divisao, waterfall para perda, funil para jornada e matriz para prioridade.</span></div></div>
+          <div class="recipe-step"><b>3</b><div><strong>Separe por camada</strong><span>Topo: contexto. Meio: visual principal. Base: recomendacao objetiva.</span></div></div>
+          <div class="recipe-step"><b>4</b><div><strong>Construa nativo</strong><span>No Google Slides, cada barra, etapa e label deve ser forma/texto editavel.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-pattern-grid">
+    <div class="slide-pattern">
+      <div class="pattern-kicker">LAYOUT 01</div>
+      <div class="pattern-name">Budget Split</div>
+      <div class="pattern-use">Comparar 3k vs 6k, mostrar Meta/Google e fechar com recomendacao de investimento.</div>
+    </div>
+    <div class="slide-pattern">
+      <div class="pattern-kicker">LAYOUT 02</div>
+      <div class="pattern-name">Conversion Waterfall</div>
+      <div class="pattern-use">Mostrar onde o volume cai: impressao, clique, lead, qualificado, venda.</div>
+    </div>
+    <div class="slide-pattern">
+      <div class="pattern-kicker">LAYOUT 03</div>
+      <div class="pattern-name">Funnel Operating Plan</div>
+      <div class="pattern-use">Explicar como Meta, Google, remarketing, WhatsApp e landing page trabalham juntos.</div>
+    </div>
+    <div class="slide-pattern">
+      <div class="pattern-kicker">LAYOUT 04</div>
+      <div class="pattern-name">Priority Matrix</div>
+      <div class="pattern-use">Cruzar impacto x esforco para decidir a ordem de acoes comerciais e criativas.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 9. MODELOS NATIVOS V4 -->
+<div class="section" id="modelos-nativos-v4">
+  <div class="section-header">
+    <div class="section-number">09</div>
+    <div class="section-title">Modelos Nativos <span>V4</span> - Biblioteca Aplicavel</div>
+  </div>
+
+  <div class="native-v4-intro">
+    <div class="native-v4-note">
+      <div class="chart-title">Por que estes modelos entram no manual?</div>
+      <div class="card-body">
+        Estes PPTX sao boas referencias porque equilibram <strong>visual premium</strong>, <strong>densidade estrategica</strong> e <strong>editabilidade real</strong>. A regra para a skill nao e copiar o slide inteiro, e sim extrair a arquitetura: fundo, hierarquia, cards, callouts, metricas, tabelas fake, funis e areas seguras.
+      </div>
+    </div>
+    <div class="native-v4-kpi">
+      <div><b>6</b><span>modelos bons para virar padrao canonico</span></div>
+      <div><b>395</b><span>shapes nativos somados nas referencias</span></div>
+      <div><b>baixo</b><span>risco de rasterizacao e baixa dependencia de imagem</span></div>
+    </div>
+  </div>
+
+  <div class="native-v4-gallery">
+    <div class="native-model">
+      <div class="native-model-shot">
+        <img src="testes-formatos/modelos-v4-pptx-preview/Teste_Gabarito_Complexo/Slide1.PNG" alt="Teste Gabarito Complexo">
+      </div>
+      <div class="native-model-body">
+        <div class="native-model-title">Proposta em Uma Tela</div>
+        <div class="native-model-use">Une time, cronograma e investimento em uma narrativa executiva. Serve para fechar escopo sem criar uma apresentacao longa demais.</div>
+        <div class="native-model-tags"><span>timeline</span><span>budget</span><span>escopo</span></div>
+        <div class="native-opinion"><b>Opiniao</b>Muito forte para proposta comercial. Eu usaria como layout padrao quando o cliente precisa decidir rapido.</div>
+      </div>
+    </div>
+
+    <div class="native-model">
+      <div class="native-model-shot">
+        <div class="native-commercial-preview">
+          <div class="mini-cvba-stack">
+            <div class="mini-preview-label">CVBA Comercial</div>
+            <div class="mini-cvba-card"><b>C</b>Caracteristica<span style="width:82%"></span></div>
+            <div class="mini-cvba-card"><b>V</b>Vantagem<span style="width:68%"></span></div>
+            <div class="mini-cvba-card"><b>B</b>Beneficio<span style="width:76%"></span></div>
+            <div class="mini-cvba-card"><b>A</b>Argumento<span style="width:58%"></span></div>
+          </div>
+          <div class="mini-funnel-stack">
+            <div class="mini-preview-label">Funil de Perda</div>
+            <div class="mini-funnel-row" style="width:100%">100 contatos</div>
+            <div class="mini-funnel-row" style="width:86%">85 triados</div>
+            <div class="mini-funnel-row" style="width:68%">51 aulas</div>
+            <div class="mini-funnel-row" style="width:52%">36 realizadas</div>
+            <div class="mini-funnel-row" style="width:34%">20 negociando</div>
+            <div class="mini-funnel-callout"><strong>Ponto critico</strong>Mostrar onde a venda escapa e qual acao corrige o gargalo.</div>
+          </div>
+        </div>
+      </div>
+      <div class="native-model-body">
+        <div class="native-model-title">CVBA + Funil de Perda</div>
+        <div class="native-model-use">Transforma argumentos de venda e gargalos comerciais em uma leitura unica: promessa, prova, queda e acao corretiva.</div>
+        <div class="native-model-tags"><span>CVBA</span><span>funil</span><span>gargalo</span></div>
+        <div class="native-opinion"><b>Opiniao</b>Agora sim vale entrar como padrao. E melhor usar desenho nativo do que miniatura cortada de dois slides.</div>
+      </div>
+    </div>
+
+    <div class="native-model">
+      <div class="native-model-shot">
+        <img src="testes-formatos/modelos-v4-pptx-preview/Replica_Genspark_Nativa/Slide1.PNG" alt="Replica Genspark Nativa">
+      </div>
+      <div class="native-model-body">
+        <div class="native-model-title">Estrutura Modular Completa</div>
+        <div class="native-model-use">Divide cronograma, escopo e investimento em blocos independentes. E uma prova de que o slide premium pode ser nativo.</div>
+        <div class="native-model-tags"><span>100% nativo</span><span>modular</span><span>proposta</span></div>
+        <div class="native-opinion"><b>Opiniao</b>Um dos mais importantes para a skill. Deve virar referencia tecnica de PPTX/Slides editavel.</div>
+      </div>
+    </div>
+
+    <div class="native-model">
+      <div class="native-model-shot">
+        <img src="testes-formatos/modelos-v4-pptx-preview/Replica_Dashboard_Decorti/Slide1.PNG" alt="Dashboard Decorti">
+      </div>
+      <div class="native-model-body">
+        <div class="native-model-title">Dashboard de Metas e KPIs</div>
+        <div class="native-model-use">Mostra numeros grandes, cards de metrica e grafico de funil em uma mesma tela. Serve para reuniao executiva.</div>
+        <div class="native-model-tags"><span>KPI</span><span>cards</span><span>grafico</span></div>
+        <div class="native-opinion"><b>Opiniao</b>Deve ser obrigatorio quando houver meta, forecast, funil ou resultado. E claro e vende decisao.</div>
+      </div>
+    </div>
+
+    <div class="native-model">
+      <div class="native-model-shot">
+        <img src="testes-formatos/modelos-v4-pptx-preview/Replica_Calendario_Editorial/Slide1.PNG" alt="Calendario Editorial">
+      </div>
+      <div class="native-model-body">
+        <div class="native-model-title">Calendario Editorial 4 Semanas</div>
+        <div class="native-model-use">Organiza pilares, semanas e formatos de conteudo. Ajuda a mostrar rotina, consistencia e previsibilidade.</div>
+        <div class="native-model-tags"><span>social</span><span>calendario</span><span>pilares</span></div>
+        <div class="native-opinion"><b>Opiniao</b>Muito util para entregas de social media. Vale virar layout proprio, com legenda semantica por cor.</div>
+      </div>
+    </div>
+
+    <div class="native-model">
+      <div class="native-model-shot">
+        <img src="testes-formatos/modelos-v4-pptx-preview/Replica_Benchmarking_Decorti/Slide1.PNG" alt="Benchmarking Decorti">
+      </div>
+      <div class="native-model-body">
+        <div class="native-model-title">Benchmarking Competitivo</div>
+        <div class="native-model-use">Compara concorrentes por criterios e destaca a proposta central. Excelente para defender posicionamento.</div>
+        <div class="native-model-tags"><span>matriz</span><span>concorrencia</span><span>valor</span></div>
+        <div class="native-opinion"><b>Opiniao</b>Um dos melhores para venda consultiva. A coluna central destacada cria leitura instantanea.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="native-rule-panel">
+    <div class="native-rule-card">
+      <div class="chart-title">Regra Mestre</div>
+      <div class="card-body">
+        Toda referencia bonita so entra na skill se virar componente nativo: texto editavel, cards editaveis, barras editaveis, linhas editaveis e imagens usadas apenas como textura ou apoio, nunca como slide inteiro.
+      </div>
+    </div>
+    <div class="native-rule-list">
+      <div><strong>1. Comece pela decisao</strong>O layout deve responder qual acao o cliente precisa tomar: investir, priorizar, corrigir, comparar ou aprovar.</div>
+      <div><strong>2. Use blocos canonicos</strong>Timeline, dashboard, funil, calendario, CVBA, matriz e proposta modular devem ser templates reaproveitaveis.</div>
+      <div><strong>3. Preserve a area segura</strong>Nunca encostar textos, labels ou valores em bordas. O Google Slides corta e reposiciona diferente do HTML.</div>
+      <div><strong>4. Evite slide-imagem</strong>O efeito GenSpark pode existir no fundo, mas a camada de informacao precisa continuar editavel.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 10. REGRAS MATEMATICAS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">10</div>
+    <div class="section-title">Regras <span>Matemáticas</span> & Dimensionamento</div>
+  </div>
+  <div class="rules-list">
+    <div class="rule-item mandatory"><strong>[OBRIGATÓRIO]</strong> Tamanho de slide: <span class="rule-code">13.33" × 7.5"</span> (widescreen 16:9). Nunca usar 4:3.</div>
+    <div class="rule-item mandatory"><strong>[OBRIGATÓRIO]</strong> Topbar de acento: <span class="rule-code">4–8px</span> no topo de 100% dos slides (exceto capas com topbar gigante).</div>
+    <div class="rule-item mandatory"><strong>[OBRIGATÓRIO]</strong> Conversão px→EMU no python-pptx: <span class="rule-code">1px = 9525 EMU</span>. Helper: <span class="rule-code">def px(v): return Emu(int(v * 9525))</span></div>
+    <div class="rule-item mandatory"><strong>[OBRIGATÓRIO]</strong> Cards: nunca mais de 30% de espaço morto. Se o card é grande, aumentar fontes (corpo 17–18pt) ou reduzir altura.</div>
+    <div class="rule-item mandatory"><strong>[OBRIGATÓRIO]</strong> Altura dinâmica de cards: <span class="rule-code">n_itens × 0.65in + 0.4in</span> de padding = altura total. Máximo 8 linhas por container.</div>
+    <div class="rule-item recommended"><strong>[RECOMENDADO]</strong> Fontes para projeção pública: corpo ≥ 16pt, labels ≥ 14pt, métricas de destaque ≥ 36pt.</div>
+    <div class="rule-item recommended"><strong>[RECOMENDADO]</strong> Vibrância: todo card deve ter pelo menos um dos: fundo tintado pelo acento, borda colorida (6px), ícone emoji antes do título, ou tag/pill de status.</div>
+    <div class="rule-item recommended"><strong>[RECOMENDADO]</strong> Padding de slide: <span class="rule-code">80px</span> laterais, <span class="rule-code">56–80px</span> topo em resoluções 1920px. Ajustar proporcionalmente para 1280px.</div>
+    <div class="rule-item recommended"><strong>[RECOMENDADO]</strong> Gap entre cards no grid: <span class="rule-code">16–24px</span>. Gap em bento ultra-denso: <span class="rule-code">10–12px</span>.</div>
+    <div class="rule-item forbidden"><strong>[PROIBIDO]</strong> Usar tabelas nativas do PowerPoint. Construir como Dashboard Rows com ROUNDED_RECTANGLE.</div>
+    <div class="rule-item forbidden"><strong>[PROIBIDO]</strong> Cards #1E1E1E puro sem acento visual. Card cinza sem cor = slide morto.</div>
+    <div class="rule-item forbidden"><strong>[PROIBIDO]</strong> Empilhar textboxes independentes para linhas sequenciais. Usar 1 textbox com <span class="rule-code">add_paragraph()</span>.</div>
+    <div class="rule-item forbidden"><strong>[PROIBIDO]</strong> Usar <span class="rule-code">Inches()</span> para posicionamento de UI. Sempre usar <span class="rule-code">px()</span> (EMUs).</div>
+    <div class="rule-item forbidden"><strong>[PROIBIDO]</strong> Gráficos nativos do PowerPoint. Construir como barras vetoriais via RECTANGLE nativos.</div>
+    <div class="rule-item forbidden"><strong>[PROIBIDO]</strong> Exportar slide como imagem de fundo (abordagem GenSpark). Construir cada elemento via shapes nativos.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 11. ANTI-PADRÕES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">11</div>
+    <div class="section-title"><span>Anti-Padrões</span> — O que Evitar</div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+    <table class="anti-table">
+      <thead>
+        <tr><th>❌ Anti-Padrão</th><th>✅ Correto</th><th>Por quê evitar</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="anti-bad">Empilhar textboxes para linhas sequenciais</td><td class="anti-good">1 textbox com add_paragraph()</td><td class="anti-why">Sobreposição — PPT não respeita o flow de textboxes independentes</td></tr>
+        <tr><td class="anti-bad">Card com 50%+ de espaço vazio</td><td class="anti-good">Aumentar fontes ou reduzir altura do card</td><td class="anti-why">Parece amador e desperdiça oportunidade de comunicação</td></tr>
+        <tr><td class="anti-bad">Corpo de texto em 7–9pt em apresentação</td><td class="anti-good">Mínimo 16pt para conteúdo projetado</td><td class="anti-why">Ilegível em projetores e telas grandes</td></tr>
+        <tr><td class="anti-bad">Cards #1E1E1E sem nenhum acento</td><td class="anti-good">Fundo tintado + borda colorida + ícone</td><td class="anti-why">Slide "morto" — sem hierarquia visual, sem vibrância</td></tr>
+        <tr><td class="anti-bad">Usar Inches() para posicionamento</td><td class="anti-good">Usar px() helper (EMUs)</td><td class="anti-why">Imprecisão — layouts "quase" alinhados destroem o ar premium</td></tr>
+        <tr><td class="anti-bad">Gráfico nativo do PowerPoint</td><td class="anti-good">Barras via RECTANGLE desenhados matematicamente</td><td class="anti-why">Gráficos nativos são engessados e feios para dashboards</td></tr>
+        <tr><td class="anti-bad">Nomes longos em colunas de tabela</td><td class="anti-good">Abreviar: "Meta Ads" (não "Meta Awareness")</td><td class="anti-why">Wrap de texto quebra alinhamento e ilegibilidade</td></tr>
+        <tr><td class="anti-bad">word_wrap=False (padrão)</td><td class="anti-good">Sempre text_frame.word_wrap = True</td><td class="anti-why">Texto vaza para fora do shape e fica invisível</td></tr>
+        <tr><td class="anti-bad">Emojis via surrogates \ud...</td><td class="anti-good">Usar \U0001f... (32-bit) ou unicode direto</td><td class="anti-why">Corrompe o XML do PPTX silenciosamente</td></tr>
+        <tr><td class="anti-bad">Background sólido puro sem textura</td><td class="anti-good">Slide com profundidade ou tinte de acento</td><td class="anti-why">Slide parece template amador sem profundidade</td></tr>
+        <tr><td class="anti-bad">Cards com cor de acento idêntica para funções diferentes</td><td class="anti-good">Verde=sucesso, Vermelho=perda, Azul=informação</td><td class="anti-why">Perde o significado semântico do fluxograma</td></tr>
+        <tr><td class="anti-bad">Tabela nativa do PowerPoint</td><td class="anti-good">Dashboard Rows via ROUNDED_RECTANGLE + separadores</td><td class="anti-why">Tabelas nativas perdem estética premium e editabilidade limitada</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 12. SKILL RULES RESUMO -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">12</div>
+    <div class="section-title">Resumo para <span>Skill</span> — Regras em Formato de Prompt</div>
+  </div>
+
+  <div class="card accent-top" style="margin-bottom:20px;">
+    <div class="card-label">Core Identity</div>
+    <div class="card-title">Identidade Visual @eder.vasconcelos</div>
+    <div class="card-body" style="margin-top:12px;">
+      <p>Apresentações do sistema @eder.vasconcelos seguem um sistema de design <strong>dark/premium</strong> com acento dinâmico por cliente. O padrão é: fundo escuro profundo (#0D0D0D–#1E1E1E), texto branco e cinza claro, acento vermelho como cor padrão (#E80403 ou variações), e acento customizado por identidade do cliente. O layout é sempre tipo <strong>Bento Grid</strong> com densidade alta de informação, cards arredondados, topbar decorativa, hierarquia tipográfica Montserrat/Roboto e zero tabelas nativas.</p>
+    </div>
+  </div>
+
+  <div class="grid-2" style="gap:12px;">
+    <div class="rule-block" style="padding:16px 20px;">
+      <div class="rule-title">TIPOGRAFIA</div>
+      <div class="rule-body">
+        Font primária: <strong>Montserrat</strong> (títulos, labels, eyebrows) · Font corpo: <strong>Roboto</strong> ou <strong>Inter</strong> · Font dados: <strong>Oswald</strong> ou <strong>Courier New</strong> · Títulos: 36–54pt 900 · Labels: 11–16pt 800 uppercase · Corpo: 14–18pt · Micro: 9–12pt
+      </div>
+    </div>
+    <div class="rule-block" style="padding:16px 20px;">
+      <div class="rule-title">CORES</div>
+      <div class="rule-body">
+        BG: #0D0D0D ou #1B1C1D · Surface: #141414 · Border: #262626 · Text1: #FFFFFF · Text2: #E0E0E0 · Muted: #9CA3AF · Acento V4: #E80403 · Acento cliente: dinâmico · Regra 60/30/10
+      </div>
+    </div>
+    <div class="rule-block" style="padding:16px 20px;">
+      <div class="rule-title">LAYOUT</div>
+      <div class="rule-body">
+        Slide: 13.33"×7.5" · Padding: 80px laterais · Gap grid: 16–24px · Avg shapes: 20–30/slide · Topbar: 4–8px topo · Cards: border-radius 10–12px · Bordas acento: 6px left ou 8px top
+      </div>
+    </div>
+    <div class="rule-block" style="padding:16px 20px;">
+      <div class="rule-title">COMPONENTES OBRIGATÓRIOS</div>
+      <div class="rule-body">
+        Topbar decorativa · Header com eyebrow + título bicolor · Cards com acento lateral/superior · Métricas hero em destaque · Separadores 1px entre rows · Bullets com marcador visual (✔, ›, ●)
+      </div>
+    </div>
+    <div class="rule-block" style="padding:16px 20px;">
+      <div class="rule-title">X9 SKILL ENGINE</div>
+      <div class="rule-body">
+        IR JSON → render-html-from-ir.js → preview.html · IR JSON → render-pptx-from-ir.js → deck.pptx (pptxgenjs) · Canvas HTML: 1280×720px · Canvas PPTX: 13.33"×7.5" · cardTint = mixHex(CARD, accent, 0.12) · acento via ir.deck.accent · encoding PT-BR: MOJIBAKE_REPLACEMENTS array · drawflow usa position:absolute, não flex
+      </div>
+    </div>
+    <div class="rule-block" style="padding:16px 20px;">
+      <div class="rule-title">CORES SEMÂNTICAS</div>
+      <div class="rule-body">
+        Verde → sucesso/ganho · Vermelho → perda/alerta · Azul → informação/educação · Laranja → atenção moderada · Branco/cinza → neutro · #25D366 → WhatsApp · #4285F4 → Google
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <div>Análise gerada automaticamente via extração XML de 31 arquivos PPTX · <strong>@eder.vasconcelos</strong></div>
+  <div>Base: Semanas 2, 3 e 4 · 14/05/2026 · Claude Sonnet 4.6</div>
+</div>
+
+</body>
+</html>

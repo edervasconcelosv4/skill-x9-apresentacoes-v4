@@ -1,0 +1,14 @@
+node_modules/
+package-lock.json
+
+# Credenciais Google — nunca commitar
+scripts/client_secret.json
+scripts/google-token.json
+*.token.json
+*.credentials.json
+
+# Arquivos temporários
+*.tmp
+*.log
+Thumbs.db
+.DS_Store
